@@ -14,11 +14,9 @@ public class PlayerDash
 
     public void HandleDash()
     {
-        if (controller.collisionWithGround)
-            controller.dashCount = 0;
 
-        if (Input.GetKeyDown(KeyCode.L) &&
-            controller.canDash &&
+
+        if (controller.canDash &&
             !controller.isDashing &&
             (controller.collisionWithGround || controller.dashCount < controller.stats.maxDashCount))
         {
@@ -70,10 +68,10 @@ public class PlayerDash
         controller.rb.gravityScale = originalGravityScale;
         controller.lockJump = false;
         controller.allowChangeHorizonSpeed = true;
-
+        controller.lockHorizonMove = false;
         yield return new WaitForSeconds(controller.stats.dashCooldown);
 
         controller.isDashing = false;
-        controller.lockHorizonMove = false;
+
     }
 }

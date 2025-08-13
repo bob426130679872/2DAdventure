@@ -33,8 +33,6 @@ public class PlayerController : MonoBehaviour
     public bool allowChangeHorizonSpeed = true;
     private float wallSlideReleaseTimer = 0f;
 
-    private float originalGravityScale;
-
     public bool isDashing = false;
     public bool canDash = true;
     private PlayerDash dash;
@@ -43,29 +41,31 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         originalScale = transform.localScale;
-        originalGravityScale = rb.gravityScale;
         dash = new PlayerDash(this); // 建立 dash 控制器
     }
 
     void Update()
     {
-        if (lockControl) return;
-
-        dash.HandleDash();  // 使用 dash 功能
-        CheckWallSlide();
-        BasicMove();
-    }
-
-    void BasicMove()
-    {
-        moveDirection = 0f;
+        if (collisionWithGround)
+        {
+            jumpCount = 0;
+            dashCount = 0;
+        }
 
         if (collisionWithCeil)
             isJumping = false;
+        if (lockControl) return;
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            dash.HandleDash();  // 使用 dash 功能
+        }
+        CheckWallSlide();
+        Move();
+    }
 
-        if (collisionWithGround)
-            jumpCount = 0;
-
+    void Move()
+    {
+        moveDirection = 0f;
         if (Input.GetKey(KeyCode.A) && !lockHorizonMove)
         {
             moveDirection = -1f;
@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
+
 
     IEnumerator UnlockControlAfterDelay(float delay)
     {
