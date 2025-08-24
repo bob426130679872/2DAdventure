@@ -1,17 +1,18 @@
 using System;
 using System.IO;
 using UnityEngine;
+using System.Collections;
 
-public  class SaveManager : MonoBehaviour
+
+public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance { get; private set; }
     private string saveRoot;
-    //public string slotName;//存檔的名稱
-
-
+    private bool savePending = false;
+    private float saveDelay = 1f; // 延遲存檔，避免頻繁存
     private void Awake()
     {
-        // Singleton 實作
+        // Singleton
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -28,10 +29,34 @@ public  class SaveManager : MonoBehaviour
     }
     void Start()
     {
-        
+        ItemManager.Instance.OnItemChanged += OnItemChanged;
     }
-    public void SaveAll(string slotName, GameData gameData, PlayerData playerData)
+
+    
+    private void OnItemChanged(Item item, int amount)
     {
+        if (!savePending)
+        {
+            savePending = true;
+            StartCoroutine(DelayedSave());
+        }
+    }
+
+    private IEnumerator DelayedSave()
+    {
+        yield return new WaitForSeconds(saveDelay);
+        SaveAll(GameManager.Instance.playerName);
+        savePending = false;
+        Debug.Log("自動儲存完成（事件驅動）");
+    }
+
+    // 🔹 外部呼叫的 API
+    public void SaveAll(string slotName)
+    {
+        // 從各個 Manager 收集資料
+        GameData gameData = CollectGameData();
+        PlayerData playerData = CollectPlayerData();
+
         string folderPath = GetSaveFolder(slotName);
         if (!Directory.Exists(folderPath))
             Directory.CreateDirectory(folderPath);
@@ -46,19 +71,18 @@ public  class SaveManager : MonoBehaviour
         string playerJson = JsonUtility.ToJson(playerData, true);
         File.WriteAllText(playerPath, playerJson);
 
-        // 儲存 meta.json，時間由 MetaData 預設建構子處理
+        // 儲存 meta.json
         string metaPath = Path.Combine(folderPath, "meta.json");
         MetaData meta = new MetaData();
         string metaJson = JsonUtility.ToJson(meta, true);
         File.WriteAllText(metaPath, metaJson);
 
-        Debug.Log($"成功儲存存檔：{slotName}");
+        Debug.Log($"✅ 成功儲存存檔：{slotName}");
     }
 
     public void LoadAll(string slotName)
     {
         string folderPath = GetSaveFolder(slotName);
-
         if (!Directory.Exists(folderPath))
         {
             Directory.CreateDirectory(folderPath);
@@ -68,7 +92,6 @@ public  class SaveManager : MonoBehaviour
         string playerPath = Path.Combine(folderPath, "player.json");
 
         bool needSave = false;
-
         GameData gameData;
         PlayerData playerData;
 
@@ -82,28 +105,27 @@ public  class SaveManager : MonoBehaviour
             needSave = true;
         }
 
-        
         if (File.Exists(playerPath))
         {
             playerData = JsonUtility.FromJson<PlayerData>(File.ReadAllText(playerPath));
-
         }
-
         else
         {
-            playerData = new()
+            playerData = new PlayerData
             {
-                playerName = slotName // 指定名稱
+                playerName = slotName
             };
             needSave = true;
         }
-        GameManager.Instance.playerName = slotName;
-        GameManager.Instance.saveScene = playerData.playerPosition;
-        GameManager.Instance.health = playerData.playerHealth;
+
         if (needSave)
         {
-            SaveAll(slotName, gameData, playerData);
+            SaveAll(slotName);
         }
+
+        // 把資料還原回各 Manager
+        ApplyGameData(gameData);
+        ApplyPlayerData(playerData);
     }
 
     public MetaData LoadMeta(string slotName)
@@ -124,5 +146,56 @@ public  class SaveManager : MonoBehaviour
     private string GetSaveFolder(string slotName)
     {
         return Path.Combine(saveRoot, slotName);
+    }
+
+    // ================================
+    // 🔹 轉換：Manager → SaveData
+    // ================================
+    private GameData CollectGameData()
+    {
+        GameData data = new GameData();
+
+        // TODO: 把全局遊戲進度收集起來
+        // e.g. data.currentScene = SceneManager.GetActiveScene().name;
+
+        return data;
+    }
+
+    private PlayerData CollectPlayerData()
+    {
+        PlayerData data = new PlayerData();
+
+        // 基本資料
+        data.playerName = GameManager.Instance.playerName;
+        data.playerHealth = GameManager.Instance.health;
+        data.playerPosition = GameManager.Instance.saveScene;
+
+
+        foreach (var item in ItemManager.Instance.GetAllItems())
+        {
+            data.items.Add(new ItemSaveData(item.id, item.quantity));
+        }
+
+        return data;
+    }
+
+    // ================================
+    // 🔹 轉換：SaveData → Manager
+    // ================================
+    private void ApplyGameData(GameData data)
+    {
+        // TODO: 還原遊戲進度
+        // e.g. SceneManager.LoadScene(data.currentScene);
+    }
+
+    private void ApplyPlayerData(PlayerData data)
+    {
+        GameManager.Instance.playerName = data.playerName;
+        GameManager.Instance.health = data.playerHealth;
+        GameManager.Instance.saveScene = data.playerPosition;
+
+        ItemManager.Instance.ClearAllItems();
+
+        ItemManager.Instance.LoadItemsFromSave(data.items);
     }
 }

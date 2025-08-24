@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab;
     public float health;//玩家血量
     public string saveScene;//玩家存檔點名稱(場景名)
-    
+
     public string spawnPortalName;//玩家接下來要生成的生成點名稱
     public string playerName;
     public bool playerFlip = false;
@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
         if (playerName == "")
         {
             playerName = "bob";
+            SaveManager.Instance.LoadAll(playerName);
         }
     }
     public void UpdateSafePoint(Vector3 position, string sceneName)
@@ -42,4 +43,5 @@ public class GameManager : MonoBehaviour
         safePosition = position;
         safeSceneName = sceneName;
     }
+   
 }

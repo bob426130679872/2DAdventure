@@ -4,38 +4,43 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    public Transform inventoryContent; // 背包物品列表父物件
-    public GameObject inventoryItemPrefab; // 背包物品UI prefab
+    public Transform ItemContent; // 背包物品列表父物件
+    public GameObject ItemItemPrefab; // 背包物品UI prefab
+    public static UIManager Instance;
+    void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void OnEnable()
     {
-        ItemManager.Instance.OnInventoryChanged += RefreshInventoryUI;
+        ItemManager.Instance.OnItemChanged += RefreshItemUI;
     }
 
     private void OnDisable()
     {
-        ItemManager.Instance.OnInventoryChanged -= RefreshInventoryUI;
+        ItemManager.Instance.OnItemChanged -= RefreshItemUI;
     }
 
-    private void RefreshInventoryUI()
+    private void RefreshItemUI(Item item, int amount)
     {
-        // 清空現有 UI
-        foreach (Transform child in inventoryContent)
+        if (amount > 0)
         {
-            Destroy(child.gameObject);
+            Debug.Log($"UI 更新: {item.displayName} 增加了 {amount} 個，目前總數 {item.quantity}");
         }
-
-        List<Item> items = ItemManager.Instance.GetAllItems();
-
-        foreach (var item in items)
+        else
         {
-            GameObject go = Instantiate(inventoryItemPrefab, inventoryContent);
-            go.transform.Find("ItemName").GetComponent<Text>().text = item.displayName;
-            go.transform.Find("Quantity").GetComponent<Text>().text = item.quantity.ToString();
-            // 如果有圖示 Image
-            var iconImage = go.transform.Find("Icon")?.GetComponent<Image>();
-            if (iconImage != null) iconImage.sprite = item.icon; // 需要在 Item 類加 Sprite icon
+            Debug.Log($"UI 更新: {item.displayName} 減少了 {-amount} 個，目前總數 {item.quantity}");
         }
+        
     }
 }
 

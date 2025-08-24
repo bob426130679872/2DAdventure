@@ -12,6 +12,7 @@ public class ScenePortal : MonoBehaviour
         {
             other.GetComponent<PlayerController>().lockControl = true;
             GameManager.Instance.spawnPortalName = targetSpawnName;
+            GameManager.Instance.saveScene = targetSceneName;
             SceneManager.LoadScene(targetSceneName);
 
         }
