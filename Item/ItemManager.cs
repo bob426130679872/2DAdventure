@@ -11,6 +11,7 @@ public class ItemManager : MonoBehaviour
     private Dictionary<string, ItemTemplate> templates = new Dictionary<string, ItemTemplate>();
 
     private Dictionary<string, Item> items = new Dictionary<string, Item>();
+    private List<string> pickedUpIds = new();
 
     public event Action<Item, int> OnItemChanged;
 
@@ -27,12 +28,23 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public void AddItem(string id, int amount = 1)
+    public void AddItem(string id, int amount = 1, string pickupId = null)
     {
         if (!templates.TryGetValue(id, out var template))
         {
             Debug.LogWarning($"找不到物品模板: {id}");
             return;
+        }
+        // 判斷 PickupType
+        switch (template.pickupType)
+        {
+            case PickupType.Unique:
+            case PickupType.OneTime:
+                pickedUpIds.Add(pickupId);
+                break;
+            case PickupType.Normal:
+                // 可累積，不用特別處理
+                break;
         }
 
         if (items.ContainsKey(id))
@@ -67,6 +79,11 @@ public class ItemManager : MonoBehaviour
         return new List<Item>(items.Values);
     }
 
+    public List<string> GetPickedUpIds()
+    {
+        return pickedUpIds;
+    }
+
     public ItemTemplate GetTemplateById(string id)
     {
         templates.TryGetValue(id, out var t);
@@ -83,9 +100,18 @@ public class ItemManager : MonoBehaviour
             }
         }
     }
+    public void LoadPickedUpIds(List<string> ids)
+    {
+        pickedUpIds = new List<string>(ids);
+    }
 
     public void ClearAllItems()
     {
         items.Clear();
     }
+    public bool HasPickedUp(string id)
+    {
+        return pickedUpIds.Contains(id);
+    }
+
 }

@@ -1,7 +1,9 @@
 public enum ItemType
 {
-    HPContainer,  // 血量容器
-    MPContainer,  // 氣的容器
-    Material,     // 素材
+    Consumable,   // 消耗品 (藥水)
+    Equipment,    // 裝備 (武器/防具)
+    Material,     // 合成素材
+    Currency,     // 金錢
+    Special       // 特殊能力道具
     
 }

@@ -29,14 +29,15 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-    public void Start()
-    {
         if (playerName == "")
         {
             playerName = "bob";
             SaveManager.Instance.LoadAll(playerName);
         }
+    }
+    public void Start()
+    {
+        
     }
     public void UpdateSafePoint(Vector3 position, string sceneName)
     {

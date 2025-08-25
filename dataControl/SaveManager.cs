@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 
 public class SaveManager : MonoBehaviour
@@ -32,7 +33,7 @@ public class SaveManager : MonoBehaviour
         ItemManager.Instance.OnItemChanged += OnItemChanged;
     }
 
-    
+
     private void OnItemChanged(Item item, int amount)
     {
         if (!savePending)
@@ -56,6 +57,7 @@ public class SaveManager : MonoBehaviour
         // 從各個 Manager 收集資料
         GameData gameData = CollectGameData();
         PlayerData playerData = CollectPlayerData();
+        
 
         string folderPath = GetSaveFolder(slotName);
         if (!Directory.Exists(folderPath))
@@ -175,7 +177,8 @@ public class SaveManager : MonoBehaviour
         {
             data.items.Add(new ItemSaveData(item.id, item.quantity));
         }
-
+        data.pickedUpIds = new List<string>(ItemManager.Instance.GetPickedUpIds());
+        
         return data;
     }
 
@@ -194,8 +197,13 @@ public class SaveManager : MonoBehaviour
         GameManager.Instance.health = data.playerHealth;
         GameManager.Instance.saveScene = data.playerPosition;
 
+        // 先清空原本物品
         ItemManager.Instance.ClearAllItems();
 
+        // 還原玩家物品
         ItemManager.Instance.LoadItemsFromSave(data.items);
+
+        // 還原已撿取的 Unique / SceneUnique 物品
+        ItemManager.Instance.LoadPickedUpIds(data.pickedUpIds);
     }
 }
