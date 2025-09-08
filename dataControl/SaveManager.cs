@@ -4,10 +4,10 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-
+  [DefaultExecutionOrder(-99)]
 public class SaveManager : MonoBehaviour
 {
-    public static SaveManager Instance { get; private set; }
+    public static SaveManager Instance;
     private string saveRoot;
     private bool savePending = false;
     private float saveDelay = 1f; // 延遲存檔，避免頻繁存
@@ -177,7 +177,8 @@ public class SaveManager : MonoBehaviour
         {
             data.items.Add(new ItemSaveData(item.id, item.quantity));
         }
-        data.pickedUpIds = new List<string>(ItemManager.Instance.GetPickedUpIds());
+        data.pickedUpIds = ItemManager.Instance.GetPickedUpIds();
+        data.openedChestIds = ItemManager.Instance.GetOpenedChestIds();
         
         return data;
     }
@@ -205,5 +206,8 @@ public class SaveManager : MonoBehaviour
 
         // 還原已撿取的 Unique / SceneUnique 物品
         ItemManager.Instance.LoadPickedUpIds(data.pickedUpIds);
+
+        ItemManager.Instance.LoadOpenedChestIds(data.openedChestIds);
+
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -18,6 +19,7 @@ public class GameManager : MonoBehaviour
     public Vector3 safePosition;//玩家最近站立的位置
     public string safeSceneName;//玩家最近站立的場景(目前沒用到)
 
+  
     void Awake()
     {
         if (Instance == null)

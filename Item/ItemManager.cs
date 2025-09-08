@@ -6,12 +6,12 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     public static ItemManager Instance;
-
-    [SerializeField] private List<ItemTemplate> itemTemplatesList;
+    [SerializeField] private ItemDatabase database;
     private Dictionary<string, ItemTemplate> templates = new Dictionary<string, ItemTemplate>();
 
     private Dictionary<string, Item> items = new Dictionary<string, Item>();
-    private List<string> pickedUpIds = new();
+    private List<string> pickedUpIds = new();//一次性拾取的物品被撿過的列表
+    private List<string> openedChestIds = new List<string>();
 
     public event Action<Item, int> OnItemChanged;
 
@@ -22,7 +22,8 @@ public class ItemManager : MonoBehaviour
         else
             Destroy(gameObject);
 
-        foreach (var t in itemTemplatesList)
+        templates.Clear();
+        foreach (var t in database.items)
         {
             templates[t.id] = t;
         }
@@ -81,7 +82,7 @@ public class ItemManager : MonoBehaviour
 
     public List<string> GetPickedUpIds()
     {
-        return pickedUpIds;
+        return new List<string>(pickedUpIds);
     }
 
     public ItemTemplate GetTemplateById(string id)
@@ -113,5 +114,23 @@ public class ItemManager : MonoBehaviour
     {
         return pickedUpIds.Contains(id);
     }
+    public void RegisterOpenedChest(string chestId)
+    {
+        openedChestIds.Add(chestId);
+    }
 
+    public bool IsChestOpen(string chestId)
+    {
+        return openedChestIds.Contains(chestId);
+    }
+
+    public List<string> GetOpenedChestIds()
+    {
+        return new List<string>(openedChestIds);
+    }
+
+    public void LoadOpenedChestIds(List<string> ids)
+    {
+        openedChestIds = new List<string>(ids);
+    }
 }

@@ -12,6 +12,7 @@ public class PlayerData
     
     public List<ItemSaveData> items = new();// 存玩家的物品 (只存存檔需要的資訊)
     public List<string> pickedUpIds = new();     // 已經撿取過的唯一物件ID
+    public List<string> openedChestIds = new List<string>();//已經開啟過的寶箱
 
     // 預設建構子 (給新玩家或沒檔案時用)
     public PlayerData()
@@ -21,6 +22,7 @@ public class PlayerData
         playerPosition = "InitialVillage";
         items = new List<ItemSaveData>();
         pickedUpIds = new List<string>();
+
     }
 
     // 自訂建構子 (可用於載入時指定數值)
