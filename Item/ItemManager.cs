@@ -9,12 +9,18 @@ public class ItemManager : MonoBehaviour
     [SerializeField] private ItemDatabase database;
     private Dictionary<string, ItemTemplate> templates = new Dictionary<string, ItemTemplate>();
 
-    private Dictionary<string, Item> items = new Dictionary<string, Item>();
+    public Dictionary<string, Item> items = new Dictionary<string, Item>();
     private List<string> pickedUpIds = new();//一次性拾取的物品被撿過的列表
     private List<string> openedChestIds = new List<string>();
+    private List<string> unlockedDiaryIds = new List<string>();
 
     public event Action<Item, int> OnItemChanged;
 
+    void Start()
+    {
+        
+
+    }
     private void Awake()
     {
         if (Instance == null)
@@ -26,6 +32,10 @@ public class ItemManager : MonoBehaviour
         foreach (var t in database.items)
         {
             templates[t.id] = t;
+        }
+        foreach (var d in database.diaries)
+        {
+            templates[d.id] = d;
         }
     }
 
@@ -79,7 +89,21 @@ public class ItemManager : MonoBehaviour
     {
         return new List<Item>(items.Values);
     }
+    public List<Item> GetItemsByType(ItemType type)
+    {
+        List<Item> result = new List<Item>();
 
+        foreach (var kvp in items)
+        {
+            Item item = kvp.Value;
+            if (item != null && item.template != null && item.template.type == type)
+            {
+                result.Add(item);
+            }
+        }
+
+        return result;
+    }
     public List<string> GetPickedUpIds()
     {
         return new List<string>(pickedUpIds);
@@ -132,5 +156,27 @@ public class ItemManager : MonoBehaviour
     public void LoadOpenedChestIds(List<string> ids)
     {
         openedChestIds = new List<string>(ids);
+    }
+    public void UnlockDiary(string id)
+    {
+        if (!unlockedDiaryIds.Contains(id))
+            unlockedDiaryIds.Add(id);
+    }
+
+    public List<string> GetUnlockedDiaryIds()
+    {
+        return new List<string>(unlockedDiaryIds);
+    }
+    public void LoadUnlockedDiaryIds(List<string> ids)
+    {
+        unlockedDiaryIds = new List<string>(ids);
+    }
+    public List<DiaryTemplate> GetAllDiariesTemplate()
+    {
+        return database.diaries;
+    }
+    public bool IsDiaryUnlockById(string diaryId)
+    {
+        return unlockedDiaryIds.Contains(diaryId);
     }
 }

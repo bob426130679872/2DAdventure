@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "ItemTemplate", menuName = "Game/Item Template")]
 public class ItemTemplate : ScriptableObject
@@ -8,5 +9,8 @@ public class ItemTemplate : ScriptableObject
     public ItemType type;        // 物品本質分類
     public PickupType pickupType;// 物品撿取規則
     public Sprite icon;
+    public string description;
 }
+
+
 

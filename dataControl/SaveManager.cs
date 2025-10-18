@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-  [DefaultExecutionOrder(-99)]
+[DefaultExecutionOrder(-99)]
 public class SaveManager : MonoBehaviour
 {
     public static SaveManager Instance;
@@ -57,7 +57,7 @@ public class SaveManager : MonoBehaviour
         // 從各個 Manager 收集資料
         GameData gameData = CollectGameData();
         PlayerData playerData = CollectPlayerData();
-        
+
 
         string folderPath = GetSaveFolder(slotName);
         if (!Directory.Exists(folderPath))
@@ -179,7 +179,8 @@ public class SaveManager : MonoBehaviour
         }
         data.pickedUpIds = ItemManager.Instance.GetPickedUpIds();
         data.openedChestIds = ItemManager.Instance.GetOpenedChestIds();
-        
+        data.unlockedDiaryIds = ItemManager.Instance.GetUnlockedDiaryIds();
+
         return data;
     }
 
@@ -208,6 +209,8 @@ public class SaveManager : MonoBehaviour
         ItemManager.Instance.LoadPickedUpIds(data.pickedUpIds);
 
         ItemManager.Instance.LoadOpenedChestIds(data.openedChestIds);
+        
+        ItemManager.Instance.LoadUnlockedDiaryIds(data.unlockedDiaryIds);
 
     }
 }
