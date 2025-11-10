@@ -51,7 +51,11 @@ public class DiaryPanel : MonoBehaviour
             int index = i; // 關鍵：避免閉包錯誤
 
             // 是否已解鎖該日記
-            bool unlocked = ItemManager.Instance.IsDiaryUnlockById("diary" + (i + 1));
+            //bool unlocked = ItemManager.Instance.IsDiaryUnlockById("diary" + (i + 1));
+            bool unlocked = ItemManager.Instance.IsUnlocked(
+                UnlockIdListType.UnlockedDiary,
+                "diary" + (i + 1)
+            );
 
             if (unlocked)
             {
@@ -72,7 +76,7 @@ public class DiaryPanel : MonoBehaviour
 
     void ShowPage(int index)
     {
-        if (ItemManager.Instance.GetUnlockedDiaryIds().Count == 0)
+        if (ItemManager.Instance.getUnlockIds(UnlockIdListType.UnlockedDiary).Count == 0)
         {
             diaryTitleText.text = "";
             diaryContentText.text = "尚未取得任何日記";
@@ -95,7 +99,7 @@ public class DiaryPanel : MonoBehaviour
         while (index >= 0)
         {
             string diaryId = "diary" + (index + 1);
-            if (ItemManager.Instance.IsDiaryUnlockById(diaryId))
+            if (ItemManager.Instance.IsUnlocked(UnlockIdListType.UnlockedDiary, diaryId))
             {
                 ShowPage(index);
                 return;
@@ -115,7 +119,7 @@ public class DiaryPanel : MonoBehaviour
         while (index < totalPages)
         {
             string diaryId = "diary" + (index + 1);
-            if (ItemManager.Instance.IsDiaryUnlockById(diaryId))
+            if (ItemManager.Instance.IsUnlocked(UnlockIdListType.UnlockedDiary, diaryId))
             {
                 ShowPage(index);
                 return;

@@ -12,7 +12,7 @@ public class Chest : MonoBehaviour
 
     void Start() {
         // 從 PlayerData 還原狀態
-        if (ItemManager.Instance.IsChestOpen(chestId)) {
+        if (ItemManager.Instance.IsUnlocked(UnlockIdListType.OpenedChest,chestId)) {
 
             // TODO: 換掉寶箱 sprite 
             isOpened = true;
@@ -52,7 +52,7 @@ public class Chest : MonoBehaviour
         ItemManager.Instance.AddItem(itemId, amount);
 
         // 紀錄已開啟
-        ItemManager.Instance.RegisterOpenedChest(chestId);
+        ItemManager.Instance.RegisterUnlock(UnlockIdListType.OpenedChest,chestId);
 
         // 播放動畫 / 改外觀
         OpenChestAnimation();

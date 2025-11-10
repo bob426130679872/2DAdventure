@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "ItemTemplate", menuName = "Game/Item Template")]
+[CreateAssetMenu(fileName = "ItemTemplate", menuName = "Item/Item Template")]
 public class ItemTemplate : ScriptableObject
 {
     public string id;            // 全域唯一識別碼 (ex: "heart_container", "gold_coin")

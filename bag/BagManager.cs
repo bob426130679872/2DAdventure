@@ -20,13 +20,13 @@ public class BagManager : MonoBehaviour
 
     [Header("控制用的按鈕")]
     public Button consumableButton;
-    public Button diaryButton;
     public Button materialButton;
+    public Button collectionButton;
+    public Button personalButton;
     public Button clothesButton;
     public Button treasureButton;
     public Button mapButton;
-    public Button collectionButton;
-    public Button personalButton;
+    public Button diaryButton;
     public Button bookButton;
 
     private Dictionary<ItemType, GameObject> panels;
@@ -104,32 +104,6 @@ public class BagManager : MonoBehaviour
             case ItemType.Consumable:
             case ItemType.Material:
             case ItemType.Collection:
-                // 清空
-
-                Transform target = panel.transform.GetChild(1).GetChild(0).GetChild(0);
-
-                // 從後往前刪，避免索引錯亂
-                for (int i = target.childCount - 1; i >= 0; i--)
-                {
-                    Destroy(target.GetChild(i).gameObject);
-                }
-
-                // 取得該分類的物品
-                List<Item> list = new List<Item>();
-                foreach (var kvp in ItemManager.Instance.items)
-                {
-                    if (kvp.Value != null && kvp.Value.quantity > 0 && kvp.Value.template.type == type)
-                    {
-                        list.Add(kvp.Value);
-                    }
-                }
-                // 生成 Slot
-                foreach (var item in list)
-                {
-                    GameObject slot = Instantiate(itemPrefab, panel.transform.GetChild(1).GetChild(0).GetChild(0));
-                    BagObjectUI slotUI = slot.GetComponent<BagObjectUI>();
-                    slotUI.Init(item);
-                }
                 break;
             case ItemType.Diary:
                 break;

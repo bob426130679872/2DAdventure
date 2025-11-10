@@ -167,19 +167,28 @@ public class SaveManager : MonoBehaviour
     {
         PlayerData data = new PlayerData();
 
-        // 基本資料
+        // 1. 基本資料
         data.playerName = GameManager.Instance.playerName;
         data.playerHealth = GameManager.Instance.health;
         data.playerPosition = GameManager.Instance.saveScene;
 
-
+        // 2. 物品庫存
         foreach (var item in ItemManager.Instance.GetAllItems())
         {
             data.items.Add(new ItemSaveData(item.id, item.quantity));
         }
-        data.pickedUpIds = ItemManager.Instance.GetPickedUpIds();
-        data.openedChestIds = ItemManager.Instance.GetOpenedChestIds();
-        data.unlockedDiaryIds = ItemManager.Instance.GetUnlockedDiaryIds();
+
+        // 3. ✅ 結合進度追蹤資料：將 ItemManager 內部的 Dictionary 轉成 List<UnlockIdListData>
+        foreach (UnlockIdListType type in Enum.GetValues(typeof(UnlockIdListType)))
+        {
+            List<string> unlockIds = ItemManager.Instance.getUnlockIds(type);
+            
+            // 僅儲存有數據的列表，可減少 JSON 體積
+            if (unlockIds != null && unlockIds.Count > 0) 
+            {
+                data.UnlockIdLists.Add(new UnlockIdListData(type, unlockIds));
+            }
+        }
 
         return data;
     }
@@ -195,22 +204,28 @@ public class SaveManager : MonoBehaviour
 
     private void ApplyPlayerData(PlayerData data)
     {
+       // 1. 還原基本資料
         GameManager.Instance.playerName = data.playerName;
         GameManager.Instance.health = data.playerHealth;
         GameManager.Instance.saveScene = data.playerPosition;
 
-        // 先清空原本物品
+        // 2. 還原物品
         ItemManager.Instance.ClearAllItems();
-
-        // 還原玩家物品
         ItemManager.Instance.LoadItemsFromSave(data.items);
-
-        // 還原已撿取的 Unique / SceneUnique 物品
-        ItemManager.Instance.LoadPickedUpIds(data.pickedUpIds);
-
-        ItemManager.Instance.LoadOpenedChestIds(data.openedChestIds);
         
-        ItemManager.Instance.LoadUnlockedDiaryIds(data.unlockedDiaryIds);
+        // 3. ✅ 還原進度追蹤資料：將 List<UnlockIdListData> 轉回 Dictionary
+        Dictionary<UnlockIdListType, List<string>> progressDataToLoad = new();
+        
+        // 遍歷 PlayerData 中的可序列化列表
+        foreach (var entry in data.UnlockIdLists)
+        {
+            // 將 Key/Value 轉換回 Dictionary 結構
+            // 由於 ItemManager 內部會處理初始化，這裡主要負責寫入數據
+            progressDataToLoad.Add(entry.type, entry.ids ?? new List<string>());
+        }
+
+        // 呼叫 ItemManager 的通用載入方法
+        ItemManager.Instance.LoadAllProgressData(progressDataToLoad);
 
     }
 }

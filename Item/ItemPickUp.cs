@@ -10,6 +10,7 @@ public class ItemPickup : MonoBehaviour
 
     private void Start()
     {
+        
         if (ItemManager.Instance.GetTemplateById(itemId).pickupType == PickupType.OneTime || ItemManager.Instance.GetTemplateById(itemId).pickupType == PickupType.Unique)
         {
             // 如果還沒設定 pickupId，就用場景名 + 名稱生成一個
@@ -19,7 +20,7 @@ public class ItemPickup : MonoBehaviour
             }
 
             // 撿過就直接刪掉
-            if (ItemManager.Instance.HasPickedUp(pickupId))
+            if (ItemManager.Instance.IsUnlocked(UnlockIdListType.ItemPickedUp,pickupId))
             {
                 Destroy(gameObject);
             }
