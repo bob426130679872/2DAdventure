@@ -1,9 +1,10 @@
 using System.Collections;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public PlayerStats stats;
+
 
     // 不變的變數仍然放這裡
     public Rigidbody2D rb;
@@ -36,6 +37,7 @@ public class PlayerController : MonoBehaviour
     public bool isDashing = false;
     public bool canDash = true;
     private PlayerDash dash;
+    private PlayerStats stats;
 
     void Start()
     {
@@ -46,6 +48,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+
         if (collisionWithGround)
         {
             jumpCount = 0;
@@ -65,6 +68,8 @@ public class PlayerController : MonoBehaviour
 
     void Move()
     {
+        PlayerManager pm = PlayerManager.Instance;
+        if (pm == null) return;
         moveDirection = 0f;
         if (Input.GetKey(KeyCode.A) && !lockHorizonMove)
         {
@@ -86,7 +91,7 @@ public class PlayerController : MonoBehaviour
 
             lockHorizonMove = false;
             collisionWithGround = false;
-            rb.velocity = new Vector2(rb.velocity.x, stats.jumpForce);
+            rb.velocity = new Vector2(rb.velocity.x, pm.finalJumpForce);
             isJumping = true;
             jumpTimeCounter = 0f;
         }
@@ -96,7 +101,7 @@ public class PlayerController : MonoBehaviour
             jumpTimeCounter += Time.deltaTime;
             if (jumpTimeCounter < stats.maxJumpTime)
             {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + stats.holdJumpForce * Time.deltaTime);
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + pm.finalHoldJumpForce * Time.deltaTime);
             }
             else
             {
@@ -112,6 +117,8 @@ public class PlayerController : MonoBehaviour
 
     void CheckWallSlide()
     {
+        PlayerManager pm = PlayerManager.Instance;
+        if (pm == null) return;
         bool isTouchingWall = collisionWithLeftWall || collisionWithRightWall;
         bool holdingWallDirection =
             (collisionWithLeftWall && Input.GetKey(KeyCode.A)) ||
@@ -130,7 +137,7 @@ public class PlayerController : MonoBehaviour
 
         if (isWallSliding)
         {
-            rb.velocity = new Vector2(rb.velocity.x, -stats.wallSlideSpeed);
+            rb.velocity = new Vector2(rb.velocity.x, -pm.finalWallSlideSpeed);
             jumpCount = 0;
             dashCount = 0;
 
@@ -142,7 +149,7 @@ public class PlayerController : MonoBehaviour
                 isJumping = false;
 
                 float direction = collisionWithLeftWall ? 1f : -1f;
-                rb.velocity = new Vector2(stats.wallJumpForce.x * direction, stats.wallJumpForce.y);
+                rb.velocity = new Vector2(pm.finalWallJumpForce.x * direction, pm.finalWallJumpForce.y);
 
                 transform.localScale = new Vector3(
                     direction * Mathf.Abs(originalScale.x),
@@ -168,6 +175,6 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (allowChangeHorizonSpeed)
-            rb.velocity = new Vector2(moveDirection * stats.moveSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(moveDirection * PlayerManager.Instance.finalMoveSpeed, rb.velocity.y);
     }
 }

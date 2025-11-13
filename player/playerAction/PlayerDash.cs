@@ -18,7 +18,7 @@ public class PlayerDash
 
         if (controller.canDash &&
             !controller.isDashing &&
-            (controller.collisionWithGround || controller.dashCount < controller.stats.maxDashCount))
+            (controller.collisionWithGround || controller.dashCount < PlayerManager.Instance.maxDashCount))
         {
             controller.StartCoroutine(PerformDash());
         }
@@ -26,6 +26,7 @@ public class PlayerDash
 
     private IEnumerator PerformDash()
     {
+        
         controller.lockJump = true;
         controller.dashCount++;
         controller.isDashing = true;
@@ -60,16 +61,16 @@ public class PlayerDash
             direction = controller.transform.localScale.x > 0 ? 1f : -1f;
         }
 
-        controller.rb.velocity = new Vector2(direction * controller.stats.dashSpeed, 0f);
+        controller.rb.velocity = new Vector2(direction * PlayerManager.Instance.dashSpeed, 0f);
         controller.allowChangeHorizonSpeed = false;
 
-        yield return new WaitForSeconds(controller.stats.dashDuration);
+        yield return new WaitForSeconds(PlayerManager.Instance.dashDuration);
 
         controller.rb.gravityScale = originalGravityScale;
         controller.lockJump = false;
         controller.allowChangeHorizonSpeed = true;
         controller.lockHorizonMove = false;
-        yield return new WaitForSeconds(controller.stats.dashCooldown);
+        yield return new WaitForSeconds(PlayerManager.Instance.dashCooldown);
 
         controller.isDashing = false;
 
