@@ -27,4 +27,7 @@ public class PlayerStats : ScriptableObject
 
     [Header("Jump Settings")]
     public int maxJump = 1;
+
+    [Header("Explode Settings")]
+    public float explodeDuration = 1f;
 }

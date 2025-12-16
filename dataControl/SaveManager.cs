@@ -20,7 +20,7 @@ public class SaveManager : MonoBehaviour
             return;
         }
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+
 
         saveRoot = Path.Combine(Application.persistentDataPath, "saves");
         if (!Directory.Exists(saveRoot))
@@ -155,11 +155,33 @@ public class SaveManager : MonoBehaviour
     // ================================
     private GameData CollectGameData()
     {
+        // 獲取 GameManager 實例
+        GameManager gm = GameManager.Instance;
+
+        if (gm == null)
+        {
+            Debug.LogError("GameManager 實例不存在，無法收集數據！");
+            return new GameData(); // 返回一個空的 GameData 以防報錯
+        }
+
         GameData data = new GameData();
+        data.brokenSceneObjectList.Clear();
 
-        // TODO: 把全局遊戲進度收集起來
-        // e.g. data.currentScene = SceneManager.GetActiveScene().name;
+        // 遍歷 GameManager 中按場景分類的破壞物件字典
+        foreach (var kvp in gm.brokenSceneObjectId)
+        {
+            string sceneName = kvp.Key;
+            List<string> brokenIDs = kvp.Value;
 
+            // 檢查該場景是否有實際的破壞 ID，避免存儲空列表
+            if (brokenIDs != null && brokenIDs.Count > 0)
+            {
+                // 使用 BrokenSceneObject 的建構子創建可序列化的實例
+                BrokenSceneObject brokenData = new BrokenSceneObject(sceneName, brokenIDs);
+                // 將實例加入到 GameData 的 List 中
+                data.brokenSceneObjectList.Add(brokenData);
+            }
+        }
         return data;
     }
 
@@ -182,9 +204,9 @@ public class SaveManager : MonoBehaviour
         foreach (UnlockIdListType type in Enum.GetValues(typeof(UnlockIdListType)))
         {
             List<string> unlockIds = ItemManager.Instance.getUnlockIds(type);
-            
+
             // 僅儲存有數據的列表，可減少 JSON 體積
-            if (unlockIds != null && unlockIds.Count > 0) 
+            if (unlockIds != null && unlockIds.Count > 0)
             {
                 data.UnlockIdLists.Add(new UnlockIdListData(type, unlockIds));
             }
@@ -198,13 +220,31 @@ public class SaveManager : MonoBehaviour
     // ================================
     private void ApplyGameData(GameData data)
     {
-        // TODO: 還原遊戲進度
-        // e.g. SceneManager.LoadScene(data.currentScene);
+        // 確保 GameManager 實例存在
+        GameManager gm = GameManager.Instance;
+        if (gm == null)
+        {
+            Debug.LogError("GameManager 實例不存在，無法還原數據！");
+            return;
+        }
+
+        gm.brokenSceneObjectId.Clear(); // 先清空舊數據
+
+        foreach (var brokenData in data.brokenSceneObjectList)
+        {
+            // 檢查該場景是否有破壞記錄
+            if (brokenData.ids != null && brokenData.ids.Count > 0)
+            {
+                // 將 List 轉換回 Dictionary 的 Key-Value 結構
+                gm.brokenSceneObjectId.Add(brokenData.sceneName, brokenData.ids);
+            }
+        }
+
     }
 
     private void ApplyPlayerData(PlayerData data)
     {
-       // 1. 還原基本資料
+        // 1. 還原基本資料
         GameManager.Instance.playerName = data.playerName;
         GameManager.Instance.health = data.playerHealth;
         GameManager.Instance.saveScene = data.playerPosition;
@@ -212,10 +252,10 @@ public class SaveManager : MonoBehaviour
         // 2. 還原物品
         ItemManager.Instance.ClearAllItems();
         ItemManager.Instance.LoadItemsFromSave(data.items);
-        
+
         // 3. ✅ 還原進度追蹤資料：將 List<UnlockIdListData> 轉回 Dictionary
         Dictionary<UnlockIdListType, List<string>> progressDataToLoad = new();
-        
+
         // 遍歷 PlayerData 中的可序列化列表
         foreach (var entry in data.UnlockIdLists)
         {

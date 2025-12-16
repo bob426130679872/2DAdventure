@@ -5,7 +5,8 @@ using System;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
-    
+    public GameObject player;
+    public GameObject playerPrefab;
     // 引用包含基礎數值的 Asset
     [SerializeField] private PlayerStats baseStats; 
     
@@ -28,6 +29,7 @@ public class PlayerManager : MonoBehaviour
     public float maxDashCount => baseStats.maxDashCount;
     public float dashDuration => baseStats.dashDuration;
     public float dashCooldown => baseStats.dashCooldown;
+    public float explodeDuration => baseStats.explodeDuration;
 
     public event Action OnFinalStatsChanged; // 可選：當數值變動時通知 UI
 

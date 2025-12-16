@@ -16,8 +16,8 @@ public class PlayerData
         playerName = "defaultPlayer";
         playerHealth = 3f;
         playerPosition = "InitialVillage";
-        items = new List<ItemSaveData>();
-        UnlockIdLists = new List<UnlockIdListData>();
+        items = new();
+        UnlockIdLists = new();
     }
 
     // 🔹 自訂建構子 (載入時用)

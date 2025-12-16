@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -36,14 +35,17 @@ public class PlayerController : MonoBehaviour
 
     public bool isDashing = false;
     public bool canDash = true;
+    public bool isExplode = false;
+    public bool canExplode = true;
     private PlayerDash dash;
-    private PlayerStats stats;
+    private PlayerExplode explode;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         originalScale = transform.localScale;
         dash = new PlayerDash(this); // 建立 dash 控制器
+        explode = new PlayerExplode(this);
     }
 
     void Update()
@@ -64,6 +66,10 @@ public class PlayerController : MonoBehaviour
         }
         CheckWallSlide();
         Move();
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            explode.handleExplode(); 
+        }
     }
 
     void Move()
@@ -84,7 +90,7 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
         }
 
-        if (Input.GetKeyDown(KeyCode.K) && !lockJump && !isWallSliding && (collisionWithGround || jumpCount < stats.maxJump))
+        if (Input.GetKeyDown(KeyCode.K) && !lockJump && !isWallSliding && (collisionWithGround || jumpCount < pm.stats.maxJump))
         {
             if (!collisionWithGround)
                 jumpCount++;
@@ -99,7 +105,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.K) && !lockJump && isJumping)
         {
             jumpTimeCounter += Time.deltaTime;
-            if (jumpTimeCounter < stats.maxJumpTime)
+            if (jumpTimeCounter < pm.stats.maxJumpTime)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + pm.finalHoldJumpForce * Time.deltaTime);
             }
@@ -133,7 +139,7 @@ public class PlayerController : MonoBehaviour
                         !collisionWithGround &&
                         rb.velocity.y < 5 &&
                         canWallSlide &&
-                        wallSlideReleaseTimer < stats.wallSlideReleaseBuffer;
+                        wallSlideReleaseTimer < pm.stats.wallSlideReleaseBuffer;
 
         if (isWallSliding)
         {
@@ -157,7 +163,7 @@ public class PlayerController : MonoBehaviour
                     originalScale.z
                 );
 
-                StartCoroutine(UnlockControlAfterDelay(stats.wallJumpLockTime));
+                StartCoroutine(UnlockControlAfterDelay(pm.stats.wallJumpLockTime));
             }
         }
     }
