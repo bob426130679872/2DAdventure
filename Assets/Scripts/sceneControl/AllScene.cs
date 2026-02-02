@@ -11,7 +11,7 @@ public class AllScene : MonoBehaviour
         GameObject spawnPortal = GameObject.Find(GameManager.Instance.spawnPortalName);
         if (spawnPortal == null)
         {
-            spawnPortal = GameObject.Find(SceneManager.GetActiveScene().name + "Spawn1");
+            spawnPortal = GameObject.Find("testSpawnPortal");
         }
         if (GameManager.Instance.safePosition == Vector3.zero)
         {
