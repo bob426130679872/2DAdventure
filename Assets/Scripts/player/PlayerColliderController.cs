@@ -21,7 +21,7 @@ public class PlayerColliderController : MonoBehaviour
     {
         var player = transform.parent.GetComponent<PlayerController>();
         if (player == null) return;
-        if (other.tag == "tile")
+        if (other.tag == "Tile")
         {
             switch (gameObject.name)
             {
@@ -48,7 +48,7 @@ public class PlayerColliderController : MonoBehaviour
     {
         var player = transform.parent.GetComponent<PlayerController>();
         if (player == null) return;
-        if (other.tag == "tile")
+        if (other.tag == "Tile")
         {
             switch (gameObject.name)
             {

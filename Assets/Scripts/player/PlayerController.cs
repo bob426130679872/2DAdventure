@@ -79,6 +79,10 @@ public class PlayerController : MonoBehaviour
         {
             shooting.handleShooting(); 
         }
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            StoryManager.Instance.ToggleNoSaveFlags("god_look"); 
+        }
     }
 
     void Move()

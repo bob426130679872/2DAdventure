@@ -38,6 +38,7 @@ public class Spike : MonoBehaviour
         GameObject playerPrefab = PlayerManager.Instance.playerPrefab;
         GameObject newPlayer = Instantiate(playerPrefab, safePos, Quaternion.identity);
         PlayerManager.Instance.player = newPlayer;
+        PlayerManager.Instance.firePoint = PlayerManager.Instance.player.transform.GetChild(5).gameObject;
         CinemachineVirtualCamera virtualCam = FindObjectOfType<CinemachineVirtualCamera>();
         if (virtualCam != null)
         {
