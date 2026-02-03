@@ -4,8 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - tile
   - Enemy
+  - Water
+  - Tile
   layers:
   - Default
   - TransparentFX
