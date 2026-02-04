@@ -156,7 +156,6 @@ public class StoryManager : MonoBehaviour
 
         foreach (var entry in data.npcTalkCounts)
             npcTalkCounts[entry.key] = entry.value;
-        Debug.Log("StoryManager: 數據讀取完成");
     }
 
     public StorySaveData GetStorySaveData()

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using Cinemachine;
 public class AllScene : MonoBehaviour
 {
+    public bool dark = false;
     void Awake()
     {
         // 嘗試找到指定名稱的傳送門
