@@ -11,8 +11,8 @@ public class ItemManager : MonoBehaviour
     public Dictionary<string, Item> items = new();
     private Dictionary<UnlockIdListType, HashSet<string>> unlockIdLists = new();
     public Dictionary<string, HashSet<string>> brokenSceneObjectId = new();
-    public event Action<UnlockIdListType,string> OnUnlockChanged;
-    public event Action<Item, int> OnItemChanged;
+    
+
 
     private void Awake()
     {
@@ -80,7 +80,7 @@ public class ItemManager : MonoBehaviour
         else
             items[id] = new Item(template, amount);
 
-        OnItemChanged?.Invoke(items[id], amount);
+        GameEvents.Inventory.TriggerItemChanged(items[id], amount);
     }
 
     public bool RemoveItem(string id, int amount = 1)
@@ -88,7 +88,7 @@ public class ItemManager : MonoBehaviour
         if (!items.ContainsKey(id) || items[id].quantity < amount) return false;
 
         items[id].quantity -= amount;
-        OnItemChanged?.Invoke(items[id], -amount);
+        GameEvents.Inventory.TriggerItemChanged(items[id], -amount);
         return true;
     }
 
@@ -150,7 +150,7 @@ public class ItemManager : MonoBehaviour
         // HashSet.Add 會回傳 bool，如果已存在會回傳 false，不需要手動 Contains
         if (unlockIdLists[type].Add(id))
         {
-            OnUnlockChanged?.Invoke(type, id);
+            GameEvents.World.TriggerUnlockChanged(type, id);
         }      
     }
 

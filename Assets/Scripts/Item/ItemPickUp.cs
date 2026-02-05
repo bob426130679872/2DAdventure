@@ -4,8 +4,6 @@ public class ItemPickup : MonoBehaviour
 {
     public string itemId;
     public int amount = 1;
-
-    // 對於場景唯一物品，每個實例生成唯一 pickupId
     public string pickupId;
 
     private void Start()
@@ -16,7 +14,7 @@ public class ItemPickup : MonoBehaviour
             // 如果還沒設定 pickupId，就用場景名 + 名稱生成一個
             if (string.IsNullOrEmpty(pickupId))
             {
-                pickupId = $"{gameObject.scene.name}_{itemId}";
+                pickupId = $"{gameObject.scene.name}_{gameObject.name}_{transform.position.x}_{transform.position.y}";
             }
 
             // 撿過就直接刪掉
@@ -31,16 +29,8 @@ public class ItemPickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            var template = ItemManager.Instance.GetTemplateById(itemId);
-            if (template == null) return;
-
-            // 撿取物品 → 加到背包
-            ItemManager.Instance.AddItem(itemId, amount, pickupId);
-
-            // 物品消失
+            GameEvents.Inventory.TriggerPickUp(this);
             Destroy(gameObject);
         }
-
-
     }
 }

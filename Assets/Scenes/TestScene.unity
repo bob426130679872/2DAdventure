@@ -707,6 +707,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d26fc2c603db6c49a9716ceb7f659d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dark: 0
 --- !u!4 &673273937
 Transform:
   m_ObjectHideFlags: 0
@@ -830,10 +831,6 @@ PrefabInstance:
     - target: {fileID: 1742341526246802005, guid: f78637aa527b36a46b0174583215b81b, type: 3}
       propertyPath: m_Name
       value: managers
-      objectReference: {fileID: 0}
-    - target: {fileID: 4544170844524543128, guid: f78637aa527b36a46b0174583215b81b, type: 3}
-      propertyPath: spawnPortalName
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6729942706424487933, guid: f78637aa527b36a46b0174583215b81b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1418,6 +1415,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 84100985}
     m_Modifications:
+    - target: {fileID: 1174398989518931348, guid: ae34e16d0e9f3ac49ad8717dbe11ba5b, type: 3}
+      propertyPath: pickupId
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7743713932291016615, guid: ae34e16d0e9f3ac49ad8717dbe11ba5b, type: 3}
       propertyPath: m_Name
       value: jetForce
@@ -1929,6 +1930,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 84100985}
     m_Modifications:
+    - target: {fileID: 1174398989518931348, guid: 6bc629bb356efcb46a6c54883979330d, type: 3}
+      propertyPath: itemId
+      value: soul
+      objectReference: {fileID: 0}
     - target: {fileID: 7743713932291016615, guid: 6bc629bb356efcb46a6c54883979330d, type: 3}
       propertyPath: m_Name
       value: soul
@@ -2054,6 +2059,11 @@ MonoBehaviour:
   smoothTime: 0.2
   verticalDeadZone: 1.5
   cameraBound: {fileID: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  minBounds: {x: 0, y: 0}
+  maxBounds: {x: 0, y: 0}
+  halfHeight: 0
+  halfWidth: 0
 --- !u!81 &1738540508
 AudioListener:
   m_ObjectHideFlags: 0

@@ -15,6 +15,6 @@ MonoBehaviour:
   id: soul
   displayName: soul
   type: 6
-  pickupType: 2
+  pickupType: 1
   icon: {fileID: 0}
   description: "\u611F\u6069\u4E4B\u6DDA"

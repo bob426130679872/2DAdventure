@@ -14,26 +14,15 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            
+            Destroy(gameObject);
         }
     }
     void Start()
     {
         
     }
-    private void OnEnable()
-    {
-        ItemManager.Instance.OnItemChanged += RefreshItemUI;
-        
-    }
 
-    private void OnDisable()
-    {
-        ItemManager.Instance.OnItemChanged -= RefreshItemUI;
-    }
-    
-
-    private void RefreshItemUI(Item changedItem, int amount)
+    public void RefreshItemUI(Item changedItem, int amount)
     {
 
         if (amount > 0)
