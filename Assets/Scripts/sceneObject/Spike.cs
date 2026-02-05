@@ -9,7 +9,7 @@ public class Spike : MonoBehaviour
     {
         if (other.CompareTag("Player")&& !PlayerManager.Instance.isDying)
         {
-            PlayerManager.Instance.PlayerDie(other.gameObject);
+            GameEvents.Player.TriggerPlayerDie(other.gameObject);
         }
     }
     

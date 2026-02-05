@@ -32,12 +32,11 @@ public class SaveManager : MonoBehaviour
     }
     void Start()
     {
-        ItemManager.Instance.OnItemChanged += OnItemChanged;
-        ItemManager.Instance.OnUnlockChanged += OnUnlockChanged;
+        
     }
 
 
-    private void OnItemChanged(Item item, int amount)
+    public void OnItemChanged(Item item, int amount)
     {
         if (!savePending)
         {
@@ -45,7 +44,7 @@ public class SaveManager : MonoBehaviour
             StartCoroutine(DelayedSave());
         }
     }
-    private void OnUnlockChanged(UnlockIdListType type,String ObjectId)
+    public void OnUnlockChanged(UnlockIdListType type,String ObjectId)
     {
         if (!savePending)
         {

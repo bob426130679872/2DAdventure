@@ -4,21 +4,23 @@ using UnityEngine;
 
 public class Chest : MonoBehaviour
 {
-    public string chestId; 
-    public int amount; 
+    public string chestId;
+    public int amount;
     public string itemId;
-    [SerializeField]private bool isOpened = false;
-    [SerializeField]private bool canOpen = false;
+    [SerializeField] private bool isOpened = false;
+    [SerializeField] private bool canOpen = false;
 
-    void Start() {
+    void Start()
+    {
 
-        if (ItemManager.Instance.IsUnlocked(UnlockIdListType.OpenedChest,chestId)) {
+        if (ItemManager.Instance.IsUnlocked(UnlockIdListType.OpenedChest, chestId))
+        {
 
             // TODO: 
             isOpened = true;
         }
     }
-   
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -48,16 +50,14 @@ public class Chest : MonoBehaviour
     {
         if (isOpened) return;
 
-        ItemManager.Instance.AddItem(itemId, amount);
-
-        ItemManager.Instance.RegisterUnlock(UnlockIdListType.OpenedChest,chestId);
-
-        OpenChestAnimation();
-
+        // 1. 執行自己能處理的：視覺表現
         isOpened = true;
+        OpenChestAnimation();
+        GameEvents.World.TriggerChestOpened(this);
     }
 
-    private void OpenChestAnimation() {
-  
+    private void OpenChestAnimation()
+    {
+
     }
 }
