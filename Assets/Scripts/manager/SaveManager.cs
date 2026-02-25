@@ -179,7 +179,6 @@ public class SaveManager : MonoBehaviour
         PlayerData data = new PlayerData(
             GameManager.Instance.playerName,
             GameManager.Instance.saveScene,
-            PlayerManager.Instance.health,
             ItemManager.Instance.GetItemSaveData(),
             ItemManager.Instance.GetUnlockSaveData(),
             StoryManager.Instance.GetStorySaveData()
@@ -200,8 +199,6 @@ public class SaveManager : MonoBehaviour
         // 1. 還原基本資料
         GameManager.Instance.playerName = data.playerName;
         GameManager.Instance.saveScene = data.playerPosition;
-        PlayerManager.Instance.health = data.playerHealth;
-
         // 2. 還原物品
         ItemManager.Instance.ClearAllItems();
         ItemManager.Instance.LoadItems(data.items);

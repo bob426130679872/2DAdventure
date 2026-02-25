@@ -35,4 +35,14 @@ public static class GameEvents
         public static event Action<UnlockIdListType, string> OnUnlockChanged;
         public static void TriggerUnlockChanged(UnlockIdListType type, string id) => OnUnlockChanged?.Invoke(type, id);
     }
+
+    public static class Npc
+    {
+        // public static event Action<Chest> OnChestOpened;
+        // public static void TriggerChestOpened(Chest chest) => OnChestOpened?.Invoke(chest);
+
+        // public static event Action<UnlockIdListType, string> OnUnlockChanged;
+        // public static void TriggerUnlockChanged(UnlockIdListType type, string id) => OnUnlockChanged?.Invoke(type, id);
+    }
+
 }

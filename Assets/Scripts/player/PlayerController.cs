@@ -103,14 +103,14 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
         }
 
-        if (Input.GetKeyDown(KeyCode.K) && !lockJump && !isWallSliding && (collisionWithGround || jumpCount < pm.stats.maxJump))
+        if (Input.GetKeyDown(KeyCode.K) && !lockJump && !isWallSliding && (collisionWithGround || jumpCount < pm.maxJumpCount))
         {
             if (!collisionWithGround)
                 jumpCount++;
 
             lockHorizonMove = false;
             collisionWithGround = false;
-            rb.velocity = new Vector2(rb.velocity.x, pm.finalJumpForce);
+            rb.velocity = new Vector2(rb.velocity.x, pm.JumpForce);
             isJumping = true;
             jumpTimeCounter = 0f;
         }
@@ -118,9 +118,9 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.K) && !lockJump && isJumping)
         {
             jumpTimeCounter += Time.deltaTime;
-            if (jumpTimeCounter < pm.stats.maxJumpTime)
+            if (jumpTimeCounter < pm.maxJumpTime)
             {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + pm.finalHoldJumpForce * Time.deltaTime);
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y + pm.HoldJumpForce * Time.deltaTime);
             }
             else
             {
@@ -152,11 +152,11 @@ public class PlayerController : MonoBehaviour
                         !collisionWithGround &&
                         rb.velocity.y < 5 &&
                         canWallSlide &&
-                        wallSlideReleaseTimer < pm.stats.wallSlideReleaseBuffer;
+                        wallSlideReleaseTimer < pm.wallSlideReleaseBuffer;
 
         if (isWallSliding)
         {
-            rb.velocity = new Vector2(rb.velocity.x, -pm.finalWallSlideSpeed);
+            rb.velocity = new Vector2(rb.velocity.x, -pm.WallSlideSpeed);
             jumpCount = 0;
             dashCount = 0;
 
@@ -168,7 +168,7 @@ public class PlayerController : MonoBehaviour
                 isJumping = false;
 
                 float direction = collisionWithLeftWall ? 1f : -1f;
-                rb.velocity = new Vector2(pm.finalWallJumpForce.x * direction, pm.finalWallJumpForce.y);
+                rb.velocity = new Vector2(pm.WallJumpForce.x * direction, pm.WallJumpForce.y);
 
                 transform.localScale = new Vector3(
                     direction * Mathf.Abs(originalScale.x),
@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
                     originalScale.z
                 );
 
-                StartCoroutine(UnlockControlAfterDelay(pm.stats.wallJumpLockTime));
+                StartCoroutine(UnlockControlAfterDelay(pm.wallJumpLockTime));
             }
         }
     }
@@ -194,6 +194,6 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         if (allowChangeHorizonSpeed)
-            rb.velocity = new Vector2(moveDirection * PlayerManager.Instance.finalMoveSpeed, rb.velocity.y);
+            rb.velocity = new Vector2(moveDirection * PlayerManager.Instance.MoveSpeed, rb.velocity.y);
     }
 }
