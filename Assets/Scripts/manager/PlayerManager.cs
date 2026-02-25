@@ -8,39 +8,51 @@ using Cinemachine;
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager Instance;
-    public GameObject player;
+    [Header("Player References")]
+    public GameObject player;                
     public GameObject playerPrefab;
     public GameObject MPbulletPrefab;
     public GameObject firePoint;
 
-    public float health; // 玩家血量
+    // --- 玩家數值資料 (封裝) ---
+    [Header("Current Stats")]
+    public float currentHealth; 
+    public float currentStamina;                
     public bool playerFlip = false;
-    // 引用包含基礎數值的 Asset
-    [SerializeField] private PlayerStats baseStats;
+    public bool isDying = false;
 
-    public PlayerStats stats => baseStats; // 方便存取設計參數
+    [Header("Stats Data")]
+    public PlayerStats baseStats;
 
-    // --- 裝備加成 (由 EquipmentManager 提供) ---
+    // 屬性讀取
+    public float maxHealth;
+    public float maxStamina;
+    public float MoveSpeed ;
+    public float JumpForce ;
+    public float HoldJumpForce ;
+    public float WallSlideSpeed ;
+    public Vector2 WallJumpForce ;
+    public float dashSpeed ;
+    public float maxDashCount ;
+    public float dashDuration ;
+    public float dashCooldown ;
+    public float explodeDuration ;
+    public float shootingDuration ;
+    public float maxJumpTime;
+    public int maxJumpCount;
+    public float wallSlideReleaseBuffer;
+    public float wallJumpLockTime;
+
+    // Bonus 變數
+    private float maxHealthBonus;
+    private float maxStaminaBonus;
     private float moveSpeedBonus = 0f;
     private float jumpForceBonus = 0f;
     private float wallSlideSpeedBonus = 0f;
     private Vector2 wallJumpForceBonus = Vector2.zero;
-    // ... (其他屬性加成)
 
-    // --- 最終計算屬性 ---
-    public float finalMoveSpeed => baseStats.baseMoveSpeed + moveSpeedBonus;
-    public float finalJumpForce => baseStats.baseJumpForce + jumpForceBonus;
-    public float finalHoldJumpForce => baseStats.baseHoldJumpForce; // 假設長按跳躍力通常不受裝備直接修改，但可以加上 moveSpeedBonus
-    public float finalWallSlideSpeed => baseStats.baseWallSlideSpeed + wallSlideSpeedBonus;
-    public Vector2 finalWallJumpForce => baseStats.baseWallJumpForce + wallJumpForceBonus;
-    public float dashSpeed => baseStats.dashSpeed;
-    public float maxDashCount => baseStats.maxDashCount;
-    public float dashDuration => baseStats.dashDuration;
-    public float dashCooldown => baseStats.dashCooldown;
-    public float explodeDuration => baseStats.explodeDuration;
-    public float shootingDuration => baseStats.shootingDuration;
 
-    public bool isDying;
+    
 
 
     private void Awake()
@@ -64,22 +76,55 @@ public class PlayerManager : MonoBehaviour
     private void Start()
     {
         firePoint = player.transform.GetChild(5).gameObject;
-        RecalculateStats(); // 首次計算
+        InitializeStats(); // 首次計算
         CheckAndSetLight();
     }
 
-    /// <summary>
-    /// 重新計算所有裝備帶來的屬性總和，並更新最終數值。
-    /// </summary>
-    public void RecalculateStats()
+    public void CaculateBonus()
     {
+        maxHealthBonus = ItemManager.Instance.GetItemCount("MPContainer");
+        maxStaminaBonus = ItemManager.Instance.GetItemCount("HPContainer");
+    }
+    public void InitializeStats()
+    {
+        CaculateBonus();
+        maxHealth = baseStats.baseMaxHealth + maxHealthBonus;
+        maxStamina = baseStats.baseMaxStamina + maxStaminaBonus;
+        MoveSpeed = baseStats.baseMoveSpeed + moveSpeedBonus;
+        JumpForce = baseStats.baseJumpForce + jumpForceBonus;
+        HoldJumpForce = baseStats.baseHoldJumpForce;
+        WallSlideSpeed = baseStats.baseWallSlideSpeed + wallSlideSpeedBonus;
+        WallJumpForce = baseStats.baseWallJumpForce + wallJumpForceBonus;
+        dashSpeed = baseStats.dashSpeed;
+        maxDashCount = baseStats.maxDashCount;
+        dashDuration = baseStats.dashDuration;
+        dashCooldown = baseStats.dashCooldown;
+        explodeDuration = baseStats.explodeDuration;
+        shootingDuration = baseStats.shootingDuration;
+        maxJumpTime = baseStats.maxJumpTime;
+        wallSlideReleaseBuffer = baseStats.wallSlideReleaseBuffer;
+        wallJumpLockTime = baseStats.wallJumpLockTime;
+        maxJumpCount = baseStats.maxJumpCount;
+        
+        // 2. 初始化目前血量 (通常重生或開始時填滿)
+        currentHealth = maxHealth;
+        currentStamina = maxStamina;
 
+    }
+
+    // --- 安全的修改方法 ---
+    public void TakeDamage(float amount)
+    {
+        if (isDying) return;
+        currentHealth -= amount;
+        if (currentHealth <= 0)
+        {
+            // 觸發死亡邏輯
+        }
     }
     public IEnumerator DeathAndRespawn(GameObject player)
     {
         isDying = true;
-
-        // --- 1. 死亡表現 (不再 Destroy) ---
         player.GetComponent<BoxCollider2D>().enabled = false;
         player.GetComponent<PlayerController>().enabled = false;
 
@@ -89,8 +134,6 @@ public class PlayerManager : MonoBehaviour
             player.GetComponent<Rigidbody2D>().isKinematic = true;
             player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
-            
-
         // 播放死亡特效或動畫 (例如變透明或縮小)
         // player.GetComponent<Animator>().SetTrigger("Die");
 
@@ -102,7 +145,7 @@ public class PlayerManager : MonoBehaviour
         // --- 2. 處理場景切換 (保留舊邏輯) ---
         string safeScene = GameManager.Instance.safeSceneName;
         if (SceneManager.GetActiveScene().name != safeScene)
-        {             
+        {
             SceneManager.LoadScene(safeScene);
             yield break; // 跳出協程，交給場景載入後的邏輯處理重生
         }

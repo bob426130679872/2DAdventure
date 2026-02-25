@@ -1,5 +1,5 @@
 ﻿ID,npc_id,name,Content,sequence,第幾幕,第幾次對話,條件,option,trigger_event,end_event,type
-test_1,test_npc,測試人,測試句子1的第一句,1,1,1,test_flag:1&ITM_MPContainer:3&QST_test_quest:1,,,,listen
+test_1,test_npc,測試人,測試句子1的第一句,1,1,1,test_flag:1&ITM_MPContainer:1&QST_test_quest:1,,,,
 test_1,test_npc,測試人,測試句子1的第二句,2,,,,選項1>option_1|選項2>option_2,,,
 test_2,test_npc,測試人,測試句子2,1,1,2,is_night_time:1|NS_is_tired:1&QST_test_quest:2,,add_item:coin:10,,
 doc_1,doctor,醫生,冒險者，你看起來受傷了。,1,,,NS_is_hurt:1&ITM_coin:10,,,,

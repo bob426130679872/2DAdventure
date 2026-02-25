@@ -142,17 +142,12 @@ public class DialogueManager : MonoBehaviour
     /// <returns>回傳一個包含多個對話組的清單</returns>
     public List<List<DialogueEntry>> GetGroupsByNpcID(string targetNpcID)
     {
-        Debug.Log("開始尋找句子");
         List<List<DialogueEntry>> results = new List<List<DialogueEntry>>();
-
-        // dialogueDatabase 結構為 Dictionary<string, List<DialogueEntry>>
-        // 其中 Key 是對話組 ID (A欄)，Value 是該組內所有 Sequence 的集合
         foreach (var group in dialogueDatabase.Values)
         {
             // 檢查該組的第一行 (通常所有行的 npcID 都應該一樣，檢查第一行即可)
             if (group.Count > 0 && group[0].npcID == targetNpcID)
             {
-                Debug.Log($"找到句子{group[0].content}");
                 results.Add(group);
             }
         }

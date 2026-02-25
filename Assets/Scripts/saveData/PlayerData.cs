@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class PlayerData
 {
     public string playerName;
-    public float playerHealth;
+    public float maxHealth;
     public string playerPosition;
 
     public List<ItemSaveData> items = new();
@@ -17,21 +17,19 @@ public class PlayerData
     {
         playerName = "defaultPlayer";
         playerPosition = "InitialVillage";
-        playerHealth = 3f;
         items = new();
         UnlockIdLists = new();
         storyData = new();
     }
 
     // 🔹 自訂建構子 (載入時用)
-    public PlayerData(string name, string pos,float health,
+    public PlayerData(string name, string pos,
                       List<ItemSaveData> itemList = null,
                       List<UnlockIdListData> UnlockIdLists = null,
                       StorySaveData story = null)
     {
         playerName = name;
         playerPosition = pos;
-        playerHealth = health;
         this.items = itemList ?? new List<ItemSaveData>();
         this.UnlockIdLists = UnlockIdLists?? new List<UnlockIdListData>();
 
