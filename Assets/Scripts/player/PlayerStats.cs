@@ -36,4 +36,7 @@ public class PlayerStats : ScriptableObject
 
     [Header("Shooting Settings")]
     public float shootingDuration = 0.5f;
+
+    [Header("Flying Settings")]
+    public float flySpeed = 8f;
 }

@@ -42,6 +42,7 @@ public class PlayerManager : MonoBehaviour
     public int maxJumpCount;
     public float wallSlideReleaseBuffer;
     public float wallJumpLockTime;
+    public float flySpeed;
 
     // Bonus 變數
     private float maxHealthBonus;
@@ -105,6 +106,7 @@ public class PlayerManager : MonoBehaviour
         wallSlideReleaseBuffer = baseStats.wallSlideReleaseBuffer;
         wallJumpLockTime = baseStats.wallJumpLockTime;
         maxJumpCount = baseStats.maxJumpCount;
+        flySpeed = baseStats.flySpeed;
         
         // 2. 初始化目前血量 (通常重生或開始時填滿)
         currentHealth = maxHealth;
@@ -205,5 +207,9 @@ public class PlayerManager : MonoBehaviour
             flashlight.SetActive(false);
             Debug.Log("此場景找不到 AllScene 腳本，預設關閉照明。");
         }
+    }
+    public void UseStamina(float amount)
+    {
+        
     }
 }
