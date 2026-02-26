@@ -14,12 +14,12 @@ public class PlayerDash
 
     public void HandleDash()
     {
-
-
         if (controller.canDash &&
             !controller.isDashing &&
             (controller.collisionWithGround || controller.dashCount < PlayerManager.Instance.maxDashCount))
         {
+            if (controller.isFlying)
+                controller.StopFly();
             controller.StartCoroutine(PerformDash());
         }
     }

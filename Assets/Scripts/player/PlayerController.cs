@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
     private PlayerShooting shooting;
     private PlayerFly fly;
 
+    public void StopFly() => fly.StopFlying();
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -74,8 +76,10 @@ public class PlayerController : MonoBehaviour
             dash.HandleDash();  // 使用 dash 功能
         }
         CheckWallSlide();
-        if(!isFlying)
+        if (!isFlying)
             Move();
+        else
+            fly.UpdateFly();
         if (Input.GetKeyDown(KeyCode.U))
         {
             explode.handleExplode(); 
@@ -161,7 +165,8 @@ public class PlayerController : MonoBehaviour
                         !collisionWithGround &&
                         rb.velocity.y < 5 &&
                         canWallSlide &&
-                        wallSlideReleaseTimer < pm.wallSlideReleaseBuffer;
+                        wallSlideReleaseTimer < pm.wallSlideReleaseBuffer &&
+                        !isFlying;
 
         if (isWallSliding)
         {
@@ -202,7 +207,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (allowChangeHorizonSpeed)
+        if (allowChangeHorizonSpeed && !isFlying)
             rb.velocity = new Vector2(moveDirection * PlayerManager.Instance.MoveSpeed, rb.velocity.y);
     }
 }

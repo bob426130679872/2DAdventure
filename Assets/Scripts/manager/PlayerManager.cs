@@ -43,6 +43,8 @@ public class PlayerManager : MonoBehaviour
     public float wallSlideReleaseBuffer;
     public float wallJumpLockTime;
     public float flySpeed;
+    public float flyAcceleration;
+    public float flyDrag;
 
     // Bonus 變數
     private float maxHealthBonus;
@@ -107,6 +109,8 @@ public class PlayerManager : MonoBehaviour
         wallJumpLockTime = baseStats.wallJumpLockTime;
         maxJumpCount = baseStats.maxJumpCount;
         flySpeed = baseStats.flySpeed;
+        flyAcceleration = baseStats.flyAcceleration;
+        flyDrag = baseStats.flyDrag;
         
         // 2. 初始化目前血量 (通常重生或開始時填滿)
         currentHealth = maxHealth;
@@ -127,8 +131,10 @@ public class PlayerManager : MonoBehaviour
     public IEnumerator DeathAndRespawn(GameObject player)
     {
         isDying = true;
+        var controller = player.GetComponent<PlayerController>();
+        controller.StopFly();
         player.GetComponent<BoxCollider2D>().enabled = false;
-        player.GetComponent<PlayerController>().enabled = false;
+        controller.enabled = false;
 
         // 如果有 Rigidbody2D，通常設定 isKinematic = true 比直接 Destroy 更快
         if (player.GetComponent<Rigidbody2D>())
@@ -210,6 +216,8 @@ public class PlayerManager : MonoBehaviour
     }
     public void UseStamina(float amount)
     {
-        
+        currentStamina -= amount;
+        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+        GameEvents.Player.TriggerStaminaChanged(currentStamina, maxStamina);
     }
 }

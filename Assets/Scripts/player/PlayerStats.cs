@@ -7,7 +7,7 @@ public class PlayerStats : ScriptableObject
 {
     [Header("Player Settings")]
     public int baseMaxHealth;
-    public int baseMaxStamina;
+    public int baseMaxStamina = 10;
     [Header("Dash Settings")]
     
     public float dashSpeed = 20f;
@@ -39,4 +39,6 @@ public class PlayerStats : ScriptableObject
 
     [Header("Flying Settings")]
     public float flySpeed = 8f;
+    public float flyAcceleration = 30f;
+    public float flyDrag = 6f;
 }
