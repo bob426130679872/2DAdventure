@@ -39,10 +39,13 @@ public class PlayerController : MonoBehaviour
     public bool canExplode = true;
     public bool isShooting = false;
     public bool canShooting = true;
+    public bool isFlying = false;
+    public bool canFly = true;
     
     private PlayerDash dash;
     private PlayerExplode explode;
     private PlayerShooting shooting;
+    private PlayerFly fly;
 
     void Start()
     {
@@ -51,6 +54,7 @@ public class PlayerController : MonoBehaviour
         dash = new PlayerDash(this); 
         explode = new PlayerExplode(this);
         shooting = new PlayerShooting(this);
+        fly = new PlayerFly(this);
     }
 
     void Update()
@@ -70,7 +74,8 @@ public class PlayerController : MonoBehaviour
             dash.HandleDash();  // 使用 dash 功能
         }
         CheckWallSlide();
-        Move();
+        if(!isFlying)
+            Move();
         if (Input.GetKeyDown(KeyCode.U))
         {
             explode.handleExplode(); 
@@ -82,6 +87,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.O))
         {
             StoryManager.Instance.ToggleNoSaveFlags("god_look"); 
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            fly.handleFly(); 
         }
     }
 
