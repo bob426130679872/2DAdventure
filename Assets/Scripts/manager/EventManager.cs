@@ -31,6 +31,7 @@ public class EventManager : MonoBehaviour
         GameEvents.World.OnChestOpened += HandleChestOpened;
         GameEvents.Player.OnPlayerDie += HandlePlayerDie;
         GameEvents.Inventory.OnPickUp += HandlePickUpItem;
+        GameEvents.Player.OnStaminaChanged += HandleStaminaChanged;
     }
 
     private void OnDisable()
@@ -40,6 +41,7 @@ public class EventManager : MonoBehaviour
         GameEvents.World.OnChestOpened -= HandleChestOpened;
         GameEvents.Player.OnPlayerDie -= HandlePlayerDie;
         GameEvents.Inventory.OnPickUp -= HandlePickUpItem;
+        GameEvents.Player.OnStaminaChanged -= HandleStaminaChanged;
     }
 
     private void HandleItemChanged(Item item, int amount)
@@ -67,5 +69,10 @@ public class EventManager : MonoBehaviour
         var template = ItemManager.Instance.GetTemplateById(item.itemId);
         if (template == null) return;
         ItemManager.Instance.AddItem(item.itemId, item.amount, item.pickupId); // 撿取物品 → 加到背包
+    }
+
+    private void HandleStaminaChanged(float current, float max)
+    {
+        um.RefreshStaminaUI(current, max);
     }
 }

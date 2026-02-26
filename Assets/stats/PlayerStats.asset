@@ -12,5 +12,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a156968ffd9891b49b1d49bd95952d9b, type: 3}
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  jumpForce: 10
+  baseMaxHealth: 0
+  baseMaxStamina: 10
+  dashSpeed: 20
+  dashDuration: 0.12
+  dashCooldown: 0.3
+  maxDashCount: 1
+  baseMoveSpeed: 8
+  baseJumpForce: 11
+  baseHoldJumpForce: 33
+  maxJumpTime: 0.35
+  baseWallSlideSpeed: 2
+  baseWallJumpForce: {x: 10, y: 15}
+  wallJumpLockTime: 0.13
+  wallSlideReleaseBuffer: 0.15
+  maxJumpCount: 1
+  explodeDuration: 1
+  shootingDuration: 0.5
+  flySpeed: 8
+  flyAcceleration: 30
+  flyDrag: 6
