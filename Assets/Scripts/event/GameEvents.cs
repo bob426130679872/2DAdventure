@@ -14,9 +14,8 @@ public static class GameEvents
         public static event Action<float, float> OnStaminaChanged; // current, max
         public static void TriggerStaminaChanged(float current, float max) => OnStaminaChanged?.Invoke(current, max);
 
-        // 未來可以加上：
-        // public static event Action<float, float> OnHealthChanged;
-        // public static void TriggerHealthChanged(float current, float max) => OnHealthChanged?.Invoke(current, max);
+        public static event Action<float, float> OnHealthChanged; // current, max
+        public static void TriggerHealthChanged(float current, float max) => OnHealthChanged?.Invoke(current, max);
     }
 
     // --- 物品與背包相關事件 ---
