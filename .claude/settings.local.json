@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import json; d=json.load\\(open\\(''C:/Users/bob42/.claude.json''\\)\\); projects=d.get\\(''projects'',{}\\); [print\\(k, json.dumps\\(v,indent=2\\)\\) for k,v in projects.items\\(\\) if ''mcp'' in str\\(v\\).lower\\(\\) or ''2D'' in k or ''unity'' in k.lower\\(\\)]\")"
+    ]
+  }
+}

@@ -65,7 +65,6 @@ public class PlayerFly
 
     private void StartFlying()
     {
-        Debug.Log("起飛");
         controller.isFlying = true;
         originalGravity = rb.gravityScale;
         originalDrag = rb.drag;
