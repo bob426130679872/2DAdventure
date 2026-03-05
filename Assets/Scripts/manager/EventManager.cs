@@ -4,24 +4,10 @@ public class EventManager : MonoBehaviour
 {
     public static EventManager Instance { get; private set; }
 
-    // --- Manager 簡寫宣告 ---
-    private SaveManager sm;
-    private UIManager um;
-    private PlayerManager pm;
-    private ItemManager im;
-
     private void Awake()
     {
         if (Instance == null) { Instance = this; }
         else { Destroy(gameObject); }
-    }
-
-    private void Start()
-    {
-        sm = SaveManager.Instance;
-        um = UIManager.Instance;
-        pm = PlayerManager.Instance;
-        im = ItemManager.Instance;
     }
 
     private void OnEnable()
@@ -31,6 +17,7 @@ public class EventManager : MonoBehaviour
         GameEvents.World.OnChestOpened += HandleChestOpened;
         GameEvents.Player.OnPlayerDie += HandlePlayerDie;
         GameEvents.Inventory.OnPickUp += HandlePickUpItem;
+        GameEvents.Player.OnHealthChanged += HandleHealthChanged;
         GameEvents.Player.OnStaminaChanged += HandleStaminaChanged;
     }
 
@@ -41,23 +28,24 @@ public class EventManager : MonoBehaviour
         GameEvents.World.OnChestOpened -= HandleChestOpened;
         GameEvents.Player.OnPlayerDie -= HandlePlayerDie;
         GameEvents.Inventory.OnPickUp -= HandlePickUpItem;
+        GameEvents.Player.OnHealthChanged -= HandleHealthChanged;
         GameEvents.Player.OnStaminaChanged -= HandleStaminaChanged;
     }
 
     private void HandleItemChanged(Item item, int amount)
     {
-        sm.OnItemChanged(item, amount);
-        um.RefreshItemUI(item, amount);
+        SaveManager.Instance.OnItemChanged(item, amount);
+        UIManager.Instance.RefreshItemUI(item, amount);
     }
 
     private void HandleUnlockChanged(UnlockIdListType type, string id)
     {
-        sm.OnUnlockChanged(type, id);
+        SaveManager.Instance.OnUnlockChanged(type, id);
     }
     private void HandleChestOpened(Chest chest)
     {
-        im.AddItem(chest.itemId, chest.amount);
-        im.RegisterUnlock(UnlockIdListType.OpenedChest, chest.chestId);
+        ItemManager.Instance.AddItem(chest.itemId, chest.amount);
+        ItemManager.Instance.RegisterUnlock(UnlockIdListType.OpenedChest, chest.chestId);
     }
     private void HandlePlayerDie(GameObject player)
     {
@@ -71,8 +59,13 @@ public class EventManager : MonoBehaviour
         ItemManager.Instance.AddItem(item.itemId, item.amount, item.pickupId); // 撿取物品 → 加到背包
     }
 
+    private void HandleHealthChanged(float current, float max)
+    {
+        UIManager.Instance.RefreshHealthUI(current, max);
+    }
+
     private void HandleStaminaChanged(float current, float max)
     {
-        um.RefreshStaminaUI(current, max);
+        UIManager.Instance.RefreshStaminaUI(current, max);
     }
 }

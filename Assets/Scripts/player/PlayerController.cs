@@ -47,7 +47,7 @@ public class PlayerController : MonoBehaviour
     private PlayerShooting shooting;
     private PlayerFly fly;
 
-    public void StopFly() => fly.StopFlying();
+    public void StopFly() { if (isFlying) fly.StopFlying(); }
 
     void Start()
     {

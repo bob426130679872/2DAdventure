@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerStats : ScriptableObject
 {
     [Header("Player Settings")]
-    public int baseMaxHealth;
+    public int baseMaxHealth = 10;
     public int baseMaxStamina = 10;
     [Header("Dash Settings")]
     
