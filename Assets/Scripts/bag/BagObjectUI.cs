@@ -7,7 +7,7 @@ public class BagObjectUI : MonoBehaviour
     public Text quantityText;   // 顯示數量
     public Button button;       // Slot 按鈕
     public Item item;          // 格子所持有的物品實例
-    public ItemInfoUI itemInfoUI;
+    private ItemInfoUI itemInfoUI;
 
     /// <summary>
     /// 初始化 Slot
@@ -18,10 +18,10 @@ public class BagObjectUI : MonoBehaviour
     {
         
     }
-    public void Init(Item newItem)
+    public void Init(Item newItem, ItemInfoUI infoUI)
     {
         item = newItem;
-        itemInfoUI = transform.parent.parent.parent.parent.GetChild(0).GetComponent<ItemInfoUI>(); 
+        itemInfoUI = infoUI;
         if (item != null && item.template != null)
         {
             icon.sprite = item.template.icon;   // 設置圖示

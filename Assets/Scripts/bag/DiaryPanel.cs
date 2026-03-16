@@ -7,6 +7,7 @@ public class DiaryPanel : MonoBehaviour
     [Header("日記資料")]
     private List<DiaryTemplate> diaryList;  // 從 ItemManager 取得
     private int currentPage = 0;
+    private const int totalPages = 20;
 
     [Header("UI 元件")]
     public Text diaryTitleText;      // 顯示標題
@@ -20,7 +21,7 @@ public class DiaryPanel : MonoBehaviour
 
     private List<Button> pageButtons = new List<Button>();
 
-    void Start()
+    public void Init()
     {
         diaryList = ItemManager.Instance.GetAllDiariesTemplate();
         // 綁定上下頁事件
@@ -89,8 +90,8 @@ public class DiaryPanel : MonoBehaviour
         diaryTitleText.text = diary.displayName;
         diaryContentText.text = diary.diaryText;
 
-        prevButton.interactable = currentPage > 0;
-        nextButton.interactable = currentPage < diaryList.Count - 1;
+        prevButton.interactable = HasUnlockedBefore(currentPage);
+        nextButton.interactable = HasUnlockedAfter(currentPage);
     }
 
     void ShowPrevPage()
@@ -107,28 +108,36 @@ public class DiaryPanel : MonoBehaviour
             index--;
         }
 
-        // 如果沒有上一個可用的頁面，就維持原頁
-        Debug.Log("沒有上一頁了");
     }
 
     void ShowNextPage()
     {
         int index = currentPage + 1;
-        int totalPages = 20; // 或改成 diaryList.Count，如果那是你的總數來源
-
         while (index < totalPages)
         {
-            string diaryId = "diary" + (index + 1);
-            if (ItemManager.Instance.IsUnlocked(UnlockIdListType.UnlockedDiary, diaryId))
+            if (ItemManager.Instance.IsUnlocked(UnlockIdListType.UnlockedDiary, "diary" + (index + 1)))
             {
                 ShowPage(index);
                 return;
             }
             index++;
         }
+    }
 
-        // 如果沒有下一個可用的頁面
-        Debug.Log("沒有下一頁了");
+    private bool HasUnlockedBefore(int index)
+    {
+        for (int i = index - 1; i >= 0; i--)
+            if (ItemManager.Instance.IsUnlocked(UnlockIdListType.UnlockedDiary, "diary" + (i + 1)))
+                return true;
+        return false;
+    }
+
+    private bool HasUnlockedAfter(int index)
+    {
+        for (int i = index + 1; i < totalPages; i++)
+            if (ItemManager.Instance.IsUnlocked(UnlockIdListType.UnlockedDiary, "diary" + (i + 1)))
+                return true;
+        return false;
     }
 
 }
