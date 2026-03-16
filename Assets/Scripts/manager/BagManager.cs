@@ -4,9 +4,6 @@ using UnityEngine.UI;
 
 public class BagManager : MonoBehaviour
 {
-    [Header("Prefab 與共用資訊 UI")]
-    public GameObject itemPrefab;
-
     [Header("所有分類面板 (依序拉進來)")]
     public GameObject consumablePanel;
     public GameObject diaryPanel;
@@ -58,8 +55,14 @@ public class BagManager : MonoBehaviour
         personalButton.onClick.AddListener(() => ShowPanel(ItemType.Personal));
         bookButton.onClick.AddListener(() => ShowPanel(ItemType.Book));
 
-        // 載入所有物品到各自分類
-        LoadAllPanels();
+        // 初始化所有 Panel
+        foreach (var kvp in panels)
+        {
+            var gop = kvp.Value.GetComponent<GridObjectPanel>();
+            if (gop != null) gop.Init();
+        }
+        diaryPanel.GetComponent<DiaryPanel>().Init();
+        clothesPanel.GetComponent<ClothesPanel>().Init();
 
         // 預設顯示消耗品
         ShowPanel(ItemType.Consumable);
@@ -81,52 +84,4 @@ public class BagManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 初始化所有分類 Panel
-    /// </summary>
-    private void LoadAllPanels()
-    {
-        foreach (var kvp in panels)
-        {
-            LoadPanel(kvp.Key, kvp.Value);
-        }
-    }
-
-    /// <summary>
-    /// 載入指定分類 Panel
-    /// </summary>
-    private void LoadPanel(ItemType type, GameObject panel)
-    {
-
-        // TODO: 在這裡加上不同分類的排序規則
-        switch (type)
-        {
-            case ItemType.Consumable:
-            case ItemType.Material:
-            case ItemType.Collection:
-                break;
-            case ItemType.Diary:
-                break;
-            case ItemType.Clothes:
-
-                break;
-            case ItemType.Treasure:
-
-                break;
-
-            case ItemType.Map:
-
-                break;
-            case ItemType.Personal:
-
-                break;
-            case ItemType.Book:
-
-                break;
-
-
-        }
-
-
-    }
 }

@@ -1,7 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python3 -c \"import json; d=json.load\\(open\\(''C:/Users/bob42/.claude.json''\\)\\); projects=d.get\\(''projects'',{}\\); [print\\(k, json.dumps\\(v,indent=2\\)\\) for k,v in projects.items\\(\\) if ''mcp'' in str\\(v\\).lower\\(\\) or ''2D'' in k or ''unity'' in k.lower\\(\\)]\")"
+      "Bash(python3 -c \"import json; d=json.load\\(open\\(''C:/Users/bob42/.claude.json''\\)\\); projects=d.get\\(''projects'',{}\\); [print\\(k, json.dumps\\(v,indent=2\\)\\) for k,v in projects.items\\(\\) if ''mcp'' in str\\(v\\).lower\\(\\) or ''2D'' in k or ''unity'' in k.lower\\(\\)]\")",
+      "WebFetch(domain:127.0.0.1)",
+      "Bash(python3 -c \":*)",
+      "mcp__UnityMCP__find_gameobjects",
+      "mcp__UnityMCP__manage_scene",
+      "mcp__UnityMCP__batch_execute",
+      "mcp__UnityMCP__read_console",
+      "mcp__UnityMCP__manage_gameobject",
+      "mcp__UnityMCP__manage_camera"
     ]
   }
 }

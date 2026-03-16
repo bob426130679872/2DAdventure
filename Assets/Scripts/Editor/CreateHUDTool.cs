@@ -106,7 +106,7 @@ public static class CreateHUDTool
         csf.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
 
         // 預覽用 5 顆（運行時由 PlayerManager 重建）
-        Sprite preview = isCircle ? Resources.GetBuiltinResource<Sprite>("UI/Skin/Knob.psd") : null;
+        Sprite preview = null;
         Color color = isCircle ? Color.red : new Color(0.4f, 0.8f, 1f);
 
         for (int i = 0; i < 5; i++)

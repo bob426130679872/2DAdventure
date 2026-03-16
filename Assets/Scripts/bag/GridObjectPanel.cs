@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GridObjectPanel : MonoBehaviour
 {
@@ -10,14 +11,12 @@ public class GridObjectPanel : MonoBehaviour
     public GameObject itemPrefab;
 
     private Transform content;
+    private ItemInfoUI itemInfoUI;
 
-    private void Awake()
+    public void Init()
     {
-        // 假設結構：Panel -> ScrollView -> Viewport -> Content
-        content = transform.GetChild(1).GetChild(0).GetChild(0);
-    }
-    private void Start()
-    {
+        content = GetComponentInChildren<ScrollRect>(true).content;
+        itemInfoUI = GetComponentInChildren<ItemInfoUI>(true);
         LoadItems();
     }
 
@@ -29,31 +28,24 @@ public class GridObjectPanel : MonoBehaviour
         foreach (var item in list)
         {
             GameObject slot = Instantiate(itemPrefab, content);
-            BagObjectUI slotUI = slot.GetComponent<BagObjectUI>();
-            slotUI.Init(item);
+            slot.GetComponent<BagObjectUI>().Init(item, itemInfoUI);
         }
     }
 
     private void ClearGrid()
     {
         for (int i = content.childCount - 1; i >= 0; i--)
-        {
             Destroy(content.GetChild(i).gameObject);
-        }
     }
 
     private List<Item> FilterItems()
     {
-        List<Item> list = new List<Item>();
-
+        var list = new List<Item>();
         foreach (var kvp in ItemManager.Instance.items)
         {
             if (kvp.Value != null && kvp.Value.quantity > 0 && kvp.Value.template.type == itemType)
-            {
                 list.Add(kvp.Value);
-            }
         }
-
         return list;
     }
 }
