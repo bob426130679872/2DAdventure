@@ -65,7 +65,7 @@ public class BagManager : MonoBehaviour
         clothesPanel.GetComponent<ClothesPanel>().Init();
 
         // 預設顯示消耗品
-        ShowPanel(ItemType.Consumable);
+        ShowPanel(ItemType.Collection);
     }
 
     /// <summary>

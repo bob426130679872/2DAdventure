@@ -164,7 +164,11 @@ public class ItemManager : MonoBehaviour
     public List<string> getUnlockIds(UnlockIdListType type)
     {
         if (unlockIdLists.ContainsKey(type))
+        {
+           
             return new List<string>(unlockIdLists[type]);
+        }
+            
         return new List<string>();
     }
 
