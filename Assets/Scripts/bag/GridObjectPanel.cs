@@ -22,7 +22,7 @@ public class GridObjectPanel : MonoBehaviour
 
     public void LoadItems()
     {
-        ClearGrid();
+        //ClearGrid();
         List<Item> list = FilterItems();
 
         foreach (var item in list)

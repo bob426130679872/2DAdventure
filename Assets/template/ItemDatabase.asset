@@ -23,6 +23,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a1eba6ba14e0d0d44bcdb19efe379f9d, type: 2}
   - {fileID: 11400000, guid: a7f437bcd7fa44e439f8ae379ab17a7b, type: 2}
   - {fileID: 11400000, guid: c9669a87a129de340854bb6b0637b8d7, type: 2}
+  - {fileID: 11400000, guid: 591836c7ff62c444186a909288229b33, type: 2}
+  - {fileID: 11400000, guid: 3ee44dcd72ae39c4eb2976422bc6ab3a, type: 2}
+  - {fileID: 11400000, guid: 47cc2789fc85d4842afa9474c5db6847, type: 2}
+  - {fileID: 11400000, guid: 99cb714293537474882c8fbc6b86c36e, type: 2}
+  - {fileID: 11400000, guid: 1643370a4ef9097439da3391c4b3aec1, type: 2}
+  - {fileID: 11400000, guid: e66c76f86d8160a4d92dcde2d043440b, type: 2}
   treasureItemTemplates:
   - {fileID: 11400000, guid: 03e6458a1ade1ce46b528697a1d4f13a, type: 2}
   mapItemTemplates:

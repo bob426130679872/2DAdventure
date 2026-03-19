@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b40a8bccd0cf84a88b7468c657bb5e, type: 3}
   m_Name: shoes1
   m_EditorClassIdentifier: 
-  id: 
-  displayName: 
-  type: 0
-  pickupType: 0
-  icon: {fileID: 0}
-  description: 
-  clothesType: 0
+  id: shoes1
+  displayName: shoes1
+  type: 3
+  pickupType: 1
+  icon: {fileID: 21300000, guid: 25740126bd302154dbf810df998e33b8, type: 3}
+  description: "shoes1\u63CF\u8FF0"
+  clothesType: 5
+  costSpace: 1
   HPBonus: 0
   attackBonus: 0
   defenseBonus: 0

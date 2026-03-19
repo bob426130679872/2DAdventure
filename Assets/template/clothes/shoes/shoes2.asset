@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e0b40a8bccd0cf84a88b7468c657bb5e, type: 3}
-  m_Name: pants1
+  m_Name: shoes2
   m_EditorClassIdentifier: 
-  id: pants1
-  displayName: pants1
+  id: shoes2
+  displayName: shoes2
   type: 3
   pickupType: 1
-  icon: {fileID: 21300000, guid: a234d99264a2ae244bb09af1dde12ca6, type: 3}
-  description: "pants1\u63CF\u8FF0"
-  clothesType: 4
-  costSpace: 1
+  icon: {fileID: 21300000, guid: 0987520c54468a446a312611a4225b3f, type: 3}
+  description: "shoes2\u63CF\u8FF0"
+  clothesType: 5
+  costSpace: 2
   HPBonus: 0
   attackBonus: 0
   defenseBonus: 0
