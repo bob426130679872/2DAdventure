@@ -7,8 +7,6 @@ public class ClothesTemplate : ItemTemplate
 {
     
     public ClothesType clothesType; 
-
-    public int costSpace;
     
     [Header("Stat Bonuses")]
     public float HPBonus;  

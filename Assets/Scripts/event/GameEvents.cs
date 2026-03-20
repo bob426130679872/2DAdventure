@@ -47,4 +47,14 @@ public static class GameEvents
         // public static void TriggerUnlockChanged(UnlockIdListType type, string id) => OnUnlockChanged?.Invoke(type, id);
     }
 
+    // --- 衣服穿脫相關事件 ---
+    public static class Clothes
+    {
+        public static event Action<string> OnClothesEquipped;
+        public static void TriggerClothesEquipped(string id) => OnClothesEquipped?.Invoke(id);
+
+        public static event Action<string> OnClothesUnequipped;
+        public static void TriggerClothesUnequipped(string id) => OnClothesUnequipped?.Invoke(id);
+    }
+
 }
