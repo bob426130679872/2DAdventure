@@ -15,7 +15,6 @@ public class NpcController : MonoBehaviour
         if (DialogueManager.Instance != null)
         {
             myDialogueGroups = DialogueManager.Instance.GetGroupsByNpcID(npcID);
-            Debug.Log($"NPC {npcID} 已讀取 {myDialogueGroups.Count} 組對話單位。");
         }
     }
 

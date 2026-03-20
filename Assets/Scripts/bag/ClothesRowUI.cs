@@ -14,6 +14,11 @@ public class ClothesRowUI : MonoBehaviour
 
     private ClothesPanel clothesPanel;
 
+    public void SetPanel(ClothesPanel panel)
+    {
+        clothesPanel = panel;
+    }
+
     public void Init(ClothesPanel panel)
     {
         clothesPanel = panel;
