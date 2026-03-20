@@ -13,11 +13,15 @@ public class GridObjectPanel : MonoBehaviour
     private Transform content;
     private ItemInfoUI itemInfoUI;
 
+    private ScrollRect scrollRect;
+
     public void Init()
     {
-        content = GetComponentInChildren<ScrollRect>(true).content;
+        scrollRect = GetComponentInChildren<ScrollRect>(true);
+        content = scrollRect.content;
         itemInfoUI = GetComponentInChildren<ItemInfoUI>(true);
         LoadItems();
+        scrollRect.horizontalNormalizedPosition = 0f;
     }
 
     public void LoadItems()

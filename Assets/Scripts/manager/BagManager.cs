@@ -66,16 +66,11 @@ public class BagManager : MonoBehaviour
             if (gop != null) gop.Init();
         }
         diaryPanel.GetComponent<DiaryPanel>().Init();
-
-        var cp = clothesPanel.GetComponent<ClothesPanel>();
-        cp.Init();
-        cp.LoadAllSlots(); // panel 已 active，slot 生成後 layout 可正確計算
-
-        // 強制 layout 在有內容的狀態下算好
+        clothesPanel.GetComponent<ClothesPanel>().Init();
         Canvas.ForceUpdateCanvases();
 
         // 預設顯示收藏品（其他 panel 會在此被隱藏）
-        ShowPanel(ItemType.Collection);
+        ShowPanel(ItemType.Consumable);
     }
 
     /// <summary>
