@@ -15,9 +15,14 @@ public class ClothesPanel : MonoBehaviour
     public Button undressButton;
 
     private ClothesTemplate selectedTemplate;
+    private Sprite[] defaultSlotSprites;
 
     public void Init()
     {
+        defaultSlotSprites = new Sprite[equippedSlots.Length];
+        for (int i = 0; i < equippedSlots.Length; i++)
+            defaultSlotSprites[i] = equippedSlots[i].sprite;
+
         dressButton.onClick.AddListener(Equip);
         undressButton.onClick.AddListener(Unequip);
 
@@ -29,25 +34,45 @@ public class ClothesPanel : MonoBehaviour
     {
         selectedTemplate = template;
         itemInfoUI.ShowInfo(template);
-        // TODO: 根據是否已穿著切換 dress/undress 按鈕狀態
+        bool isEquipped = PlayerManager.Instance.IsClothesEquipped(template.id);
+        SetDressButtonInteractable(canDress: !isEquipped, canUndress: isEquipped);
     }
 
     private void Equip()
     {
         if (selectedTemplate == null) return;
-        // TODO: 通知 PlayerManager 穿上衣服
-        RefreshEquippedSlots();
+        GameEvents.Clothes.TriggerClothesEquipped(selectedTemplate.id);
     }
 
     private void Unequip()
     {
         if (selectedTemplate == null) return;
-        // TODO: 通知 PlayerManager 脫下衣服
-        RefreshEquippedSlots();
+        GameEvents.Clothes.TriggerClothesUnequipped(selectedTemplate.id);
     }
 
-    private void RefreshEquippedSlots()
+    public void RefreshEquippedSlots()
     {
-        // TODO: 根據目前裝備狀態更新 equippedSlots 的圖示
+        var equipped = PlayerManager.Instance.equippedClothes;
+        for (int i = 0; i < equippedSlots.Length; i++)
+        {
+            ClothesType type = (ClothesType)i;
+            if (equipped.TryGetValue(type, out string id))
+            {
+                var template = ItemManager.Instance.GetTemplateById(id) as ClothesTemplate;
+                equippedSlots[i].sprite = template?.icon;
+                equippedSlots[i].enabled = template != null;
+            }
+            else
+            {
+                equippedSlots[i].sprite = defaultSlotSprites[i];
+                equippedSlots[i].enabled = true;
+            }
+        }
+    }
+
+    public void SetDressButtonInteractable(bool canDress, bool canUndress)
+    {
+        dressButton.interactable = canDress;
+        undressButton.interactable = canUndress;
     }
 }

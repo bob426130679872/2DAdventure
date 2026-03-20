@@ -18,7 +18,7 @@ MonoBehaviour:
   pickupType: 1
   icon: {fileID: 21300000, guid: ded58ac0b717e3748baefc6ab7a741f5, type: 3}
   description: "gloves2\u63CF\u8FF0"
-  clothesType: 2
+  clothesType: 1
   costSpace: 2
   HPBonus: 0
   attackBonus: 0

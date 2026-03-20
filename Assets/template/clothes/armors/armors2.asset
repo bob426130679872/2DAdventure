@@ -18,7 +18,7 @@ MonoBehaviour:
   pickupType: 1
   icon: {fileID: 21300000, guid: 0ccb56bd79b72e7488e52a1fe34061d8, type: 3}
   description: "armos2\u63CF\u8FF0"
-  clothesType: 3
+  clothesType: 2
   costSpace: 2
   HPBonus: 0
   attackBonus: 0

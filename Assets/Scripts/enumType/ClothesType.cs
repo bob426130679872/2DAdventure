@@ -1,9 +1,9 @@
 public enum ClothesType
 {
     Hat,
-    Jacket,
     Gloves,
     Armor,
+    Jacket,
     Pants,
     Shoes
     

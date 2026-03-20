@@ -4,6 +4,17 @@ using UnityEngine.UI;
 
 public class BagManager : MonoBehaviour
 {
+    public static BagManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+    }
+
+    [Header("包包主體")]
+    public GameObject bagCanvas;
+
     [Header("所有分類面板 (依序拉進來)")]
     public GameObject consumablePanel;
     public GameObject diaryPanel;
@@ -71,6 +82,19 @@ public class BagManager : MonoBehaviour
 
         // 預設顯示收藏品（其他 panel 會在此被隱藏）
         ShowPanel(ItemType.Consumable);
+
+        bagCanvas.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+            ToggleBag();
+    }
+
+    public void ToggleBag()
+    {
+        bagCanvas.SetActive(!bagCanvas.activeSelf);
     }
 
     /// <summary>

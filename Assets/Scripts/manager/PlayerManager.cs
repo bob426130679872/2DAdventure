@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 using Cinemachine;
 
 [DefaultExecutionOrder(-100)]
@@ -45,12 +46,18 @@ public class PlayerManager : MonoBehaviour
     public float flyAcceleration;
     public float flyDrag;
 
+    // 衣物相關
+    public Dictionary<ClothesType, string> equippedClothes = new Dictionary<ClothesType, string>();
+
     // Bonus 變數
     private float maxHealthBonus;
     private float maxStaminaBonus;
     private float moveSpeedBonus = 0f;
     private float jumpForceBonus = 0f;
     private float wallSlideSpeedBonus = 0f;
+    public float attackBonus;
+    public float defenseBonus;
+
     private Vector2 wallJumpForceBonus = Vector2.zero;
 
     private void Awake()
@@ -75,6 +82,20 @@ public class PlayerManager : MonoBehaviour
     {
         maxHealthBonus = ItemManager.Instance.GetItemCount("MPContainer") / 3;
         maxStaminaBonus = ItemManager.Instance.GetItemCount("HPContainer") / 3;
+        moveSpeedBonus = 0f;
+        attackBonus = 0f;
+        defenseBonus = 0f;
+
+        foreach (var id in equippedClothes.Values)
+        {
+            var template = ItemManager.Instance.GetTemplateById(id) as ClothesTemplate;
+            if (template == null) continue;
+            maxHealthBonus += template.HPBonus;
+            maxStaminaBonus += template.MPBonus;
+            moveSpeedBonus += template.speedBonus;
+            attackBonus += template.attackBonus;
+            defenseBonus += template.defenseBonus;
+        }
     }
 
     public void InitializeStats()
@@ -189,5 +210,27 @@ public class PlayerManager : MonoBehaviour
         currentStamina -= amount;
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
         GameEvents.Player.TriggerStaminaChanged(currentStamina, maxStamina);
+    }
+
+    // --- 衣服穿脫 ---
+    public void EquipClothes(string id)
+    {
+        var template = ItemManager.Instance.GetTemplateById(id) as ClothesTemplate;
+        if (template == null) return;
+        equippedClothes[template.clothesType] = id;
+        InitializeStats();
+    }
+
+    public void UnequipClothes(string id)
+    {
+        var template = ItemManager.Instance.GetTemplateById(id) as ClothesTemplate;
+        if (template == null) return;
+        equippedClothes.Remove(template.clothesType);
+        InitializeStats();
+    }
+
+    public bool IsClothesEquipped(string id)
+    {
+        return equippedClothes.ContainsValue(id);
     }
 }

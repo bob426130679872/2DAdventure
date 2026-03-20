@@ -19,6 +19,8 @@ public class EventManager : MonoBehaviour
         GameEvents.Inventory.OnPickUp += HandlePickUpItem;
         GameEvents.Player.OnHealthChanged += HandleHealthChanged;
         GameEvents.Player.OnStaminaChanged += HandleStaminaChanged;
+        GameEvents.Clothes.OnClothesEquipped += HandleClothesEquipped;
+        GameEvents.Clothes.OnClothesUnequipped += HandleClothesUnequipped;
     }
 
     private void OnDisable()
@@ -30,6 +32,8 @@ public class EventManager : MonoBehaviour
         GameEvents.Inventory.OnPickUp -= HandlePickUpItem;
         GameEvents.Player.OnHealthChanged -= HandleHealthChanged;
         GameEvents.Player.OnStaminaChanged -= HandleStaminaChanged;
+        GameEvents.Clothes.OnClothesEquipped -= HandleClothesEquipped;
+        GameEvents.Clothes.OnClothesUnequipped -= HandleClothesUnequipped;
     }
 
     private void HandleItemChanged(Item item, int amount)
@@ -67,5 +71,21 @@ public class EventManager : MonoBehaviour
     private void HandleStaminaChanged(float current, float max)
     {
         UIManager.Instance.RefreshStaminaUI(current, max);
+    }
+
+    private void HandleClothesEquipped(string id)
+    {
+        PlayerManager.Instance.EquipClothes(id);
+        var cp = BagManager.Instance.clothesPanel.GetComponent<ClothesPanel>();
+        cp.RefreshEquippedSlots();
+        cp.SetDressButtonInteractable(canDress: false, canUndress: true);
+    }
+
+    private void HandleClothesUnequipped(string id)
+    {
+        PlayerManager.Instance.UnequipClothes(id);
+        var cp = BagManager.Instance.clothesPanel.GetComponent<ClothesPanel>();
+        cp.RefreshEquippedSlots();
+        cp.SetDressButtonInteractable(canDress: true, canUndress: false);
     }
 }
