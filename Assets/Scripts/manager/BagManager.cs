@@ -55,6 +55,10 @@ public class BagManager : MonoBehaviour
         personalButton.onClick.AddListener(() => ShowPanel(ItemType.Personal));
         bookButton.onClick.AddListener(() => ShowPanel(ItemType.Book));
 
+        // 先全部啟用，讓 layout 在 active 狀態下正確初始化
+        foreach (var kvp in panels)
+            kvp.Value.SetActive(true);
+
         // 初始化所有 Panel
         foreach (var kvp in panels)
         {
@@ -62,9 +66,15 @@ public class BagManager : MonoBehaviour
             if (gop != null) gop.Init();
         }
         diaryPanel.GetComponent<DiaryPanel>().Init();
-        clothesPanel.GetComponent<ClothesPanel>().Init();
 
-        // 預設顯示消耗品
+        var cp = clothesPanel.GetComponent<ClothesPanel>();
+        cp.Init();
+        cp.LoadAllSlots(); // panel 已 active，slot 生成後 layout 可正確計算
+
+        // 強制 layout 在有內容的狀態下算好
+        Canvas.ForceUpdateCanvases();
+
+        // 預設顯示收藏品（其他 panel 會在此被隱藏）
         ShowPanel(ItemType.Collection);
     }
 

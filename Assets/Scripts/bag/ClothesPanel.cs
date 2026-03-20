@@ -22,7 +22,13 @@ public class ClothesPanel : MonoBehaviour
         undressButton.onClick.AddListener(Unequip);
 
         foreach (var row in clothesRows)
-            row.Init(this);
+            row.SetPanel(this);
+    }
+
+    public void LoadAllSlots()
+    {
+        foreach (var row in clothesRows)
+            row.LoadSlots();
     }
 
     public void ShowInfo(ClothesTemplate template)
