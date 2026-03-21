@@ -127,6 +127,11 @@ public class ItemManager : MonoBehaviour
         return t;
     }
 
+    public List<TreasureMapTemplate> GetTreasureMapTemplates()
+    {
+        return database != null ? database.treasureItemTemplates : new List<TreasureMapTemplate>();
+    }
+
     public List<Item> GetItemsByType(ItemType type)
     {
         List<Item> result = new List<Item>();

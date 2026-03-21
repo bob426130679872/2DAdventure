@@ -4,5 +4,6 @@ public enum UnlockIdListType
     OpenedChest,
     UnlockedDiary,
     UnlockedClothes, 
-    BrokenObjects
+    BrokenObjects,
+    UnlockedTreasurePiece
 }

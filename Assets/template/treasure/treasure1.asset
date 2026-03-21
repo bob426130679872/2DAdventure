@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80206faf84754464897b3da66582a5a3, type: 3}
+  m_Name: treasure1
+  m_EditorClassIdentifier: 
+  id: treasure1
+  displayName: treasure1
+  type: 4
+  pickupType: 1
+  icon: {fileID: 21300000, guid: fbf54193f90bc1046a626a47ecc7f18c, type: 3}
+  description: 
+  maskSprites:
+  - {fileID: 21300000, guid: 1ecfc795d4f5a1a4aa1594c3ba0dc2c1, type: 3}
+  - {fileID: 21300000, guid: f32cd03a0e514fc4abdf2e435894e2fc, type: 3}
+  - {fileID: 21300000, guid: faec4baeb289e54429c53666e1255cc2, type: 3}
+  - {fileID: 21300000, guid: d8fb98c0cadc2344fa99f405bd6ed380, type: 3}
+  maskFragmentIds:
+  - treasure1mask1
+  - treasure1mask2
+  - treasure1mask3
+  - treasure1mask4

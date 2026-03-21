@@ -78,6 +78,7 @@ public class BagManager : MonoBehaviour
         }
         diaryPanel.GetComponent<DiaryPanel>().Init();
         clothesPanel.GetComponent<ClothesPanel>().Init();
+        treasurePanel.GetComponent<TreasurePanel>().Init();
         Canvas.ForceUpdateCanvases();
 
         // 預設顯示收藏品（其他 panel 會在此被隱藏）

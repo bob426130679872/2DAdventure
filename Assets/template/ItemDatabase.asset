@@ -30,7 +30,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1643370a4ef9097439da3391c4b3aec1, type: 2}
   - {fileID: 11400000, guid: e66c76f86d8160a4d92dcde2d043440b, type: 2}
   treasureItemTemplates:
-  - {fileID: 11400000, guid: 03e6458a1ade1ce46b528697a1d4f13a, type: 2}
+  - {fileID: 11400000, guid: fd6290f6d868c594fba0d14ca8c04c03, type: 2}
+  - {fileID: 11400000, guid: b34a145ee07938c4b9ca098384f630fd, type: 2}
+  - {fileID: 11400000, guid: 2bbe5764dd2260641b0c13cace1973cc, type: 2}
   mapItemTemplates:
   - {fileID: 11400000, guid: 81b3bbe3d96cc224eb24d7755457c150, type: 2}
   collectionItemTemplates:
