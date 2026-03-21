@@ -11,7 +11,8 @@
       "mcp__UnityMCP__manage_gameobject",
       "mcp__UnityMCP__manage_camera",
       "mcp__UnityMCP__manage_components",
-      "Bash(find /c/unity/2Dadventure/Assets -name *Clothes*.cs -o -name *Now*.cs)"
+      "Bash(find /c/unity/2Dadventure/Assets -name *Clothes*.cs -o -name *Now*.cs)",
+      "Bash(python3 -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\(''''mcpServers'''', {}\\), indent=2\\)\\)\")"
     ]
   }
 }
