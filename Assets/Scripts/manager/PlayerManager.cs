@@ -121,7 +121,6 @@ public class PlayerManager : MonoBehaviour
         flySpeed = baseStats.flySpeed;
         flyAcceleration = baseStats.flyAcceleration;
         flyDrag = baseStats.flyDrag;
-
         currentHealth = maxHealth;
         currentStamina = maxStamina;
         GameEvents.Player.TriggerHealthChanged(currentHealth, maxHealth);
