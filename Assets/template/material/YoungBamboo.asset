@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5489abe3f9a32db4584247dd11e7d12b, type: 3}
+  m_Name: YoungBamboo
+  m_EditorClassIdentifier: 
+  id: young_bamboo
+  displayName: "\u82E5\u7AF9"
+  displayNameEN: Young Bamboo
+  type: 2
+  pickupType: 0
+  icon: {fileID: 21300000, guid: b999b0513365be64e9196b77f5b0ae87, type: 3}
+  description: "\u5728\u7F61\u98A8\u4E2D\u8271\u96E3\u751F\u9577\u7684\u7AF9\u5B50\u3002\u7E96\u7DAD\u7D30\u5BC6\u5805\u97CC\uFF0C\u56E0\u5E38\u5E74\u8207\u96F2\u6C23\u70BA\u4F34\uFF0C\u5E36\u8457\u4E00\u7A2E\u812B\u96E2\u5875\u4E16\u7684\u8F15\u76C8\u611F\u3002"
+  descriptionEN: 

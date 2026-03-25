@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5489abe3f9a32db4584247dd11e7d12b, type: 3}
+  m_Name: AncientFossil
+  m_EditorClassIdentifier: 
+  id: ancient_fossil
+  displayName: "\u53E4\u8001\u5316\u77F3"
+  displayNameEN: Ancient Fossil
+  type: 2
+  pickupType: 0
+  icon: {fileID: 21300000, guid: 51d3dc3de59689a49be0701984c688b1, type: 3}
+  description: "\u4F86\u81EA\u9060\u53E4\u5DE8\u7378\u7684\u9AA8\u9AB8\uFF0C\u88AB\u8352\u6F20\u7684\u9EC3\u6C99\u63A9\u57CB\u4E86\u7121\u6578\u6B72\u6708\u3002"
+  descriptionEN: 

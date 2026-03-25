@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5489abe3f9a32db4584247dd11e7d12b, type: 3}
+  m_Name: BuddhaStone
+  m_EditorClassIdentifier: 
+  id: buddha_stone
+  displayName: "\u4F5B\u4E4B\u77F3"
+  displayNameEN: Buddha Stone
+  type: 2
+  pickupType: 0
+  icon: {fileID: 21300000, guid: 48b3c51698ed769468c6bc4f79207868, type: 3}
+  description: "\u860A\u542B\u8457\u5E73\u975C\u529B\u91CF\u7684\u8056\u6F54\u77F3\u584A\uFF0C\u64DA\u8AAA\u80FD\u6D17\u6ECC\u5FC3\u9748\uFF0C\u5E38\u88AB\u7528\u65BC\u88FD\u4F5C\u4FEE\u884C\u8005\u7684\u8863\u7269\u3002"
+  descriptionEN: 

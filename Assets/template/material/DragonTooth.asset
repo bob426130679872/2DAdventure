@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5489abe3f9a32db4584247dd11e7d12b, type: 3}
+  m_Name: DragonTooth
+  m_EditorClassIdentifier: 
+  id: dragon_tooth
+  displayName: "\u9F8D\u7259"
+  displayNameEN: Dragon Tooth
+  type: 2
+  pickupType: 0
+  icon: {fileID: 21300000, guid: f73c76aa9bf1d32448cee3080174faf8, type: 3}
+  description: "\u65E9\u5DF2\u6EC5\u7D55\u7684\u53E4\u4EE3\u5DE8\u9F8D\u6B98\u9AB8\u4E2D\u7684\u5229\u9F52\u3002\u6BCF\u4E00\u9846\u7259\u9F52\u90FD\u860A\u542B\u8457\u6BC0\u6EC5\u6027\u7684\u529B\u91CF\uFF0C\u662F\u9060\u53E4\u9738\u4E3B\u7684\u907A\u7559\u3002"
+  descriptionEN: 

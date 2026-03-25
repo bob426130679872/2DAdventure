@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5489abe3f9a32db4584247dd11e7d12b, type: 3}
+  m_Name: DarkStone
+  m_EditorClassIdentifier: 
+  id: dark_stone
+  displayName: "\u95C7\u4E4B\u77F3"
+  displayNameEN: Dark Stone
+  type: 2
+  pickupType: 0
+  icon: {fileID: 21300000, guid: ee13807b191962d4f914b22100db87fb, type: 3}
+  description: "\u4F86\u81EA\u5730\u5E95\u6DF1\u8655\uFF0C\u5438\u6536\u4E86\u6C38\u6046\u9ED1\u6697\u7684\u7926\u77F3\u3002\u5B83\u672C\u8EAB\u4E0D\u767C\u5149\uFF0C\u537B\u6563\u767C\u8457\u4E00\u7A2E\u6C89\u975C\u7684\u865B\u7121\u611F\u3002"
+  descriptionEN: 

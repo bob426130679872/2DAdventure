@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5489abe3f9a32db4584247dd11e7d12b, type: 3}
+  m_Name: AncientOre
+  m_EditorClassIdentifier: 
+  id: ancient_ore
+  displayName: "\u53E4\u4EE3\u7926\u77F3"
+  displayNameEN: Ancient Ore
+  type: 2
+  pickupType: 0
+  icon: {fileID: 21300000, guid: 60c32a2d5d484ad44a41a260a67087ce, type: 3}
+  description: "\u5F9E\u5730\u5FC3\u820A\u738B\u671D\u907A\u5740\u6316\u6398\u51FA\u7684\u7368\u7279\u7926\u7269\u3002\u5B83\u6BD4\u9435\u7926\u66F4\u6C89\u91CD\u3002"
+  descriptionEN: 

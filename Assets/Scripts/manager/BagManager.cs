@@ -41,48 +41,76 @@ public class BagManager : MonoBehaviour
 
     void Start()
     {
+        // 自動找 bagCanvas（沒手動拉才找）
+        if (bagCanvas == null) bagCanvas = GameObject.Find("bagCanvas");
+        if (bagCanvas == null) { Debug.LogError("BagManager: 找不到 bagCanvas"); return; }
+
+        // 自動找所有 Panel（沒手動拉才找）
+        if (consumablePanel == null)  consumablePanel  = Find(bagCanvas, "consumablePanel");
+        if (diaryPanel == null)       diaryPanel       = Find(bagCanvas, "diaryPanel");
+        if (materialPanel == null)    materialPanel    = Find(bagCanvas, "materialPanel");
+        if (clothesPanel == null)     clothesPanel     = Find(bagCanvas, "clothesPanel");
+        if (treasurePanel == null)    treasurePanel    = Find(bagCanvas, "treasurePanel");
+        if (mapPanel == null)         mapPanel         = Find(bagCanvas, "mapPanel");
+        if (collectionPanel == null)  collectionPanel  = Find(bagCanvas, "collectionPanel");
+        if (personalPanel == null)    personalPanel    = Find(bagCanvas, "personalPanel");
+        if (bookPanel == null)        bookPanel        = Find(bagCanvas, "bookPanel");
+
+        // 自動找所有 Button（沒手動拉才找）
+        if (consumableButton == null)  consumableButton  = FindBtn(bagCanvas, "consumableButton");
+        if (diaryButton == null)       diaryButton       = FindBtn(bagCanvas, "diaryButton");
+        if (materialButton == null)    materialButton    = FindBtn(bagCanvas, "materialButton");
+        if (clothesButton == null)     clothesButton     = FindBtn(bagCanvas, "clothesButton");
+        if (treasureButton == null)    treasureButton    = FindBtn(bagCanvas, "treasureButton");
+        if (mapButton == null)         mapButton         = FindBtn(bagCanvas, "mapButton");
+        if (collectionButton == null)  collectionButton  = FindBtn(bagCanvas, "collectionButton");
+        if (personalButton == null)    personalButton    = FindBtn(bagCanvas, "personalButton");
+        if (bookButton == null)        bookButton        = FindBtn(bagCanvas, "bookButton");
+
         // 建立字典 (分類 -> Panel)
         panels = new Dictionary<ItemType, GameObject>
         {
             { ItemType.Consumable, consumablePanel },
-            { ItemType.Diary, diaryPanel },
-            { ItemType.Material, materialPanel },
-            { ItemType.Clothes, clothesPanel },
-            { ItemType.Treasure, treasurePanel },
-            { ItemType.Map, mapPanel },
+            { ItemType.Diary,      diaryPanel },
+            { ItemType.Material,   materialPanel },
+            { ItemType.Clothes,    clothesPanel },
+            { ItemType.Treasure,   treasurePanel },
+            { ItemType.Map,        mapPanel },
             { ItemType.Collection, collectionPanel },
-            { ItemType.Personal, personalPanel },
-            { ItemType.Book, bookPanel },
+            { ItemType.Personal,   personalPanel },
+            { ItemType.Book,       bookPanel },
         };
 
         // 綁定按鈕事件
-        consumableButton.onClick.AddListener(() => ShowPanel(ItemType.Consumable));
-        diaryButton.onClick.AddListener(() => ShowPanel(ItemType.Diary));
-        materialButton.onClick.AddListener(() => ShowPanel(ItemType.Material));
-        clothesButton.onClick.AddListener(() => ShowPanel(ItemType.Clothes));
-        treasureButton.onClick.AddListener(() => ShowPanel(ItemType.Treasure));
-        mapButton.onClick.AddListener(() => ShowPanel(ItemType.Map));
-        collectionButton.onClick.AddListener(() => ShowPanel(ItemType.Collection));
-        personalButton.onClick.AddListener(() => ShowPanel(ItemType.Personal));
-        bookButton.onClick.AddListener(() => ShowPanel(ItemType.Book));
+        consumableButton?.onClick.AddListener(() => ShowPanel(ItemType.Consumable));
+        diaryButton     ?.onClick.AddListener(() => ShowPanel(ItemType.Diary));
+        materialButton  ?.onClick.AddListener(() => ShowPanel(ItemType.Material));
+        clothesButton   ?.onClick.AddListener(() => ShowPanel(ItemType.Clothes));
+        treasureButton  ?.onClick.AddListener(() => ShowPanel(ItemType.Treasure));
+        mapButton       ?.onClick.AddListener(() => ShowPanel(ItemType.Map));
+        collectionButton?.onClick.AddListener(() => ShowPanel(ItemType.Collection));
+        personalButton  ?.onClick.AddListener(() => ShowPanel(ItemType.Personal));
+        bookButton      ?.onClick.AddListener(() => ShowPanel(ItemType.Book));
+
+        // 確保 bagCanvas 是 active，ForceUpdateCanvases 才有效
+        bagCanvas.SetActive(true);
 
         // 先全部啟用，讓 layout 在 active 狀態下正確初始化
         foreach (var kvp in panels)
-            kvp.Value.SetActive(true);
+            kvp.Value?.SetActive(true);
 
         // 初始化所有 Panel
         foreach (var kvp in panels)
         {
-            var gop = kvp.Value.GetComponent<GridObjectPanel>();
+            var gop = kvp.Value?.GetComponent<GridObjectPanel>();
             if (gop != null) gop.Init();
         }
-        diaryPanel.GetComponent<DiaryPanel>().Init();
-        clothesPanel.GetComponent<ClothesPanel>().Init();
-        treasurePanel.GetComponent<TreasurePanel>().Init();
-        personalPanel.GetComponent<PersonalPanel>().Init();
+        diaryPanel    ?.GetComponent<DiaryPanel>()   ?.Init();
+        clothesPanel  ?.GetComponent<ClothesPanel>() ?.Init();
+        treasurePanel ?.GetComponent<TreasurePanel>()?.Init();
+        personalPanel ?.GetComponent<PersonalPanel>()?.Init();
         Canvas.ForceUpdateCanvases();
 
-        // 預設顯示收藏品（其他 panel 會在此被隱藏）
         ShowPanel(ItemType.Consumable);
 
         bagCanvas.SetActive(false);
@@ -99,20 +127,26 @@ public class BagManager : MonoBehaviour
         bagCanvas.SetActive(!bagCanvas.activeSelf);
     }
 
-    /// <summary>
-    /// 顯示指定分類的 Panel
-    /// </summary>
     private void ShowPanel(ItemType type)
     {
         foreach (var kvp in panels)
-        {
-            kvp.Value.SetActive(false);
-        }
+            kvp.Value?.SetActive(false);
 
         if (panels.ContainsKey(type))
-        {
-            panels[type].SetActive(true);
-        }
+            panels[type]?.SetActive(true);
     }
 
+    private static GameObject Find(GameObject parent, string goName)
+    {
+        foreach (Transform t in parent.GetComponentsInChildren<Transform>(true))
+            if (t.name == goName) return t.gameObject;
+        Debug.LogWarning($"BagManager: 找不到 {goName}");
+        return null;
+    }
+
+    private static Button FindBtn(GameObject parent, string goName)
+    {
+        var go = Find(parent, goName);
+        return go != null ? go.GetComponent<Button>() : null;
+    }
 }

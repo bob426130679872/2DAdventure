@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5489abe3f9a32db4584247dd11e7d12b, type: 3}
+  m_Name: DivineCrystal
+  m_EditorClassIdentifier: 
+  id: divine_crystal
+  displayName: "\u795E\u4E4B\u7D50\u6676"
+  displayNameEN: Divine Crystal
+  type: 2
+  pickupType: 0
+  icon: {fileID: 21300000, guid: b6a3dfb7110d33c48b1e7fa2a74ec239, type: 3}
+  description: "\u9583\u720D\u8457\u7D14\u7CB9\u7121\u6687\u7684\u5149\u8292\uFF0C\u860A\u542B\u8457\u63A5\u8FD1\u795E\u9748\u7684\u3001\u96E3\u4EE5\u8A00\u55BB\u7684\u529B\u91CF\u3002"
+  descriptionEN: 

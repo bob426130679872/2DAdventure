@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5489abe3f9a32db4584247dd11e7d12b, type: 3}
+  m_Name: DarkGrass
+  m_EditorClassIdentifier: 
+  id: dark_grass
+  displayName: "\u5E7D\u6697\u8349"
+  displayNameEN: Dark Grass
+  type: 2
+  pickupType: 0
+  icon: {fileID: 21300000, guid: c105c8edaf651014da0bffb762983044, type: 3}
+  description: "\u751F\u9577\u5728\u6975\u6DF1\u8655\u7684\u5947\u7570\u690D\u7269\u3002"
+  descriptionEN: 

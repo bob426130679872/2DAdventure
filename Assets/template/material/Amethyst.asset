@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5489abe3f9a32db4584247dd11e7d12b, type: 3}
+  m_Name: Amethyst
+  m_EditorClassIdentifier: 
+  id: amethyst
+  displayName: "\u7D2B\u6C34\u6676"
+  displayNameEN: Amethyst
+  type: 2
+  pickupType: 0
+  icon: {fileID: 21300000, guid: c054f99e78cd6f04fb91b2014f20685d, type: 3}
+  description: "\u5E36\u6709\u795E\u79D8\u7D2B\u8272\u5149\u8292\u7684\u6C34\u6676\uFF0C\u5176\u7D50\u6676\u7D50\u69CB\u80FD\u6709\u6548\u6DE8\u5316\u6BD2\u7D20\uFF0C\u662F\u88FD\u4F5C\u6297\u6BD2\u88DD\u5099\u7684\u826F\u6750\u3002"
+  descriptionEN: 

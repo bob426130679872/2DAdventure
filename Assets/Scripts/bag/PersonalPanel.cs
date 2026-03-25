@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PersonalPanel : MonoBehaviour
 {
@@ -29,6 +30,10 @@ public class PersonalPanel : MonoBehaviour
     public PieceContainer heartContainer;
     public PieceContainer mpContainer;
 
+    [Header("錢包 / 靈魂")]
+    public Text walletText;
+    public Text soulText;
+
     public void Init()
     {
         RefreshPanel();
@@ -58,6 +63,11 @@ public class PersonalPanel : MonoBehaviour
         // 碎片容器
         RefreshPieceContainer(heartContainer);
         RefreshPieceContainer(mpContainer);
+
+        // 錢包 / 靈魂
+        var item = ItemManager.Instance;
+        if (walletText != null) walletText.text = item.GetItemCount("coin").ToString();
+        if (soulText != null) soulText.text = item.GetItemCount("soul").ToString();
     }
 
     private void RefreshPieceContainer(PieceContainer c)
