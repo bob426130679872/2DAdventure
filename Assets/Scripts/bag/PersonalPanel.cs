@@ -10,11 +10,24 @@ public class PersonalPanel : MonoBehaviour
         public GameObject icon;     // 有能力時顯示的物件
     }
 
+    [System.Serializable]
+    public class PieceContainer
+    {
+        public string label;        // 僅供 Inspector 辨識用
+        public string itemId;       // ItemManager 的 item ID
+        public GameObject piece1;
+        public GameObject piece2;
+    }
+
     [Header("一般能力 (flag != 0 → 顯示)")]
     public AbilityEntry[] abilities;
 
     [Header("空氣砲攻擊力 (每升一級多顯示一格)")]
-    public GameObject[] airCannonLevelCells; // 依序排列，level 1 顯示 [0]，level 2 再加 [1]…
+    public GameObject[] airCannonLevelCells;
+
+    [Header("碎片容器 (1個→piece1, 2個→兩個, 3個完整→都隱藏)")]
+    public PieceContainer heartContainer;
+    public PieceContainer mpContainer;
 
     public void Init()
     {
@@ -41,5 +54,18 @@ public class PersonalPanel : MonoBehaviour
             if (airCannonLevelCells[i] == null) continue;
             airCannonLevelCells[i].SetActive(i < level);
         }
+
+        // 碎片容器
+        RefreshPieceContainer(heartContainer);
+        RefreshPieceContainer(mpContainer);
+    }
+
+    private void RefreshPieceContainer(PieceContainer c)
+    {
+        if (c == null) return;
+        int count = ItemManager.Instance.GetItemCount(c.itemId);
+        bool complete = count >= 3;
+        if (c.piece1 != null) c.piece1.SetActive(!complete && count >= 1);
+        if (c.piece2 != null) c.piece2.SetActive(!complete && count >= 2);
     }
 }
