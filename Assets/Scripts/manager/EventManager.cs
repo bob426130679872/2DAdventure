@@ -63,12 +63,12 @@ public class EventManager : MonoBehaviour
         ItemManager.Instance.AddItem(item.itemId, item.amount, item.pickupId); // 撿取物品 → 加到背包
     }
 
-    private void HandleHealthChanged(float current, float max)
+    private void HandleHealthChanged(int current, int max)
     {
         UIManager.Instance.RefreshHealthUI(current, max);
     }
 
-    private void HandleStaminaChanged(float current, float max)
+    private void HandleStaminaChanged(int current, int max)
     {
         UIManager.Instance.RefreshStaminaUI(current, max);
     }

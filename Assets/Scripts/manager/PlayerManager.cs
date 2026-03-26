@@ -16,8 +16,8 @@ public class PlayerManager : MonoBehaviour
 
     // --- 玩家數值資料 ---
     [Header("Current Stats")]
-    public float currentHealth;
-    public float currentStamina;
+    public int currentHealth;
+    public int currentStamina;
     public bool playerFlip = false;
     public bool isDying = false;
 
@@ -25,8 +25,8 @@ public class PlayerManager : MonoBehaviour
     public PlayerStats baseStats;
 
     // 屬性讀取
-    public float maxHealth;
-    public float maxStamina;
+    public int maxHealth;
+    public int maxStamina;
     public float MoveSpeed;
     public float JumpForce;
     public float HoldJumpForce;
@@ -50,8 +50,8 @@ public class PlayerManager : MonoBehaviour
     public Dictionary<ClothesType, string> equippedClothes = new Dictionary<ClothesType, string>();
 
     // Bonus 變數
-    private float maxHealthBonus;
-    private float maxStaminaBonus;
+    private int maxHealthBonus;
+    private int maxStaminaBonus;
     private float moveSpeedBonus = 0f;
     private float jumpForceBonus = 0f;
     private float wallSlideSpeedBonus = 0f;
@@ -80,8 +80,8 @@ public class PlayerManager : MonoBehaviour
 
     public void CaculateBonus()
     {
-        maxHealthBonus = ItemManager.Instance.GetItemCount("MPContainer") / 3;
-        maxStaminaBonus = ItemManager.Instance.GetItemCount("HPContainer") / 3;
+        maxHealthBonus = ItemManager.Instance.GetItemCount("MPContainer");
+        maxStaminaBonus = ItemManager.Instance.GetItemCount("HPContainer");
         moveSpeedBonus = 0f;
         attackBonus = 0f;
         defenseBonus = 0f;
@@ -90,8 +90,8 @@ public class PlayerManager : MonoBehaviour
         {
             var template = ItemManager.Instance.GetTemplateById(id) as ClothesTemplate;
             if (template == null) continue;
-            maxHealthBonus += template.HPBonus;
-            maxStaminaBonus += template.MPBonus;
+            maxHealthBonus += (int)template.HPBonus;
+            maxStaminaBonus += (int)template.MPBonus;
             moveSpeedBonus += template.speedBonus;
             attackBonus += template.attackBonus;
             defenseBonus += template.defenseBonus;
@@ -128,20 +128,32 @@ public class PlayerManager : MonoBehaviour
     }
 
     // --- 安全的修改方法 ---
-    public void TakeDamage(float amount)
+    public void TakeDamage(int amount)
     {
         if (isDying) return;
-        currentHealth -= amount;
+        currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
         GameEvents.Player.TriggerHealthChanged(currentHealth, maxHealth);
         if (currentHealth <= 0)
         {
-            // 觸發死亡邏輯
+            isDying = true;
+            StartCoroutine(RealDeathAndRespawn());
         }
     }
 
+    // 掉懸崖：扣 1 格心（2 半格），再決定走哪條路
     public IEnumerator DeathAndRespawn(GameObject player)
     {
         isDying = true;
+
+        currentHealth = Mathf.Clamp(currentHealth - 2, 0, maxHealth);
+        GameEvents.Player.TriggerHealthChanged(currentHealth, maxHealth);
+
+        if (currentHealth <= 0)
+        {
+            yield return StartCoroutine(RealDeathAndRespawn());
+            yield break;
+        }
+
         var controller = player.GetComponent<PlayerController>();
         controller.StopFly();
         player.GetComponent<BoxCollider2D>().enabled = false;
@@ -166,6 +178,29 @@ public class PlayerManager : MonoBehaviour
 
         RespawnPlayer(player);
         isDying = false;
+    }
+
+    // 真正死亡：回到存檔點場景，血量回滿
+    private IEnumerator RealDeathAndRespawn()
+    {
+        var controller = player.GetComponent<PlayerController>();
+        controller.StopFly();
+        player.GetComponent<BoxCollider2D>().enabled = false;
+        controller.enabled = false;
+
+        if (player.GetComponent<Rigidbody2D>())
+        {
+            player.GetComponent<Rigidbody2D>().isKinematic = true;
+            player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        currentHealth = maxHealth;
+        GameEvents.Player.TriggerHealthChanged(currentHealth, maxHealth);
+
+        GameManager.Instance.spawnPortalName = GameManager.Instance.saveScene + "Spawn0";
+        SceneManager.LoadScene(GameManager.Instance.saveScene);
     }
 
     void RespawnPlayer(GameObject player)
@@ -204,7 +239,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public void UseStamina(float amount)
+    public void UseStamina(int amount)
     {
         currentStamina -= amount;
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);

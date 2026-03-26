@@ -11,11 +11,11 @@ public static class GameEvents
         public static event Action<GameObject> OnPlayerDie;
         public static void TriggerPlayerDie(GameObject player) => OnPlayerDie?.Invoke(player);
 
-        public static event Action<float, float> OnStaminaChanged; // current, max
-        public static void TriggerStaminaChanged(float current, float max) => OnStaminaChanged?.Invoke(current, max);
+        public static event Action<int, int> OnStaminaChanged; // current, max
+        public static void TriggerStaminaChanged(int current, int max) => OnStaminaChanged?.Invoke(current, max);
 
-        public static event Action<float, float> OnHealthChanged; // current, max
-        public static void TriggerHealthChanged(float current, float max) => OnHealthChanged?.Invoke(current, max);
+        public static event Action<int, int> OnHealthChanged; // current, max
+        public static void TriggerHealthChanged(int current, int max) => OnHealthChanged?.Invoke(current, max);
     }
 
     // --- 物品與背包相關事件 ---

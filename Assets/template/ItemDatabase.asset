@@ -13,7 +13,14 @@ MonoBehaviour:
   m_Name: ItemDatabase
   m_EditorClassIdentifier: 
   consumableItemTemplates:
-  - {fileID: 11400000, guid: b4d9c69b146832e4c808ad9ae4187ee1, type: 2}
+  - {fileID: 11400000, guid: c89dfc87b2ab6ce4ebbaa57e6763e447, type: 2}
+  - {fileID: 11400000, guid: bd15e0839a1c9fb409a399c0755d5b79, type: 2}
+  - {fileID: 11400000, guid: 1423b8112970ea04c85b285431cf9838, type: 2}
+  - {fileID: 11400000, guid: db1090697401d6940a1811c8ea8c91a0, type: 2}
+  - {fileID: 11400000, guid: 9217135fc5e23eb49b45c559c018ec34, type: 2}
+  - {fileID: 11400000, guid: c749a799c33da224987179a32c10929a, type: 2}
+  - {fileID: 11400000, guid: f640834bd6834d04da376c3deda5ca69, type: 2}
+  - {fileID: 11400000, guid: 7c918dc231e03e24da5e578619dd5afd, type: 2}
   materialItemTemplates:
   - {fileID: 11400000, guid: 9db20d77f16ed5a4b899b686530f2fe2, type: 2}
   - {fileID: 11400000, guid: 79082a7b6f19c1b4dbd71cf8001e238c, type: 2}
