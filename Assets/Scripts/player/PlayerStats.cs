@@ -7,7 +7,7 @@ public class PlayerStats : ScriptableObject
 {
     [Header("Player Settings")]
     public int baseMaxHealth = 10;
-    public int baseMaxStamina = 10;
+    public int baseMaxStamina = 15;
     [Header("Dash Settings")]
     
     public float dashSpeed = 20f;

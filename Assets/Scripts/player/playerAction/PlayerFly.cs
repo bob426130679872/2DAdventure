@@ -7,7 +7,8 @@ public class PlayerFly
     private float originalGravity;
     private float originalDrag;
 
-    private const float staminaCostPerSecond = 0f; // 測試階段為 0，正式上線後改為實際數值
+    private const float staminaCostPerSecond = 0f; // 測試階段為 0，正式上線後改為實際數值（單位：1/3格/秒）
+    private float staminaAccumulator = 0f;
 
     public PlayerFly(PlayerController controller)
     {
@@ -53,7 +54,15 @@ public class PlayerFly
         }
 
         if (staminaCostPerSecond > 0)
-            pm.UseStamina(staminaCostPerSecond * Time.deltaTime);
+        {
+            staminaAccumulator += staminaCostPerSecond * Time.deltaTime;
+            int toDeduct = (int)staminaAccumulator;
+            if (toDeduct > 0)
+            {
+                pm.UseStamina(toDeduct);
+                staminaAccumulator -= toDeduct;
+            }
+        }
         Debug.Log($"氣剩餘：{pm.currentStamina}/{pm.maxStamina}");
 
         if (pm.currentStamina <= 0)
@@ -77,6 +86,7 @@ public class PlayerFly
     public void StopFlying()
     {
         controller.isFlying = false;
+        staminaAccumulator = 0f;
         rb.gravityScale = originalGravity;
         rb.drag = originalDrag;
         StoryManager.Instance.SetNoSaveFlags("isFlying", 0);

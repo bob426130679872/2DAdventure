@@ -11,20 +11,11 @@ public class UIManager : MonoBehaviour
     public Transform staminaContainer;
 
     [Header("HUD Prefabs")]
-    public GameObject healthOrbPrefab;   // 指定則用 Prefab；留空則用預設圓形
-    public GameObject staminaOrbPrefab;  // 指定則用 Prefab；留空則用預設方形
+    public GameObject healthOrbPrefab;
+    public GameObject staminaOrbPrefab;
 
-    [Header("HUD Colors")]
-    public Color healthFull = Color.red;
-    public Color healthEmpty = new Color(0.3f, 0.1f, 0.1f, 1f);
-    public Color staminaFull = new Color(0.4f, 0.8f, 1f, 1f);
-    public Color staminaEmpty = new Color(0.1f, 0.2f, 0.3f, 1f);
-
-    [Header("HUD Size")]
-    public float orbSize = 28f;
-
-    private readonly List<Image> healthOrbs = new();
-    private readonly List<Image> staminaOrbs = new();
+    private readonly List<GameObject> healthOrbs = new();
+    private readonly List<GameObject> staminaOrbs = new();
 
     void Awake()
     {
@@ -37,29 +28,31 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void RefreshHealthUI(float current, float max)
+    // current/max 單位為半格（1格心 = 2）
+    public void RefreshHealthUI(int current, int max)
     {
-        int count = (int)max;
-        if (healthOrbs.Count != count)
-            BuildOrbs(healthOrbs, healthContainer, count, healthOrbPrefab, null);
+        int orbCount = max / 2;
+        if (healthOrbs.Count != orbCount)
+            BuildOrbs(healthOrbs, healthContainer, orbCount, healthOrbPrefab);
 
-        int filled = Mathf.RoundToInt(current);
         for (int i = 0; i < healthOrbs.Count; i++)
-            healthOrbs[i].color = i < filled ? healthFull : healthEmpty;
+            for (int j = 0; j < healthOrbs[i].transform.childCount; j++)
+                healthOrbs[i].transform.GetChild(j).gameObject.SetActive(current > i * 2 + j);
     }
 
-    public void RefreshStaminaUI(float current, float max)
+    // current/max 單位為1/3格（1格氣 = 3）
+    public void RefreshStaminaUI(int current, int max)
     {
-        int count = (int)max;
-        if (staminaOrbs.Count != count)
-            BuildOrbs(staminaOrbs, staminaContainer, count, staminaOrbPrefab, null);
+        int orbCount = max / 3;
+        if (staminaOrbs.Count != orbCount)
+            BuildOrbs(staminaOrbs, staminaContainer, orbCount, staminaOrbPrefab);
 
-        int filled = Mathf.RoundToInt(current);
         for (int i = 0; i < staminaOrbs.Count; i++)
-            staminaOrbs[i].color = i < filled ? staminaFull : staminaEmpty;
+            for (int j = 0; j < staminaOrbs[i].transform.childCount; j++)
+                staminaOrbs[i].transform.GetChild(j).gameObject.SetActive(current > i * 3 + j);
     }
 
-    void BuildOrbs(List<Image> orbList, Transform container, int count, GameObject prefab, Sprite fallbackSprite)
+    void BuildOrbs(List<GameObject> orbList, Transform container, int count, GameObject prefab)
     {
         if (container == null) return;
         foreach (Transform child in container)
@@ -68,23 +61,9 @@ public class UIManager : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            GameObject orb;
-            if (prefab != null)
-            {
-                orb = Instantiate(prefab, container);
-                orb.name = $"orb_{i}";
-            }
-            else
-            {
-                orb = new GameObject($"orb_{i}");
-                orb.transform.SetParent(container, false);
-                orb.AddComponent<RectTransform>().sizeDelta = new Vector2(orbSize, orbSize);
-                var img = orb.AddComponent<Image>();
-                if (fallbackSprite != null) img.sprite = fallbackSprite;
-            }
-
-            if (orb.TryGetComponent<Image>(out var image))
-                orbList.Add(image);
+            var orb = Instantiate(prefab, container);
+            orb.name = $"orb_{i}";
+            orbList.Add(orb);
         }
     }
 
