@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using Cinemachine;
 
 public class EventManager : MonoBehaviour
 {
@@ -16,6 +18,9 @@ public class EventManager : MonoBehaviour
         GameEvents.World.OnUnlockChanged += HandleUnlockChanged;
         GameEvents.World.OnChestOpened += HandleChestOpened;
         GameEvents.Player.OnPlayerDie += HandlePlayerDie;
+        GameEvents.Player.OnPlayerDieComplete += HandlePlayerDieComplete;
+        GameEvents.Player.OnPlayerGameOver += HandlePlayerGameOver;
+        GameEvents.Player.OnPlayerGameOverComplete += HandlePlayerGameOverComplete;
         GameEvents.Inventory.OnPickUp += HandlePickUpItem;
         GameEvents.Player.OnHealthChanged += HandleHealthChanged;
         GameEvents.Player.OnStaminaChanged += HandleStaminaChanged;
@@ -29,6 +34,9 @@ public class EventManager : MonoBehaviour
         GameEvents.World.OnUnlockChanged -= HandleUnlockChanged;
         GameEvents.World.OnChestOpened -= HandleChestOpened;
         GameEvents.Player.OnPlayerDie -= HandlePlayerDie;
+        GameEvents.Player.OnPlayerDieComplete -= HandlePlayerDieComplete;
+        GameEvents.Player.OnPlayerGameOver -= HandlePlayerGameOver;
+        GameEvents.Player.OnPlayerGameOverComplete -= HandlePlayerGameOverComplete;
         GameEvents.Inventory.OnPickUp -= HandlePickUpItem;
         GameEvents.Player.OnHealthChanged -= HandleHealthChanged;
         GameEvents.Player.OnStaminaChanged -= HandleStaminaChanged;
@@ -54,6 +62,24 @@ public class EventManager : MonoBehaviour
     private void HandlePlayerDie(GameObject player)
     {
         StartCoroutine(PlayerManager.Instance.DeathAndRespawn(player));
+    }
+
+    private void HandlePlayerDieComplete(GameObject player)
+    {
+        CinemachineVirtualCamera virtualCam = FindObjectOfType<CinemachineVirtualCamera>();
+        if (virtualCam != null)
+            virtualCam.Follow = player.transform;
+    }
+
+    private void HandlePlayerGameOver()
+    {
+        StartCoroutine(PlayerManager.Instance.GameOverAndRespawn());
+    }
+
+    private void HandlePlayerGameOverComplete()
+    {
+        GameManager.Instance.spawnPortalName = GameManager.Instance.saveScene + "Spawn0";
+        SceneManager.LoadScene(GameManager.Instance.saveScene);
     }
 
     private void HandlePickUpItem(ItemPickup item)
