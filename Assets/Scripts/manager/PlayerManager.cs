@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
-using Cinemachine;
 
 [DefaultExecutionOrder(-100)]
 public class PlayerManager : MonoBehaviour
@@ -136,7 +135,7 @@ public class PlayerManager : MonoBehaviour
         if (currentHealth <= 0)
         {
             isDying = true;
-            StartCoroutine(RealDeathAndRespawn());
+            GameEvents.Player.TriggerPlayerGameOver();
         }
     }
 
@@ -150,7 +149,7 @@ public class PlayerManager : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            yield return StartCoroutine(RealDeathAndRespawn());
+            GameEvents.Player.TriggerPlayerGameOver();
             yield break;
         }
 
@@ -180,8 +179,8 @@ public class PlayerManager : MonoBehaviour
         isDying = false;
     }
 
-    // 真正死亡：回到存檔點場景，血量回滿
-    private IEnumerator RealDeathAndRespawn()
+    // GameOver：回到存檔點場景，血量回滿
+    public IEnumerator GameOverAndRespawn()
     {
         var controller = player.GetComponent<PlayerController>();
         controller.StopFly();
@@ -198,9 +197,7 @@ public class PlayerManager : MonoBehaviour
 
         currentHealth = maxHealth;
         GameEvents.Player.TriggerHealthChanged(currentHealth, maxHealth);
-
-        GameManager.Instance.spawnPortalName = GameManager.Instance.saveScene + "Spawn0";
-        SceneManager.LoadScene(GameManager.Instance.saveScene);
+        GameEvents.Player.TriggerPlayerGameOverComplete();
     }
 
     void RespawnPlayer(GameObject player)
@@ -215,9 +212,7 @@ public class PlayerManager : MonoBehaviour
         if (player.GetComponent<Rigidbody2D>())
             player.GetComponent<Rigidbody2D>().isKinematic = false;
 
-        CinemachineVirtualCamera virtualCam = FindObjectOfType<CinemachineVirtualCamera>();
-        if (virtualCam != null)
-            virtualCam.Follow = player.transform;
+        GameEvents.Player.TriggerPlayerDieComplete(player);
     }
 
     public void CheckAndSetLight()
