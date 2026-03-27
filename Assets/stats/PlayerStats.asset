@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
   baseMaxHealth: 10
-  baseMaxStamina: 10
+  baseMaxStamina: 15
   dashSpeed: 20
   dashDuration: 0.12
   dashCooldown: 0.3
