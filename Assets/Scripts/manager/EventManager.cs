@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Cinemachine;
@@ -18,9 +19,8 @@ public class EventManager : MonoBehaviour
         GameEvents.World.OnUnlockChanged += HandleUnlockChanged;
         GameEvents.World.OnChestOpened += HandleChestOpened;
         GameEvents.Player.OnPlayerDie += HandlePlayerDie;
-        GameEvents.Player.OnPlayerDieComplete += HandlePlayerDieComplete;
         GameEvents.Player.OnPlayerGameOver += HandlePlayerGameOver;
-        GameEvents.Player.OnPlayerGameOverComplete += HandlePlayerGameOverComplete;
+        GameEvents.Player.OnPlayerRespawn += HandlePlayerRespawn;
         GameEvents.Inventory.OnPickUp += HandlePickUpItem;
         GameEvents.Player.OnHealthChanged += HandleHealthChanged;
         GameEvents.Player.OnStaminaChanged += HandleStaminaChanged;
@@ -34,9 +34,8 @@ public class EventManager : MonoBehaviour
         GameEvents.World.OnUnlockChanged -= HandleUnlockChanged;
         GameEvents.World.OnChestOpened -= HandleChestOpened;
         GameEvents.Player.OnPlayerDie -= HandlePlayerDie;
-        GameEvents.Player.OnPlayerDieComplete -= HandlePlayerDieComplete;
         GameEvents.Player.OnPlayerGameOver -= HandlePlayerGameOver;
-        GameEvents.Player.OnPlayerGameOverComplete -= HandlePlayerGameOverComplete;
+        GameEvents.Player.OnPlayerRespawn -= HandlePlayerRespawn;
         GameEvents.Inventory.OnPickUp -= HandlePickUpItem;
         GameEvents.Player.OnHealthChanged -= HandleHealthChanged;
         GameEvents.Player.OnStaminaChanged -= HandleStaminaChanged;
@@ -44,50 +43,83 @@ public class EventManager : MonoBehaviour
         GameEvents.Clothes.OnClothesUnequipped -= HandleClothesUnequipped;
     }
 
+    // ── Player ────────────────────────────────────────────
+
+    private void HandlePlayerDie()
+    {
+        if (PlayerManager.Instance.isDying) return;
+        PlayerManager.Instance.isDying = true;
+        StartCoroutine(DieRoutine());
+    }
+
+    private IEnumerator DieRoutine()
+    {
+        PlayerManager.Instance.DisablePlayer();
+
+        bool isGameOver = PlayerManager.Instance.TakeFallDamage();
+        if (isGameOver)
+        {
+            yield return StartCoroutine(GameOverRoutine());
+            yield break;
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        GameManager.Instance.isDieRespawn = true;
+        SceneManager.LoadScene(GameManager.Instance.safeSceneName);
+    }
+
+    private void HandlePlayerGameOver()
+    {
+        if (PlayerManager.Instance.isDying) return;
+        PlayerManager.Instance.isDying = true;
+        StartCoroutine(GameOverRoutine());
+    }
+
+    private IEnumerator GameOverRoutine()
+    {
+        PlayerManager.Instance.DisablePlayer();
+        yield return new WaitForSeconds(1f);
+        SaveManager.Instance.LoadAll(GameManager.Instance.playerName);
+        PlayerManager.Instance.InitializeStats();
+        GameManager.Instance.isGameOverRespawn = true;
+        SceneManager.LoadScene(GameManager.Instance.saveScene);
+    }
+
+    private void HandlePlayerRespawn()
+    {
+        // 可在此加入復活特效、UI 提示等
+    }
+
+    // ── Inventory ─────────────────────────────────────────
+
     private void HandleItemChanged(Item item, int amount)
     {
         SaveManager.Instance.OnItemChanged(item, amount);
         UIManager.Instance.RefreshItemUI(item, amount);
     }
 
+    private void HandlePickUpItem(ItemPickup item)
+    {
+        var template = ItemManager.Instance.GetTemplateById(item.itemId);
+        if (template == null) return;
+        ItemManager.Instance.AddItem(item.itemId, item.amount, item.pickupId);
+    }
+
+    // ── World ─────────────────────────────────────────────
+
     private void HandleUnlockChanged(UnlockIdListType type, string id)
     {
         SaveManager.Instance.OnUnlockChanged(type, id);
     }
+
     private void HandleChestOpened(Chest chest)
     {
         ItemManager.Instance.AddItem(chest.itemId, chest.amount);
         ItemManager.Instance.RegisterUnlock(UnlockIdListType.OpenedChest, chest.chestId);
     }
-    private void HandlePlayerDie(GameObject player)
-    {
-        StartCoroutine(PlayerManager.Instance.DeathAndRespawn(player));
-    }
 
-    private void HandlePlayerDieComplete(GameObject player)
-    {
-        CinemachineVirtualCamera virtualCam = FindObjectOfType<CinemachineVirtualCamera>();
-        if (virtualCam != null)
-            virtualCam.Follow = player.transform;
-    }
-
-    private void HandlePlayerGameOver()
-    {
-        StartCoroutine(PlayerManager.Instance.GameOverAndRespawn());
-    }
-
-    private void HandlePlayerGameOverComplete()
-    {
-        GameManager.Instance.spawnPortalName = GameManager.Instance.saveScene + "Spawn0";
-        SceneManager.LoadScene(GameManager.Instance.saveScene);
-    }
-
-    private void HandlePickUpItem(ItemPickup item)
-    {
-        var template = ItemManager.Instance.GetTemplateById(item.itemId);
-        if (template == null) return;
-        ItemManager.Instance.AddItem(item.itemId, item.amount, item.pickupId); // 撿取物品 → 加到背包
-    }
+    // ── UI ────────────────────────────────────────────────
 
     private void HandleHealthChanged(int current, int max)
     {
@@ -98,6 +130,8 @@ public class EventManager : MonoBehaviour
     {
         UIManager.Instance.RefreshStaminaUI(current, max);
     }
+
+    // ── Clothes ───────────────────────────────────────────
 
     private void HandleClothesEquipped(string id)
     {

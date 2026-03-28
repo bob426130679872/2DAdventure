@@ -11,7 +11,10 @@ public class GameManager : MonoBehaviour
     // 使用 public 以便存檔管理器存取和序列化
 
   
-    public string saveScene; // 玩家存檔點名稱(場景名)
+    public string saveScene;         // 玩家存檔點名稱(場景名)
+    public string savePointName;     // 存檔時使用的 SavePoint GameObject 名稱
+    public bool isGameOverRespawn;   // AllScene 用來判斷是否要生成在 savePoint
+    public bool isDieRespawn;        // AllScene 用來判斷是否要生成在 safePosition
 
     public string spawnPortalName; // 玩家接下來要生成的生成點名稱
     public string playerName;
