@@ -8,17 +8,14 @@ public static class GameEvents
     // --- 玩家相關事件 ---
     public static class Player
     {
-        public static event Action<GameObject> OnPlayerDie;
-        public static void TriggerPlayerDie(GameObject player) => OnPlayerDie?.Invoke(player);
-
-        public static event Action<GameObject> OnPlayerDieComplete;
-        public static void TriggerPlayerDieComplete(GameObject player) => OnPlayerDieComplete?.Invoke(player);
+        public static event Action OnPlayerDie;
+        public static void TriggerPlayerDie() => OnPlayerDie?.Invoke();
 
         public static event Action OnPlayerGameOver;
         public static void TriggerPlayerGameOver() => OnPlayerGameOver?.Invoke();
 
-        public static event Action OnPlayerGameOverComplete;
-        public static void TriggerPlayerGameOverComplete() => OnPlayerGameOverComplete?.Invoke();
+        public static event Action OnPlayerRespawn;
+        public static void TriggerPlayerRespawn() => OnPlayerRespawn?.Invoke();
 
         public static event Action<int, int> OnStaminaChanged; // current, max
         public static void TriggerStaminaChanged(int current, int max) => OnStaminaChanged?.Invoke(current, max);

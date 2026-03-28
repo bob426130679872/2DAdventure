@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 [Serializable]
 public class PlayerData
@@ -7,6 +8,7 @@ public class PlayerData
     public string playerName;
     public float maxHealth;
     public string playerPosition;
+    public string savePointName;
 
     public List<ItemSaveData> items = new();
     public List<UnlockIdListData> UnlockIdLists = new();
@@ -23,13 +25,14 @@ public class PlayerData
     }
 
     // 🔹 自訂建構子 (載入時用)
-    public PlayerData(string name, string pos,
+    public PlayerData(string name, string pos, string savePoint = "",
                       List<ItemSaveData> itemList = null,
                       List<UnlockIdListData> UnlockIdLists = null,
                       StorySaveData story = null)
     {
         playerName = name;
         playerPosition = pos;
+        savePointName = savePoint;
         this.items = itemList ?? new List<ItemSaveData>();
         this.UnlockIdLists = UnlockIdLists?? new List<UnlockIdListData>();
 

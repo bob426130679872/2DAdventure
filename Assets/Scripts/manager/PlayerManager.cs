@@ -72,15 +72,14 @@ public class PlayerManager : MonoBehaviour
 
     private void Start()
     {
-        firePoint = player.transform.GetChild(5).gameObject;
         InitializeStats();
         CheckAndSetLight();
     }
 
     public void CaculateBonus()
     {
-        maxHealthBonus = ItemManager.Instance.GetItemCount("MPContainer");
-        maxStaminaBonus = ItemManager.Instance.GetItemCount("HPContainer");
+        maxHealthBonus = ItemManager.Instance.GetItemCount("HPContainer") / 3 * 2;
+        maxStaminaBonus = ItemManager.Instance.GetItemCount("MPContainer") / 3* 3;
         moveSpeedBonus = 0f;
         attackBonus = 0f;
         defenseBonus = 0f;
@@ -126,93 +125,49 @@ public class PlayerManager : MonoBehaviour
         GameEvents.Player.TriggerStaminaChanged(currentStamina, maxStamina);
     }
 
-    // --- 安全的修改方法 ---
+    // --- 受傷 ---
     public void TakeDamage(int amount)
     {
         if (isDying) return;
         currentHealth = Mathf.Clamp(currentHealth - amount, 0, maxHealth);
         GameEvents.Player.TriggerHealthChanged(currentHealth, maxHealth);
         if (currentHealth <= 0)
-        {
-            isDying = true;
             GameEvents.Player.TriggerPlayerGameOver();
-        }
     }
 
-    // 掉懸崖：扣 1 格心（2 半格），再決定走哪條路
-    public IEnumerator DeathAndRespawn(GameObject player)
+    // 掉懸崖傷害：扣 2 半格，回傳是否 GameOver（由 EventManager 決定後續流程）
+    public bool TakeFallDamage()
     {
-        isDying = true;
-
         currentHealth = Mathf.Clamp(currentHealth - 2, 0, maxHealth);
         GameEvents.Player.TriggerHealthChanged(currentHealth, maxHealth);
-
-        if (currentHealth <= 0)
-        {
-            GameEvents.Player.TriggerPlayerGameOver();
-            yield break;
-        }
-
-        var controller = player.GetComponent<PlayerController>();
-        controller.StopFly();
-        player.GetComponent<BoxCollider2D>().enabled = false;
-        controller.enabled = false;
-
-        if (player.GetComponent<Rigidbody2D>())
-        {
-            player.GetComponent<Rigidbody2D>().isKinematic = true;
-            player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        }
-
-        yield return new WaitForSeconds(1f);
-
-        player.SetActive(false);
-
-        string safeScene = GameManager.Instance.safeSceneName;
-        if (SceneManager.GetActiveScene().name != safeScene)
-        {
-            SceneManager.LoadScene(safeScene);
-            yield break;
-        }
-
-        RespawnPlayer(player);
-        isDying = false;
+        return currentHealth <= 0;
     }
 
-    // GameOver：回到存檔點場景，血量回滿
-    public IEnumerator GameOverAndRespawn()
+    // 禁用玩家控制（由 EventManager 在 coroutine 中呼叫）
+    public void DisablePlayer()
     {
         var controller = player.GetComponent<PlayerController>();
         controller.StopFly();
         player.GetComponent<BoxCollider2D>().enabled = false;
         controller.enabled = false;
-
-        if (player.GetComponent<Rigidbody2D>())
+        var rb = player.GetComponent<Rigidbody2D>();
+        if (rb != null)
         {
-            player.GetComponent<Rigidbody2D>().isKinematic = true;
-            player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            rb.isKinematic = true;
+            rb.velocity = Vector2.zero;
         }
-
-        yield return new WaitForSeconds(1f);
-
-        currentHealth = maxHealth;
-        GameEvents.Player.TriggerHealthChanged(currentHealth, maxHealth);
-        GameEvents.Player.TriggerPlayerGameOverComplete();
     }
 
-    void RespawnPlayer(GameObject player)
+    // 復活（由 AllScene 在場景載入後呼叫）
+    public void Respawn()
     {
-        Vector3 safePos = GameManager.Instance.safePosition;
-
-        player.transform.position = safePos;
-        player.SetActive(true);
         player.GetComponent<BoxCollider2D>().enabled = true;
         player.GetComponent<PlayerController>().enabled = true;
-
-        if (player.GetComponent<Rigidbody2D>())
-            player.GetComponent<Rigidbody2D>().isKinematic = false;
-
-        GameEvents.Player.TriggerPlayerDieComplete(player);
+        var rb = player.GetComponent<Rigidbody2D>();
+        if (rb != null) rb.isKinematic = false;
+        isDying = false;
+        CheckAndSetLight();
+        GameEvents.Player.TriggerPlayerRespawn();
     }
 
     public void CheckAndSetLight()

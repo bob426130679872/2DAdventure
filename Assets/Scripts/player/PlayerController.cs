@@ -53,10 +53,11 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         originalScale = transform.localScale;
-        dash = new PlayerDash(this); 
+        dash = new PlayerDash(this);
         explode = new PlayerExplode(this);
         shooting = new PlayerShooting(this);
         fly = new PlayerFly(this);
+        PlayerManager.Instance.firePoint = transform.GetChild(5).gameObject;
     }
 
     void Update()

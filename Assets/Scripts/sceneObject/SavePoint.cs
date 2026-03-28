@@ -34,9 +34,8 @@ public class SavePoint : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            // 更新存檔場景
             GameManager.Instance.saveScene = SceneManager.GetActiveScene().name;
-            //儲存data
+            GameManager.Instance.savePointName = gameObject.name;
             SaveManager.Instance.SaveAll(GameManager.Instance.playerName);
             Debug.Log($"儲存成功：場景 {GameManager.Instance.saveScene}");
         }
