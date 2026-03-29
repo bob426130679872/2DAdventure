@@ -28,10 +28,22 @@ public class AllScene : MonoBehaviour
             GameObject savePoint = GameObject.Find(GameManager.Instance.savePointName);
             spawnPos = savePoint.transform.position;
         }
-        else
+        else if (!string.IsNullOrEmpty(GameManager.Instance.spawnPortalName))
         {
             GameObject spawnPortal = GameObject.Find(GameManager.Instance.spawnPortalName);
-            if (spawnPortal == null) spawnPortal = GameObject.Find("testSpawnPortal");
+            spawnPos = spawnPortal.transform.position;
+        }
+
+        //先註解掉以便隨意切場景測試
+
+        // else if (!string.IsNullOrEmpty(GameManager.Instance.savePointName))
+        // {
+        //     GameObject savePoint = GameObject.Find(GameManager.Instance.savePointName);
+        //     spawnPos = savePoint.transform.position;
+        // }
+        else
+        {
+            GameObject spawnPortal = GameObject.Find("testSpawnPortal");
             spawnPos = spawnPortal.transform.position;
         }
         if (GameManager.Instance.safePosition == Vector3.zero)
