@@ -1,4 +1,25 @@
+using System.Collections.Generic;
 using UnityEngine;
+
+public enum AttackType { Melee, Projectile, AOE }
+[System.Serializable]
+public class DropEntry
+{
+    public string itemId;
+    [Range(0f, 1f)]
+    public float chance;
+}
+
+[System.Serializable]
+public class AttackPattern
+{
+    public string attackName;
+    public AttackType type;
+    public int damage;
+    public float cooldown;
+    public string animTrigger;
+    public GameObject projectilePrefab;
+}
 
 [CreateAssetMenu(fileName = "EnemyData", menuName = "Enemy/EnemyData")]
 public class EnemyData : ScriptableObject
@@ -9,14 +30,12 @@ public class EnemyData : ScriptableObject
 
     [Header("基本數值")]
     public int maxHealth = 100;
-    public float moveSpeed = 2f;
-    public int attackDamage = 10;
-    public float attackRange = 1.5f;
-    public float attackCooldown = 1f;
-    // 感應範圍由子物件碰撞體大小決定，不需在此設定
+    public float baseMoveSpeed = 2f;
+
+    [Header("攻擊模式")]
+    public List<AttackPattern> attackPatterns = new();
 
     [Header("掉落設定")]
-    public string dropItemId;
-    [Range(0f, 1f)]
-    public float dropChance = 0.5f;
+    public int maxDropCount = -1;  // -1 = 不限制，0 = 不掉
+    public List<DropEntry> drops;
 }

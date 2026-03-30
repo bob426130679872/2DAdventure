@@ -9,6 +9,8 @@ public abstract class EnemyController : MonoBehaviour
 
     protected Rigidbody2D rb;
     protected int currentHealth;
+    protected float currentMoveSpeed;
+    public int currentAttackDamage { get; protected set; }
     protected bool isDead = false;
     protected bool isFacingRight = true;
     protected Transform player;
@@ -22,6 +24,7 @@ public abstract class EnemyController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         currentHealth = data.maxHealth;
+        currentMoveSpeed = data.baseMoveSpeed;
         EnemyManager.Instance?.RegisterEnemy(this);
 
         if (PlayerManager.Instance?.player != null)
@@ -54,6 +57,21 @@ public abstract class EnemyController : MonoBehaviour
     }
 
     protected virtual void OnDie() { }
+
+    protected void RollDrops()
+    {
+        if (data.drops == null || data.drops.Count == 0 || data.maxDropCount == 0) return;
+        int limit = data.maxDropCount > 0 ? data.maxDropCount : int.MaxValue;
+        int count = 0;
+
+        foreach (var drop in data.drops)
+        {
+            if (count >= limit) break;
+            if (Random.value < drop.chance) { SpawnDrop(drop.itemId); count++; }
+        }
+    }
+
+    protected virtual void SpawnDrop(string itemId) { }
 
     // ── 工具方法 ──────────────────────────────────────────
 
