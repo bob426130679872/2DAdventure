@@ -20,6 +20,6 @@ public class EnemyAttackZone : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
-            PlayerManager.Instance?.TakeDamage(enemy.data.attackDamage);
+            PlayerManager.Instance?.TakeDamage(enemy.currentAttackDamage);
     }
 }
