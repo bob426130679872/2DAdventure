@@ -15,6 +15,7 @@ public class SlimeController : EnemyController
     [Header("攻擊設定")]
     public GameObject attackZoneObject;   // 拖入攻擊範圍子物件
     public float attackActiveDuration = 0.2f;
+    public float attackRange = 1.5f;
 
     private float patrolTimer = 0f;
     private float patrolDirection = 1f;
@@ -33,7 +34,7 @@ public class SlimeController : EnemyController
 
         float dist = DistanceToPlayer();
 
-        if (dist <= data.attackRange)
+        if (dist <= attackRange)
             state = State.Attack;
         else if (isPlayerDetected)
             state = State.Chase;
@@ -58,14 +59,14 @@ public class SlimeController : EnemyController
             patrolTimer = 0f;
             patrolDirection *= -1f;
         }
-        rb.velocity = new Vector2(patrolDirection * data.moveSpeed * 0.5f, rb.velocity.y);
+        rb.velocity = new Vector2(patrolDirection * currentMoveSpeed * 0.5f, rb.velocity.y);
         Flip(patrolDirection);
     }
 
     void HandleChase()
     {
         Vector2 dir = DirectionToPlayer();
-        rb.velocity = new Vector2(dir.x * data.moveSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(dir.x * currentMoveSpeed, rb.velocity.y);
         Flip(dir.x);
     }
 
@@ -76,7 +77,9 @@ public class SlimeController : EnemyController
         rb.velocity = new Vector2(0, rb.velocity.y);
         if (attackTimer <= 0f)
         {
-            attackTimer = data.attackCooldown;
+            var pattern = data.attackPatterns.Count > 0 ? data.attackPatterns[0] : null;
+            attackTimer = pattern != null ? pattern.cooldown : 1f;
+            currentAttackDamage = pattern != null ? pattern.damage : 0;
             if (attackZoneObject != null)
                 StartCoroutine(ActivateAttackZone(attackZoneObject, attackActiveDuration));
         }
