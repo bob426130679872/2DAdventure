@@ -6,20 +6,16 @@ using UnityEngine;
 /// </summary>
 public class EnemyAttackZone : MonoBehaviour
 {
-    private EnemyController enemy;
+    public int damage;
 
     void Awake()
     {
-        enemy = GetComponentInParent<EnemyController>();
-        if (enemy == null)
-            Debug.LogWarning($"EnemyAttackZone [{gameObject.name}]：找不到父物件的 EnemyController");
-
         gameObject.SetActive(false);
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
-            PlayerManager.Instance?.TakeDamage(enemy.currentAttackDamage);
+            PlayerManager.Instance?.TakeDamage(damage);
     }
 }

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum AttackType { Melee, Projectile, AOE }
 [System.Serializable]
 public class DropEntry
 {
@@ -14,11 +13,9 @@ public class DropEntry
 public class AttackPattern
 {
     public string attackName;
-    public AttackType type;
-    public int damage;
     public float cooldown;
     public string animTrigger;
-    public GameObject projectilePrefab;
+    public GameObject attackColliderPrefab;
 }
 
 [CreateAssetMenu(fileName = "EnemyData", menuName = "Enemy/EnemyData")]
