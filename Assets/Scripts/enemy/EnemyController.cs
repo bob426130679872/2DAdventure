@@ -10,10 +10,8 @@ public abstract class EnemyController : MonoBehaviour
     protected Rigidbody2D rb;
     protected int currentHealth;
     protected float currentMoveSpeed;
-    public int currentAttackDamage { get; protected set; }
     protected bool isDead = false;
     protected bool isFacingRight = true;
-    protected Transform player;
 
     public bool isPlayerDetected { get; private set; } = false;
 
@@ -26,9 +24,6 @@ public abstract class EnemyController : MonoBehaviour
         currentHealth = data.maxHealth;
         currentMoveSpeed = data.baseMoveSpeed;
         EnemyManager.Instance?.RegisterEnemy(this);
-
-        if (PlayerManager.Instance?.player != null)
-            player = PlayerManager.Instance.player.transform;
     }
 
     protected virtual void OnDestroy()
@@ -86,18 +81,6 @@ public abstract class EnemyController : MonoBehaviour
         }
     }
 
-    protected float DistanceToPlayer()
-    {
-        if (player == null) return float.MaxValue;
-        return Vector2.Distance(transform.position, player.position);
-    }
-
-    protected Vector2 DirectionToPlayer()
-    {
-        if (player == null) return Vector2.zero;
-        return (player.position - transform.position).normalized;
-    }
-
     // ── 攻擊輔助 ─────────────────────────────────────────
 
     /// <summary>近戰：SetActive 開啟攻擊碰撞體 duration 秒後關閉</summary>
@@ -108,12 +91,4 @@ public abstract class EnemyController : MonoBehaviour
         zone.SetActive(false);
     }
 
-    /// <summary>遠程：在 spawnPoint 生成子彈 prefab</summary>
-    protected void FireProjectile(GameObject prefab, Transform spawnPoint, Vector2 direction, float speed)
-    {
-        GameObject bullet = Instantiate(prefab, spawnPoint.position, Quaternion.identity);
-        Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
-        if (bulletRb != null)
-            bulletRb.velocity = direction * speed;
-    }
 }
