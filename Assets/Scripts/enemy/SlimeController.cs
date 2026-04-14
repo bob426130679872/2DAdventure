@@ -21,18 +21,16 @@ public class SlimeController : EnemyController
     private float patrolDirection = 1f;
     private float attackTimer = 0f;
 
-    protected override void Start()
-    {
-        base.Start();
-    }
-
     void Update()
     {
         if (isDead) return;
 
         attackTimer -= Time.deltaTime;
 
-        float dist = DistanceToPlayer();
+        Transform playerTransform = PlayerManager.Instance?.player?.transform;
+        float dist = playerTransform != null
+            ? Vector2.Distance(transform.position, playerTransform.position)
+            : float.MaxValue;
 
         if (dist <= attackRange)
             state = State.Attack;
@@ -65,7 +63,9 @@ public class SlimeController : EnemyController
 
     void HandleChase()
     {
-        Vector2 dir = DirectionToPlayer();
+        Transform playerTransform = PlayerManager.Instance?.player?.transform;
+        if (playerTransform == null) return;
+        Vector2 dir = ((Vector2)(playerTransform.position - transform.position)).normalized;
         rb.velocity = new Vector2(dir.x * currentMoveSpeed, rb.velocity.y);
         Flip(dir.x);
     }
@@ -75,14 +75,12 @@ public class SlimeController : EnemyController
     void HandleAttack()
     {
         rb.velocity = new Vector2(0, rb.velocity.y);
-        if (attackTimer <= 0f)
-        {
-            var pattern = data.attackPatterns.Count > 0 ? data.attackPatterns[0] : null;
-            attackTimer = pattern != null ? pattern.cooldown : 1f;
-            currentAttackDamage = pattern != null ? pattern.damage : 0;
-            if (attackZoneObject != null)
-                StartCoroutine(ActivateAttackZone(attackZoneObject, attackActiveDuration));
-        }
+        if (attackTimer > 0f) return;
+
+        var pattern = data.attackPatterns.Count > 0 ? data.attackPatterns[0] : null;
+        attackTimer = pattern?.cooldown ?? 1f;
+        if (attackZoneObject != null)
+            StartCoroutine(ActivateAttackZone(attackZoneObject, attackActiveDuration));
     }
 
     protected override void OnHit()
