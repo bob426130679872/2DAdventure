@@ -1,17 +1,15 @@
 using UnityEngine;
 
 /// <summary>
-/// 掛在敵人攻擊範圍子物件上，子物件需有 Collider2D (IsTrigger = true)
-/// 攻擊時由 EnemyController 呼叫 SetActive(true)，結束後再 SetActive(false)
+/// 攻擊時生成的傷害碰撞體，碰到玩家造成傷害後依 lifetime 自毀。
+/// 需有 Collider2D (IsTrigger = true)
 /// </summary>
 public class EnemyAttackZone : MonoBehaviour
 {
     public int damage;
+    public float lifetime = 0.3f;
 
-    void Awake()
-    {
-        gameObject.SetActive(false);
-    }
+    void Start() => Destroy(gameObject, lifetime);
 
     void OnTriggerEnter2D(Collider2D other)
     {
