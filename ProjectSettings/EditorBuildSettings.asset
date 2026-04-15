@@ -9,18 +9,18 @@ EditorBuildSettings:
     path: Assets/Scenes/StartScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Scenes/forest/InitialVillage.unity
+    path: Assets/Scenes/GROUND/Forest/InitialVillage.unity
     guid: c137d9efa835fb44084df8a19fa83819
   - enabled: 1
-    path: Assets/Scenes/forest/SummerForest1.unity
+    path: Assets/Scenes/GROUND/Forest/SummerForest1.unity
     guid: 52c3c091670df354984c5f8b9556217b
   - enabled: 1
-    path: Assets/Scenes/forest/AutumnForest1.unity
+    path: Assets/Scenes/GROUND/Forest/AutumnForest1.unity
     guid: 8b4c324d8622d1748821ad53cb822fef
   - enabled: 1
-    path: Assets/Scenes/forest/SummerForest2.unity
+    path: Assets/Scenes/GROUND/Forest/SpringForest.unity
     guid: b3993a6cb5a55554287ea320963d2478
   - enabled: 1
-    path: Assets/Scenes/forest/WinterForest1.unity
+    path: Assets/Scenes/GROUND/Forest/WinterForest0.unity
     guid: 1b60917112fb8074daabefbbdff1660c
   m_configObjects: {}
