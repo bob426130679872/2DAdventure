@@ -2,15 +2,15 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public abstract class EnemyController : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     [Header("敵人資料")]
     public EnemyData data;
 
     protected Rigidbody2D rb;
-    protected int currentHealth;
-    protected float currentMoveSpeed;
-    protected bool isDead = false;
+    public int currentHealth { get; private set; }
+    public float currentMoveSpeed { get; protected set; }
+    public bool isDead { get; private set; } = false;
     protected bool isFacingRight = true;
 
     public bool isPlayerDetected { get; private set; } = false;
@@ -33,25 +33,20 @@ public abstract class EnemyController : MonoBehaviour
 
     // ── 受傷 / 死亡 ──────────────────────────────────────
 
-    public virtual void TakeDamage(int amount)
+    public void TakeDamage(int amount)
     {
         if (isDead) return;
         currentHealth -= amount;
-        OnHit();
-        if (currentHealth <= 0) Die();
+        if (currentHealth <= 0) MarkDead();
     }
 
-    protected virtual void OnHit() { }
-
-    protected virtual void Die()
+    private void MarkDead()
     {
         isDead = true;
         EnemyManager.Instance?.UnregisterEnemy(this);
-        OnDie();
-        Destroy(gameObject);
+        RollDrops();
+        // 不在此處 Destroy — 由受擊碰撞體腳本播完動畫後負責
     }
-
-    protected virtual void OnDie() { }
 
     protected void RollDrops()
     {
@@ -81,14 +76,10 @@ public abstract class EnemyController : MonoBehaviour
         }
     }
 
-    // ── 攻擊輔助 ─────────────────────────────────────────
-
-    /// <summary>近戰：SetActive 開啟攻擊碰撞體 duration 秒後關閉</summary>
     protected IEnumerator ActivateAttackZone(GameObject zone, float duration)
     {
         zone.SetActive(true);
         yield return new WaitForSeconds(duration);
         zone.SetActive(false);
     }
-
 }
