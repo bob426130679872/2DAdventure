@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -83,13 +84,39 @@ public class SlimeController : EnemyController
             StartCoroutine(ActivateAttackZone(attackZoneObject, attackActiveDuration));
     }
 
-    protected override void OnHit()
+    // ── 受擊 / 死亡 ──────────────────────────────────────
+
+    void OnTriggerEnter2D(Collider2D other)
     {
-        // TODO：受擊特效 / 閃爍
+        var bullet = other.GetComponent<MPbullet>();
+        if (bullet != null)
+            StartCoroutine(HandleHit(bullet.damage));
     }
 
-    protected override void OnDie()
+    IEnumerator HandleHit(int damage)
     {
-        // TODO：死亡特效 / 掉落物品
+        TakeDamage(damage);
+
+        if (isDead)
+        {
+            yield return StartCoroutine(DeathRoutine());
+            Destroy(gameObject);
+        }
+        else
+        {
+            yield return StartCoroutine(HitRoutine());
+        }
+    }
+
+    IEnumerator HitRoutine()
+    {
+        // TODO：受擊動畫
+        yield break;
+    }
+
+    IEnumerator DeathRoutine()
+    {
+        // TODO：死亡動畫
+        yield break;
     }
 }

@@ -5,12 +5,12 @@ public class EnemyManager : MonoBehaviour
 {
     public static EnemyManager Instance;
 
-    private readonly List<EnemyController> enemies = new List<EnemyController>();
+    private List<EnemyController> enemies = new();
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        else  Destroy(gameObject);
     }
 
     // ── 註冊 / 移除 ───────────────────────────────────────
@@ -30,5 +30,5 @@ public class EnemyManager : MonoBehaviour
 
     public int EnemyCount => enemies.Count;
 
-    public List<EnemyController> GetAllEnemies() => new List<EnemyController>(enemies);
+    public List<EnemyController> GetAllEnemies() => enemies;
 }
