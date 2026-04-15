@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -14,6 +13,11 @@ public class EnemyController : MonoBehaviour
     protected bool isFacingRight = true;
 
     public bool isPlayerDetected { get; private set; } = false;
+
+    // 由子物件感應腳本寫入
+    public bool isGroundAhead    { get; set; } = true;
+    public bool isWallAhead      { get; set; } = false;
+    public bool isPlayerInAtkRange { get; set; } = false;
 
     public void OnPlayerEnterDetection() => isPlayerDetected = true;
     public void OnPlayerExitDetection() => isPlayerDetected = false;
@@ -76,10 +80,4 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    protected IEnumerator ActivateAttackZone(GameObject zone, float duration)
-    {
-        zone.SetActive(true);
-        yield return new WaitForSeconds(duration);
-        zone.SetActive(false);
-    }
 }

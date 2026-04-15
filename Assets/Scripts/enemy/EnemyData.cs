@@ -28,6 +28,7 @@ public class EnemyData : ScriptableObject
     [Header("基本數值")]
     public int maxHealth = 100;
     public float baseMoveSpeed = 2f;
+    public int contactDamage = 10;
 
     [Header("攻擊模式")]
     public List<AttackPattern> attackPatterns = new();
