@@ -12,6 +12,7 @@ public class SlimeController : EnemyController
     private float patrolDirection = 1f;
     private bool wasBlocked = false;
     private bool attackOnCooldown = false;
+    private State prevState = State.Patrol;
 
     // ── 狀態機 ───────────────────────────────────────────
 
@@ -21,16 +22,38 @@ public class SlimeController : EnemyController
 
         if (isPlayerInAtkRange)
             state = State.Attack;
-        else if (isPlayerDetected)
+        else if (seePlayer)
             state = State.Chase;
         else
             state = State.Patrol;
 
+        if (state != prevState)
+        {
+            OnStateEnter(state);
+            prevState = state;
+        }
+
         switch (state)
         {
             case State.Patrol: HandlePatrol(); break;
-            case State.Chase:  HandleChase();  break;
+            case State.Chase: HandleChase(); break;
             case State.Attack: HandleAttack(); break;
+        }
+    }
+
+    void OnStateEnter(State newState)
+    {
+        switch (newState)
+        {
+            case State.Chase:
+                currentMoveSpeed = 4f;
+                break;
+            case State.Patrol:
+                currentMoveSpeed = data.baseMoveSpeed;
+                break;
+            case State.Attack:
+                
+                break;
         }
     }
 
@@ -40,11 +63,13 @@ public class SlimeController : EnemyController
     {
         bool blocked = !isGroundAhead || isWallAhead;
         if (blocked && !wasBlocked)
+        {
             patrolDirection *= -1f;
+            Flip();
+        }
         wasBlocked = blocked;
 
-        rb.velocity = new Vector2(patrolDirection * currentMoveSpeed * 0.5f, rb.velocity.y);
-        Flip(patrolDirection);
+        rb.velocity = new Vector2(patrolDirection * currentMoveSpeed, rb.velocity.y);
     }
 
     void HandleChase()
@@ -52,17 +77,18 @@ public class SlimeController : EnemyController
         var player = PlayerManager.Instance?.player;
         if (player == null) return;
         float dirX = Mathf.Sign(player.transform.position.x - transform.position.x);
+        if (dirX > 0 && !isFacingRight || dirX < 0 && isFacingRight)
+            Flip();
         rb.velocity = new Vector2(dirX * currentMoveSpeed, rb.velocity.y);
-        Flip(dirX);
     }
 
     // ── 攻擊邏輯 ──────────────────────────────────────────
 
     void HandleAttack()
     {
-        rb.velocity = new Vector2(0, rb.velocity.y);
-        if (!attackOnCooldown)
-            StartCoroutine(AttackRoutine());
+        // rb.velocity = new Vector2(0, rb.velocity.y);
+        // if (!attackOnCooldown)
+        //     StartCoroutine(AttackRoutine());
     }
 
     IEnumerator AttackRoutine()
@@ -81,6 +107,7 @@ public class SlimeController : EnemyController
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        if (isDead) return;
         var bullet = other.GetComponent<MPbullet>();
         if (bullet != null)
             StartCoroutine(HandleHit(bullet.damage));

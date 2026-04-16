@@ -16,15 +16,21 @@ public class TerrainChecker : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (!other.CompareTag("Tile")) return;
-        if (checkType == CheckType.Wall)        enemy.isWallAhead   = true;
-        else                                    enemy.isGroundAhead = true;
+        if (other.CompareTag("Tile"))
+        {
+            if (checkType == CheckType.Wall) enemy.isWallAhead = true;
+            else enemy.isGroundAhead = true;
+        }
+
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (!other.CompareTag("Tile")) return;
-        if (checkType == CheckType.Wall)        enemy.isWallAhead   = false;
-        else                                    enemy.isGroundAhead = false;
+        if (other.CompareTag("Tile"))
+        {
+            if (checkType == CheckType.Wall) enemy.isWallAhead = false;
+            else enemy.isGroundAhead = false;
+        }
+
     }
 }

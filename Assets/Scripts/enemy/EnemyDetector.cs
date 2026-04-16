@@ -6,24 +6,17 @@ using UnityEngine;
 /// </summary>
 public class EnemyDetector : MonoBehaviour
 {
-    private EnemyController enemy;
+    EnemyController enemy;
 
-    void Awake()
-    {
-        enemy = GetComponentInParent<EnemyController>();
-        if (enemy == null)
-            Debug.LogWarning($"EnemyDetector [{gameObject.name}]：找不到父物件的 EnemyController");
-    }
+    void Awake() => enemy = GetComponentInParent<EnemyController>();
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-            enemy?.OnPlayerEnterDetection();
+        if (other.CompareTag("Player")) enemy.seePlayer = true;
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-            enemy?.OnPlayerExitDetection();
+        if (other.CompareTag("Player")) enemy.seePlayer = false;
     }
 }
