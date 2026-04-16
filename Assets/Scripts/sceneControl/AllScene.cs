@@ -42,6 +42,7 @@ public class AllScene : MonoBehaviour
         else if (!string.IsNullOrEmpty(GameManager.Instance.spawnPortalName))
         {
             GameObject spawnPortal = GameObject.Find(GameManager.Instance.spawnPortalName);
+            Debug.Log(GameManager.Instance.spawnPortalName);
             spawnPos = spawnPortal.transform.position;
         }
 
