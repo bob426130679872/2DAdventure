@@ -68,7 +68,7 @@ public class PlayerFly
         if (pm.currentStamina <= 0)
             StopFlying();
 
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.W))
             StopFlying();
     }
 

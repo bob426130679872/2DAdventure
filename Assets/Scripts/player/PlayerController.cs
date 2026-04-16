@@ -117,7 +117,7 @@ public class PlayerController : MonoBehaviour
             transform.localScale = new Vector3(Mathf.Abs(originalScale.x), originalScale.y, originalScale.z);
         }
 
-        if (Input.GetKeyDown(KeyCode.K) && !lockJump && !isWallSliding && (collisionWithGround || jumpCount < pm.maxJumpCount))
+        if (Input.GetKeyDown(KeyCode.W) && !lockJump && !isWallSliding && (collisionWithGround || jumpCount < pm.maxJumpCount))
         {
             if (!collisionWithGround)
                 jumpCount++;
@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour
             jumpTimeCounter = 0f;
         }
 
-        if (Input.GetKey(KeyCode.K) && !lockJump && isJumping)
+        if (Input.GetKey(KeyCode.W) && !lockJump && isJumping)
         {
             jumpTimeCounter += Time.deltaTime;
             if (jumpTimeCounter < pm.maxJumpTime)
@@ -142,7 +142,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.K))
+        if (Input.GetKeyUp(KeyCode.W))
         {
             isJumping = false;
         }
@@ -175,7 +175,7 @@ public class PlayerController : MonoBehaviour
             jumpCount = 0;
             dashCount = 0;
 
-            if (Input.GetKeyDown(KeyCode.K))
+            if (Input.GetKeyDown(KeyCode.W))
             {
                 isWallJumping = true;
                 lockHorizonMove = true;
