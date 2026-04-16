@@ -12,15 +12,12 @@ public class EnemyController : MonoBehaviour
     public bool isDead { get; private set; } = false;
     protected bool isFacingRight = true;
 
-    public bool isPlayerDetected { get; private set; } = false;
-
     // 由子物件感應腳本寫入
     public bool isGroundAhead    { get; set; } = true;
     public bool isWallAhead      { get; set; } = false;
-    public bool isPlayerInAtkRange { get; set; } = false;
 
-    public void OnPlayerEnterDetection() => isPlayerDetected = true;
-    public void OnPlayerExitDetection() => isPlayerDetected = false;
+    public bool seePlayer { get; set; } = false;
+    public bool isPlayerInAtkRange { get; set; } = false;
 
     protected virtual void Start()
     {
@@ -69,15 +66,12 @@ public class EnemyController : MonoBehaviour
 
     // ── 工具方法 ──────────────────────────────────────────
 
-    protected void Flip(float moveDirectionX)
+    protected void Flip()
     {
-        if (moveDirectionX > 0 && !isFacingRight || moveDirectionX < 0 && isFacingRight)
-        {
-            isFacingRight = !isFacingRight;
-            Vector3 scale = transform.localScale;
-            scale.x *= -1;
-            transform.localScale = scale;
-        }
+        isFacingRight = !isFacingRight;
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
     }
 
 }
