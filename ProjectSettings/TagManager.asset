@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Water
   - Tile
+  - tile
   layers:
   - Default
   - TransparentFX
@@ -15,10 +16,10 @@ TagManager:
   - Water
   - UI
   - background
-  - 
-  - 
-  - 
-  - 
+  - player
+  - enemy
+  - detectEnemy
+  - detectPlayer
   - 
   - 
   - 

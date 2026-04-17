@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd5440c8854e789488091603b23a1b35, type: 3}
   m_Name: slime
   m_EditorClassIdentifier: 
-  enemyName: 
+  enemyName: normalSlime
   enemyType: 0
   maxHealth: 100
   baseMoveSpeed: 2

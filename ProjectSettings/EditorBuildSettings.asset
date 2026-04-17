@@ -6,27 +6,477 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/StartScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/GROUND/AncientAltar/AncientAltar4.unity
+    guid: ffa1245e99b8a9e4396b9778cc637857
   - enabled: 1
-    path: Assets/Scenes/GROUND/Forest/InitialVillage.unity
-    guid: c137d9efa835fb44084df8a19fa83819
+    path: Assets/Scenes/GROUND/AncientAltar/1 4.unity
+    guid: 23c5df44c606bb74b8beaee94b8e2dbf
   - enabled: 1
-    path: Assets/Scenes/GROUND/Forest/SummerForest1.unity
-    guid: 52c3c091670df354984c5f8b9556217b
+    path: Assets/Scenes/GROUND/AncientAltar/1 5.unity
+    guid: 726a40a6011ddbd4d90fb8f28cd66f47
   - enabled: 1
-    path: Assets/Scenes/GROUND/Forest/AutumnForest1.unity
-    guid: 8b4c324d8622d1748821ad53cb822fef
-  - enabled: 1
-    path: Assets/Scenes/GROUND/Forest/SpringForest.unity
-    guid: b3993a6cb5a55554287ea320963d2478
-  - enabled: 1
-    path: Assets/Scenes/GROUND/Forest/WinterForest0.unity
-    guid: 1b60917112fb8074daabefbbdff1660c
+    path: Assets/Scenes/GROUND/AncientAltar/1 6.unity
+    guid: 4c5accacccc6c7648ab7edb88333bf32
   - enabled: 1
     path: Assets/Scenes/GROUND/AncientAltar/AncientAltar1.unity
     guid: 0cc8c28d2b47f6c4e81d34dd3d92dd5c
   - enabled: 1
     path: Assets/Scenes/GROUND/AncientAltar/AncientAltar2.unity
     guid: e5c24ee41f53d4a49acc98f47f92e143
+  - enabled: 1
+    path: Assets/Scenes/GROUND/AncientAltar/AncientAltar3.unity
+    guid: 56678ab4c2cc8124fa2c69ac611d035d
+  - enabled: 1
+    path: Assets/Scenes/GROUND/CityOfPureLand/Bosss.unity
+    guid: fcda5da59d407494fb0d2be5a83a2451
+  - enabled: 1
+    path: Assets/Scenes/GROUND/CityOfPureLand/City 1.unity
+    guid: 6719dba55c56fa649a89670a1165496f
+  - enabled: 1
+    path: Assets/Scenes/GROUND/CityOfPureLand/City.unity
+    guid: a45a077b751103a47b650be5c1acf5e6
+  - enabled: 1
+    path: Assets/Scenes/GROUND/CityOfPureLand/DarkForest.unity
+    guid: 8be6b7a216a9fa8418ab11006749dfc8
+  - enabled: 1
+    path: Assets/Scenes/GROUND/CityOfPureLand/OldCastle 1.unity
+    guid: f1da26703e5b67044948e502b6b4828f
+  - enabled: 1
+    path: Assets/Scenes/GROUND/CityOfPureLand/OldCastle 2.unity
+    guid: c14ce88fe5a9ac44582cea9c9d6e0391
+  - enabled: 1
+    path: Assets/Scenes/GROUND/CityOfPureLand/OldCastle 3.unity
+    guid: 4698736d2719b68489a8ee7260800551
+  - enabled: 1
+    path: Assets/Scenes/GROUND/CityOfPureLand/OldCastle 4.unity
+    guid: 958b7eb3fa02b4e4185b480bcf4828e4
+  - enabled: 1
+    path: Assets/Scenes/GROUND/CityOfPureLand/OldCastle 5.unity
+    guid: 9ba46c0b896c367428bfedc443daa6dc
+  - enabled: 1
+    path: Assets/Scenes/GROUND/CityOfPureLand/OldCastle.unity
+    guid: acf140b19b731ed459fa365d1d42ee70
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Desert/1 1.unity
+    guid: 3ec2fcd0c6ea5ac43bd6b261bc55eed0
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Desert/1 2down 1.unity
+    guid: e70d50e60a8746b41bd163e61da9202e
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Desert/1 2down 2.unity
+    guid: cfac708123952cf459ebe0dce8226e1e
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Desert/1 2up 1.unity
+    guid: daaff0e42bb6379468b7f1b732ab3fb2
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Desert/1 2up.unity
+    guid: 688a76a2a5d593441ac3250d5226171e
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Desert/1.unity
+    guid: e4f7be9be45d21f4e8e4efc0268d281b
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Desert/boss.unity
+    guid: 8b2cf49559667724fb409ecef489fa87
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Desert/EMAA.unity
+    guid: f6558f6d8c3e02140b92347116310b63
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Forest/AutumnForest1.unity
+    guid: 8b4c324d8622d1748821ad53cb822fef
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Forest/AutumnForest2.unity
+    guid: 7878fa6f6f63cc54c8e9c74c9be3d01b
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Forest/EMMC.unity
+    guid: 08734bcd3293c8344bca986a5e21330d
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Forest/InitialVillage.unity
+    guid: c137d9efa835fb44084df8a19fa83819
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Forest/OldForest/1 1.unity
+    guid: 996d76f72d67f9e408eb6239b6fc4e1e
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Forest/OldForest/1 2.unity
+    guid: 46815282ef69e2a48bd98287213940e0
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Forest/OldForest/1.unity
+    guid: 02974bf2aa039644683ea9b056957f0d
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Forest/SpringForest.unity
+    guid: b3993a6cb5a55554287ea320963d2478
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Forest/SummerForest1.unity
+    guid: 52c3c091670df354984c5f8b9556217b
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Forest/SummerForest2.unity
+    guid: 390391716e9cba945852e56faa14bf51
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Forest/WinterForest0.unity
+    guid: 1b60917112fb8074daabefbbdff1660c
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Forest/WinterForest1.unity
+    guid: ab8dc67413a564a49a7624cfa593869e
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Forest/WinterForest2.unity
+    guid: d1452a24af538fa4d8a6c2da9fe07d89
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Forest/WinterForest3.unity
+    guid: 567a91ad8dd865945981a6e18ec6bf69
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Forest/WinterForest4.unity
+    guid: f186f299c19bb1342b7a28dc431aacab
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverForest/0 1.unity
+    guid: c22b27ada2c461349a362a5d000cc619
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverForest/0 2boss.unity
+    guid: fc69476d6c525b94a86915112d2a7ba3
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverForest/0.unity
+    guid: 74280593389daf64bbbb1ff4085a6c3f
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverForest/Down1.unity
+    guid: 559689fd064cccf47917334c3210b55b
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverForest/Down2.unity
+    guid: ec9dcb3f2e9748e43b305420e1d7ee0d
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverForest/ForeverTemple/1.unity
+    guid: 93e48349eb37bf44a982efda22c7fbcb
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverForest/ForeverTemple/A.unity
+    guid: 82de0f6b93b45fe47a25376e1a4947b9
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverForest/ForeverTemple/B.unity
+    guid: 55aab3bb9bf53cd4b9fd427608b08104
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverForest/ForeverTemple/C.unity
+    guid: 6b4e38169f333a14a90568352edf65aa
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverForest/ForeverTemple/D.unity
+    guid: d5f24406ac59d2f479e6138f5183489e
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverForest/ForeverTemple/E.unity
+    guid: 0deaabf75f0dbc9499d21bed21a55ac7
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverForest/Up1.unity
+    guid: c733e7f02a37fbb4ba6ec3eaa8aea046
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverForest/Up2 EntetDoor.unity
+    guid: 480889e2a34293e4cadba862f3dc6532
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverForest/UptoAutumn.unity
+    guid: c4541d72f13486c4e8883dd3e455bf47
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverRoad/1 1.unity
+    guid: f837d9149699dc849a529198dbf2f761
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverRoad/1 2.unity
+    guid: 0becdf890f088ce4b901f311a2fd8ca6
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverRoad/13.unity
+    guid: 0b2f19648603ee54c913a950ab6c3f9e
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverRoad/14.unity
+    guid: 6deb5b5b758e09b48bd02576221e34ca
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverRoad/15.unity
+    guid: e0b9c0f884223ed47ae705c3f5de9831
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverRoad/16.unity
+    guid: e85e7fb1c94c4b34380105dc5d4df9a9
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverRoad/17.unity
+    guid: 5420ccbc5a2a8b947b997a421118fd1c
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverRoad/18.unity
+    guid: bd4a40ea9af23eb44936a12993f3d7ae
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverRoad/19.unity
+    guid: 41f29d480acd1e34a8b641ceb28a46f7
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverRoad/20.unity
+    guid: 179bf605420cc194b96ef3c012ea164a
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverRoad/21.unity
+    guid: 586e27329593b2a40bef28043ab3a628
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverRoad/22.unity
+    guid: c2486b8a4fe00264382951e273fa2268
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverRoad/Boss.unity
+    guid: a3ce4c8f911b783409bd1d528084fe8d
+  - enabled: 1
+    path: Assets/Scenes/GROUND/ForeverRoad/ex.unity
+    guid: 85b5838f84491c948b7ecabe938c05a5
+  - enabled: 1
+    path: Assets/Scenes/GROUND/GrangCanyon/1.unity
+    guid: 53e9d6a45cce46748baa7215e418cc61
+  - enabled: 1
+    path: Assets/Scenes/GROUND/GrangCanyon/2.unity
+    guid: f6842210b972a594598be3592fae5bf3
+  - enabled: 1
+    path: Assets/Scenes/GROUND/GrangCanyon/3.unity
+    guid: a444c2b93686b744f9fbbec708b5aa69
+  - enabled: 1
+    path: Assets/Scenes/GROUND/GrangCanyon/4.unity
+    guid: 7440833bc038eb14caf781f3f3ccc660
+  - enabled: 1
+    path: Assets/Scenes/GROUND/GrangCanyon/EMAAgc.unity
+    guid: 91306eecf3addbf4780c72b0bd6c4d16
+  - enabled: 1
+    path: Assets/Scenes/GROUND/GrangCanyon/middle 1.unity
+    guid: aa910fb2c73d50b44a52b09a96ace428
+  - enabled: 1
+    path: Assets/Scenes/GROUND/GrangCanyon/middle.unity
+    guid: 907bf15d246f8f040a8d901fa194e193
+  - enabled: 1
+    path: Assets/Scenes/GROUND/GrangCanyon/Puzzl.unity
+    guid: dbfca1bb4640b7b4582bd4e700d42177
+  - enabled: 1
+    path: Assets/Scenes/GROUND/KingRoad/1.unity
+    guid: 7eff9a81188021748b4ef938a25ca384
+  - enabled: 1
+    path: Assets/Scenes/GROUND/KingRoad/2.unity
+    guid: 677afcc0efb328140ab9601205f10abb
+  - enabled: 1
+    path: Assets/Scenes/GROUND/KingRoad/3.unity
+    guid: 8c857d37668511f409cbd5611ef9f9ba
+  - enabled: 1
+    path: Assets/Scenes/GROUND/KingRoad/4 1.unity
+    guid: 1d74fbdfa4dcd09449c8be708ddc2026
+  - enabled: 1
+    path: Assets/Scenes/GROUND/KingRoad/4.unity
+    guid: 017ea242ada86cd4296a2db96a05f001
+  - enabled: 1
+    path: Assets/Scenes/GROUND/KingRoad/5.unity
+    guid: a020df012cbc15441966d9cfc5906531
+  - enabled: 1
+    path: Assets/Scenes/GROUND/KingRoad/6.unity
+    guid: 0b4aed26fee2dff40b3eab54c104f4e0
+  - enabled: 1
+    path: Assets/Scenes/GROUND/KingRoad/7EntertoCentereaeth.unity
+    guid: f880348b3245e634598fab0431694d91
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/BigGarbagrDump/1 1.unity
+    guid: 0f70e7e32e623c34d87d8839b0e5b295
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/BigGarbagrDump/1 2.unity
+    guid: 47d6f87f591c0dc4d932723fdb4033be
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/BigGarbagrDump/1 3.unity
+    guid: bf27100d25f51714f8102d014e56be37
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/BigGarbagrDump/1 4.unity
+    guid: 79f71f49b74cc394596ca582f594c72e
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/BigGarbagrDump/1 5.unity
+    guid: 583b5d9e622ea854c8cdc39b3340bbd8
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/BigGarbagrDump/1 6.unity
+    guid: 8d59b393cca57e84e95a2732f8efb69c
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/BigGarbagrDump/1.unity
+    guid: c0fd5f6ebe835464f8761171007db84b
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/BigGarbagrDump/Hide/NobleColosseum.unity
+    guid: 11866a41572cf84408437ed10371c80b
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/BigGarbagrDump/WastewaterStation 1.unity
+    guid: 46ab4f73af19bcb48890abd66a408e61
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/BigGarbagrDump/WastewaterStation2.unity
+    guid: c40fd40af5a30c44aa83b29d533e41f2
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/Castle/Castle1.unity
+    guid: ce6629835803a0d42965590aec80a0b1
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/Castle/Castle2.unity
+    guid: 228d4f2b6fb4b5c419e4d2a48488b8aa
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/Castle/Castle3.unity
+    guid: db22a1a045512b54ea9c74d90006d499
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/Castle/Castle4.unity
+    guid: 075612df0c25fe0418a092befc06350f
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/Castle/Castle5.unity
+    guid: 0c3685ed19fb3ed45a0fe2739c14640e
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/Castle/Castle6.unity
+    guid: f2f83ea1490ee8348b1f030ba7e6c934
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/DownRegion.unity
+    guid: f3229c9f3fbd85048b6ebd6ded000bcf
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/Holylibery 1.unity
+    guid: 484401888b084eb45a2115eaad0eac72
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/Holylibery.unity
+    guid: e888c57c962cb2f4c842478552206eb3
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/MiddleRegion.unity
+    guid: 963302d6e1acdb94290f6fc14e11e4ab
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/OldEievater.unity
+    guid: 18f902edbc9d3cf42846336397eb02d7
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/Port.unity
+    guid: 2d81df01e0a25794d835765be28fbdf2
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/Prison 1.unity
+    guid: 62fd58deab29c2549a54646b1a56f17f
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/Prison.unity
+    guid: e78c4da52178cf640a6a2e9cfaa47eb9
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/Sewer/1.unity
+    guid: 21006446e270cbb49b71ce00fa8791db
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/Sewer/2.unity
+    guid: 5a5c55f9bf8284645ac9bd9bb8076fb3
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MainCity/Sewer/3.unity
+    guid: 86b8cf9e7cc4aa446ad1cc20225988ce
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MinerHome/00.unity
+    guid: 1e35257099962b0489c2f2c93c5c2cef
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MinerHome/000.unity
+    guid: 0590f990fd806b046960b99275819e16
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MinerHome/0000.unity
+    guid: ae4d083091f62394ea2459742a68a845
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MinerHome/01.unity
+    guid: 1445921017700a54191e3bd96872d3ff
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MinerHome/02.unity
+    guid: 29b679057063cae4c88bb64d4771ca17
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MinerHome/03.unity
+    guid: af76729fc5383c84193d95d91009d454
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MinerHome/04.unity
+    guid: 9e9157bc8ec967649bf8af28272d144b
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MinerHome/Boss.unity
+    guid: 31eabd011fa3e9144a98e03ff3d24a92
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MinerHome/Hide 2.unity
+    guid: 8b3932b9e5db8504db632244ff3b6d79
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MinerHome/Hide 3.unity
+    guid: eb5649078bdc7c74198d47a331e8abb4
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MinerHome/Hide 4.unity
+    guid: fa0087ca9a180164b860a82b8945b808
+  - enabled: 1
+    path: Assets/Scenes/GROUND/MinerHome/Hide1.unity
+    guid: 2e1cde76f7b7772419226ad108845e21
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Ocean/AnglerFish.unity
+    guid: 7a684b3a9c9e0654cbd2e7e7c9a5acee
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Ocean/Boss.unity
+    guid: 69386d7f8ec730945a6571aafe92fa28
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Ocean/MiddleOcean.unity
+    guid: 5625ccd60af6bd04798156382b07e848
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Ocean/PoisonOcean 1.unity
+    guid: 992069a6cbfe281498721f026c2d6bab
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Ocean/PoisonOcean 2.unity
+    guid: fe3c46c542c3886469338cf61e1d62e9
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Ocean/PoisonOcean.unity
+    guid: 32d28944d60e7dd49a7f70c598abcaf1
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Ocean/UnderOcean.unity
+    guid: f65c7ffc8154ef94aa0a1c2ad1778d51
+  - enabled: 1
+    path: Assets/Scenes/GROUND/Ocean/UpperOcean.unity
+    guid: 69933785eb4ab354b8ce25b20e6fe55b
+  - enabled: 1
+    path: Assets/Scenes/GROUND/OldCity/1 1.unity
+    guid: fd2d92a2117998a41803214dbcc550d6
+  - enabled: 1
+    path: Assets/Scenes/GROUND/OldCity/1 2.unity
+    guid: 7a41acb25e0c2dc4bbbb803907e1b100
+  - enabled: 1
+    path: Assets/Scenes/GROUND/OldCity/1 3.unity
+    guid: 558656ac8b85f7f42814ddfc66029797
+  - enabled: 1
+    path: Assets/Scenes/GROUND/OldCity/1 4.unity
+    guid: 32020e1505d64594c9a1762d268833ee
+  - enabled: 1
+    path: Assets/Scenes/GROUND/OldCity/1 5.unity
+    guid: 6ffa5885e9ca90b49b28cf12bcb2a757
+  - enabled: 1
+    path: Assets/Scenes/GROUND/OldCity/1 6.unity
+    guid: a1cd39a0800b34041ae173d1876c69cb
+  - enabled: 1
+    path: Assets/Scenes/GROUND/OldCity/1 7.unity
+    guid: 437638ce25be4a54e978cf0268d456cd
+  - enabled: 1
+    path: Assets/Scenes/GROUND/OldCity/1 8.unity
+    guid: 9c71c496fc97c864980cfe2628060821
+  - enabled: 1
+    path: Assets/Scenes/GROUND/OldCity/1.unity
+    guid: 8a1124e85e6c5434b8f1e7b50032aec5
+  - enabled: 1
+    path: Assets/Scenes/sky/GodRegion/A.unity
+    guid: 1b49e2aeaca45a546831428f77c2bda0
+  - enabled: 1
+    path: Assets/Scenes/sky/GodRegion/B.unity
+    guid: a023270be4adf314ca3bd146a5a445dc
+  - enabled: 1
+    path: Assets/Scenes/sky/GodRegion/Boss.unity
+    guid: a095522ae19863c4e97919a8876e069b
+  - enabled: 1
+    path: Assets/Scenes/sky/GodRegion/Entrer.unity
+    guid: 0ac96ae04bc7de045971d4c38ac4eb84
+  - enabled: 1
+    path: Assets/Scenes/sky/GodRegion/Hide/FullDown.unity
+    guid: 3b303cba230d5504f906af643cf8d801
+  - enabled: 1
+    path: Assets/Scenes/sky/GodRegion/Hide/hide 1.unity
+    guid: 672277fdf8db5ce4ca8b4e36c2529425
+  - enabled: 1
+    path: Assets/Scenes/sky/GodRegion/Hide/hide 2.unity
+    guid: d0b3fd5c19489c04f8598495c17068fb
+  - enabled: 1
+    path: Assets/Scenes/sky/GodRegion/Hide/hide 3.unity
+    guid: 40712e05b0ec0b249bd2c122a489a098
+  - enabled: 1
+    path: Assets/Scenes/sky/GodRegion/Hide/hide 4.unity
+    guid: c4da0c76f993ecb42a38280c0c8ea600
+  - enabled: 1
+    path: Assets/Scenes/sky/GodRegion/Hide/hide.unity
+    guid: 5fde87ad4e751604d82b9f723754ab18
+  - enabled: 1
+    path: Assets/Scenes/sky/GodRegion/Hide/MaxLow 1.unity
+    guid: 5897263c2b8755b40afea095d3e5d70b
+  - enabled: 1
+    path: Assets/Scenes/sky/GodRegion/Hide/MaxLow.unity
+    guid: 4fcf969490c47ff499273cc21601e2f8
+  - enabled: 1
+    path: Assets/Scenes/sky/GodRegion/Puzzal.unity
+    guid: 8b125397675ba5a4f8c6f9590acaacc3
+  - enabled: 1
+    path: Assets/Scenes/sky/GodRegion/Right.unity
+    guid: 41b61bc60399a4a45889d3abe5ad593b
+  - enabled: 1
+    path: Assets/Scenes/sky/GodRegion/UpperEntrer.unity
+    guid: e79890e9250728745ac2ab4b2b7071a4
+  - enabled: 1
+    path: Assets/Scenes/sky/SkyMountain/SkyMountain.unity
+    guid: 23c35a0e6edee2e4eba52f5af4266faa
+  - enabled: 1
+    path: Assets/Scenes/sky/SkyRoad/SR1.unity
+    guid: e59192b524760a749943d5eddfabb19c
+  - enabled: 1
+    path: Assets/Scenes/StartScene.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}

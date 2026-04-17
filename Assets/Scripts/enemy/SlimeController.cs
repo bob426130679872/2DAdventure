@@ -50,6 +50,8 @@ public class SlimeController : EnemyController
                 break;
             case State.Patrol:
                 currentMoveSpeed = data.baseMoveSpeed;
+                if (patrolDirection > 0 && !isFacingRight || patrolDirection < 0 && isFacingRight)
+                    Flip();
                 break;
             case State.Attack:
                 
