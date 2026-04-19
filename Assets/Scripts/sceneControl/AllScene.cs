@@ -19,9 +19,8 @@ public class AllScene : MonoBehaviour
         if (existingPlayer != null)
         {
             PlayerManager.Instance.player = existingPlayer;
-            CinemachineVirtualCamera virtualCam = FindObjectOfType<CinemachineVirtualCamera>();
-            if (virtualCam != null)
-                virtualCam.Follow = PlayerManager.Instance.player.transform;
+            foreach (var cam in FindObjectsOfType<CinemachineVirtualCamera>())
+                cam.Follow = PlayerManager.Instance.player.transform;
             return;
         }
 
@@ -30,6 +29,7 @@ public class AllScene : MonoBehaviour
         // 2. GameOver 或開啟遊戲無 spawnPortal → savePoint
         // 3. 走路傳送 → spawnPortal
         Vector3 spawnPos;
+        GameObject spawnPortalObj = null;
         if (GameManager.Instance.isDieRespawn)
         {
             spawnPos = GameManager.Instance.safePosition;
@@ -41,9 +41,9 @@ public class AllScene : MonoBehaviour
         }
         else if (!string.IsNullOrEmpty(GameManager.Instance.spawnPortalName))
         {
-            GameObject spawnPortal = GameObject.Find(GameManager.Instance.spawnPortalName);
+            spawnPortalObj = GameObject.Find(GameManager.Instance.spawnPortalName);
             Debug.Log(GameManager.Instance.spawnPortalName);
-            spawnPos = spawnPortal.transform.position;
+            spawnPos = spawnPortalObj.transform.position;
         }
 
         //先註解掉以便隨意切場景測試
@@ -55,8 +55,8 @@ public class AllScene : MonoBehaviour
         // }
         else
         {
-            GameObject spawnPortal = GameObject.Find("testSpawnPortal");
-            spawnPos = spawnPortal.transform.position;
+            spawnPortalObj = GameObject.Find("testSpawnPortal");
+            spawnPos = spawnPortalObj.transform.position;
         }
 
         if (GameManager.Instance.safePosition == Vector3.zero)
@@ -79,8 +79,14 @@ public class AllScene : MonoBehaviour
         if (wasRespawn)
             PlayerManager.Instance.Respawn();
 
-        CinemachineVirtualCamera virtualCam2 = FindObjectOfType<CinemachineVirtualCamera>();
-        if (virtualCam2 != null)
-            virtualCam2.Follow = PlayerManager.Instance.player.transform;
+        foreach (var cam in FindObjectsOfType<CinemachineVirtualCamera>())
+            cam.Follow = PlayerManager.Instance.player.transform;
+
+        if (spawnPortalObj != null)
+        {
+            var sp = spawnPortalObj.GetComponent<SpawnPoint>();
+            if (sp != null && sp.initialCamera != null)
+                CameraZoneTrigger.Activate(sp.initialCamera);
+        }
     }
 }
