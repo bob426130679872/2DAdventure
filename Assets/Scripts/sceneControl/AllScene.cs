@@ -85,8 +85,14 @@ public class AllScene : MonoBehaviour
         if (spawnPortalObj != null)
         {
             var sp = spawnPortalObj.GetComponent<SpawnPoint>();
-            if (sp != null && sp.initialCamera != null)
-                CameraZoneTrigger.Activate(sp.initialCamera);
+            if (sp != null)
+            {
+                var cam = sp.initialCamera != null
+                    ? sp.initialCamera
+                    : FindObjectOfType<CinemachineVirtualCamera>();
+                if (cam != null)
+                    CameraZoneTrigger.Activate(cam);
+            }
         }
     }
 }
