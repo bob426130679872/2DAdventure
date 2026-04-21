@@ -20,19 +20,22 @@ public class CameraZoneTrigger : MonoBehaviour
         if (activeCam != null) activeCam.Priority = 20;
     }
 
+    CinemachineVirtualCamera ResolvedCam =>
+        enterCam != null ? enterCam : FindObjectOfType<CinemachineVirtualCamera>();
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
         activeZones.Remove(this);
         activeZones.Insert(0, this);
-        Activate(enterCam);
+        Activate(ResolvedCam);
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
         activeZones.Remove(this);
-        if (activeCam == enterCam)
-            Activate(activeZones.Count > 0 ? activeZones[0].enterCam : null);
+        if (activeCam == ResolvedCam)
+            Activate(activeZones.Count > 0 ? activeZones[0].ResolvedCam : null);
     }
 }
