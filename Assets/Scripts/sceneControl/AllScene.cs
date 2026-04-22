@@ -79,8 +79,14 @@ public class AllScene : MonoBehaviour
         if (wasRespawn)
             PlayerManager.Instance.Respawn();
 
-        foreach (var cam in FindObjectsOfType<CinemachineVirtualCamera>())
-            cam.Follow = PlayerManager.Instance.player.transform;
+        var brain = Camera.main != null ? Camera.main.GetComponent<CinemachineBrain>() : null;
+        if (brain != null) brain.enabled = false;
+
+        foreach (var c in FindObjectsOfType<CinemachineVirtualCamera>())
+        {
+            c.Follow = PlayerManager.Instance.player.transform;
+            c.PreviousStateIsValid = false;
+        }
 
         if (spawnPortalObj != null)
         {
@@ -94,5 +100,7 @@ public class AllScene : MonoBehaviour
                     CameraZoneTrigger.Activate(cam);
             }
         }
+
+        if (brain != null) brain.enabled = true;
     }
 }
