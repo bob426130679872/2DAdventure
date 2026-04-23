@@ -11,11 +11,11 @@ public class CheckInAtkZone : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) enemy.isPlayerInAtkRange = true;
+        if (other.CompareTag("Player")) enemy.EnterZone(gameObject.name);
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) enemy.isPlayerInAtkRange = false;
+        if (other.CompareTag("Player")) enemy.ExitZone(gameObject.name);
     }
 }

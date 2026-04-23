@@ -37,7 +37,13 @@ public class AllScene : MonoBehaviour
         else if (GameManager.Instance.isGameOverRespawn)
         {
             GameObject savePoint = GameObject.Find(GameManager.Instance.savePointName);
-            spawnPos = savePoint.transform.position;
+            if (savePoint != null)
+                spawnPos = savePoint.transform.position;
+            else
+            {
+                spawnPortalObj = GameObject.Find("testSpawnPortal");
+                spawnPos = spawnPortalObj.transform.position;
+            }
         }
         else if (!string.IsNullOrEmpty(GameManager.Instance.spawnPortalName))
         {

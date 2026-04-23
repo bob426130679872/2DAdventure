@@ -50,11 +50,9 @@ public class SlimeController : EnemyController
                 break;
             case State.Patrol:
                 currentMoveSpeed = data.baseMoveSpeed;
-                if (patrolDirection > 0 && !isFacingRight || patrolDirection < 0 && isFacingRight)
-                    Flip();
+                patrolDirection = isFacingRight ? 1f : -1f;
                 break;
             case State.Attack:
-                
                 break;
         }
     }
@@ -88,18 +86,33 @@ public class SlimeController : EnemyController
 
     void HandleAttack()
     {
-        // rb.velocity = new Vector2(0, rb.velocity.y);
-        // if (!attackOnCooldown)
-        //     StartCoroutine(AttackRoutine());
+        rb.velocity = new Vector2(0, rb.velocity.y);
+        if (!attackOnCooldown)
+            StartCoroutine(AttackRoutine());
     }
 
     IEnumerator AttackRoutine()
     {
         attackOnCooldown = true;
 
-        var pattern = data.attackPatterns.Count > 0 ? data.attackPatterns[0] : null;
-        if (pattern?.attackColliderPrefab != null)
-            Instantiate(pattern.attackColliderPrefab, transform.position, Quaternion.identity, transform);
+        var pattern = GetRandomAttack();
+        if (pattern != null)
+        {
+            if (pattern.mode == AttackMode.Spawn && pattern.attackColliderPrefab != null)
+            {
+                Instantiate(pattern.attackColliderPrefab, transform.position, Quaternion.identity);
+            }
+            else if (pattern.mode == AttackMode.ChildTrigger)
+            {
+                var zone = FindAttackZone(pattern.attackName);
+                if (zone != null)
+                {
+                    zone.Activate();
+                    yield return new WaitForSeconds(pattern.activeDuration);
+                    zone.Deactivate();
+                }
+            }
+        }
 
         yield return new WaitForSeconds(pattern?.cooldown ?? 1f);
         attackOnCooldown = false;
@@ -110,6 +123,11 @@ public class SlimeController : EnemyController
     void OnTriggerEnter2D(Collider2D other)
     {
         if (isDead) return;
+        if (other.CompareTag("Player"))
+        {
+            OnContactWithPlayer();
+            return;
+        }
         var bullet = other.GetComponent<MPbullet>();
         if (bullet != null)
             StartCoroutine(HandleHit(bullet.damage));
