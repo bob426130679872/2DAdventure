@@ -9,13 +9,22 @@ public class DropEntry
     public float chance;
 }
 
+public enum AttackMode { Spawn, ChildTrigger }
+
 [System.Serializable]
 public class AttackPattern
 {
     public string attackName;
+    [Min(0)] public float weight = 1f;
+    public AttackMode mode;
     public float cooldown;
     public string animTrigger;
+
+    // Spawn 模式：生成獨立物件
     public GameObject attackColliderPrefab;
+
+    // ChildTrigger 模式：啟用怪物身上子物件的 Collider
+    public float activeDuration;
 }
 
 [CreateAssetMenu(fileName = "EnemyData", menuName = "Enemy/EnemyData")]

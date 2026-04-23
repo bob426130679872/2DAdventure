@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd5440c8854e789488091603b23a1b35, type: 3}
+  m_Name: slime
+  m_EditorClassIdentifier: 
+  enemyName: normalSlime
+  enemyType: 0
+  maxHealth: 100
+  baseMoveSpeed: 2
+  contactDamage: 10
+  attackPatterns:
+  - attackName: atk1
+    weight: 1
+    mode: 1
+    cooldown: 1
+    animTrigger: 
+    attackColliderPrefab: {fileID: 0}
+    activeDuration: 1
+  maxDropCount: -1
+  drops: []

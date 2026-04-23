@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -17,7 +18,9 @@ public class EnemyController : MonoBehaviour
     public bool isWallAhead      { get; set; } = false;
 
     public bool seePlayer { get; set; } = false;
-    public bool isPlayerInAtkRange { get; set; } = false;
+    public bool isPlayerInAtkRange => activeZones.Count > 0;
+
+    private HashSet<string> activeZones = new();
 
     protected virtual void Start()
     {
@@ -31,6 +34,44 @@ public class EnemyController : MonoBehaviour
     {
         EnemyManager.Instance?.UnregisterEnemy(this);
     }
+
+    // ── 攻擊區域 ─────────────────────────────────────────
+
+    public void EnterZone(string zoneName) => activeZones.Add(zoneName);
+    public void ExitZone(string zoneName)  => activeZones.Remove(zoneName);
+
+    protected EnemyAttackZone FindAttackZone(string zoneName)
+    {
+        foreach (var zone in GetComponentsInChildren<EnemyAttackZone>(true))
+            if (zone.gameObject.name == zoneName) return zone;
+        return null;
+    }
+
+    protected AttackPattern GetRandomAttack()
+    {
+        var candidates = new List<AttackPattern>();
+        foreach (var p in data.attackPatterns)
+            if (activeZones.Contains(p.attackName + "Detect"))
+                candidates.Add(p);
+
+        if (candidates.Count == 0) return null;
+
+        float total = 0f;
+        foreach (var p in candidates) total += p.weight;
+
+        float roll = Random.Range(0f, total);
+        float acc = 0f;
+        foreach (var p in candidates)
+        {
+            acc += p.weight;
+            if (roll <= acc) return p;
+        }
+        return candidates[candidates.Count - 1];
+    }
+
+    // ── 接觸事件 ──────────────────────────────────────────
+
+    protected virtual void OnContactWithPlayer() { }
 
     // ── 受傷 / 死亡 ──────────────────────────────────────
 
@@ -73,5 +114,4 @@ public class EnemyController : MonoBehaviour
         scale.x *= -1;
         transform.localScale = scale;
     }
-
 }
