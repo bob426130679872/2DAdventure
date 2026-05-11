@@ -30,7 +30,7 @@ EditorBuildSettings:
     path: Assets/Scenes/GROUND/CityOfPureLand/Bosss.unity
     guid: fcda5da59d407494fb0d2be5a83a2451
   - enabled: 1
-    path: Assets/Scenes/GROUND/CityOfPureLand/City 1.unity
+    path: Assets/Scenes/GROUND/CityOfPureLand/City1.unity
     guid: 6719dba55c56fa649a89670a1165496f
   - enabled: 1
     path: Assets/Scenes/GROUND/CityOfPureLand/City.unity
@@ -48,7 +48,7 @@ EditorBuildSettings:
     path: Assets/Scenes/GROUND/CityOfPureLand/OldCastle 3.unity
     guid: 4698736d2719b68489a8ee7260800551
   - enabled: 1
-    path: Assets/Scenes/GROUND/CityOfPureLand/OldCastle 4.unity
+    path: Assets/Scenes/GROUND/CityOfPureLand/OldCastle4.unity
     guid: 958b7eb3fa02b4e4185b480bcf4828e4
   - enabled: 1
     path: Assets/Scenes/GROUND/CityOfPureLand/OldCastle 5.unity
@@ -426,55 +426,55 @@ EditorBuildSettings:
     path: Assets/Scenes/GROUND/OldCity/1.unity
     guid: 8a1124e85e6c5434b8f1e7b50032aec5
   - enabled: 1
-    path: Assets/Scenes/SKY/GodRegion/A.unity
+    path: Assets/Scenes/sky/GodRegion/A.unity
     guid: 1b49e2aeaca45a546831428f77c2bda0
   - enabled: 1
-    path: Assets/Scenes/SKY/GodRegion/B.unity
+    path: Assets/Scenes/sky/GodRegion/B.unity
     guid: a023270be4adf314ca3bd146a5a445dc
   - enabled: 1
-    path: Assets/Scenes/SKY/GodRegion/Boss.unity
+    path: Assets/Scenes/sky/GodRegion/Boss.unity
     guid: a095522ae19863c4e97919a8876e069b
   - enabled: 1
-    path: Assets/Scenes/SKY/GodRegion/Entrer.unity
+    path: Assets/Scenes/sky/GodRegion/Entrer.unity
     guid: 0ac96ae04bc7de045971d4c38ac4eb84
   - enabled: 1
-    path: Assets/Scenes/SKY/GodRegion/Hide/FullDown.unity
+    path: Assets/Scenes/sky/GodRegion/Hide/FullDown.unity
     guid: 3b303cba230d5504f906af643cf8d801
   - enabled: 1
-    path: Assets/Scenes/SKY/GodRegion/Hide/hide 1.unity
+    path: Assets/Scenes/sky/GodRegion/Hide/hide 1.unity
     guid: 672277fdf8db5ce4ca8b4e36c2529425
   - enabled: 1
-    path: Assets/Scenes/SKY/GodRegion/Hide/hide 2.unity
+    path: Assets/Scenes/sky/GodRegion/Hide/hide 2.unity
     guid: d0b3fd5c19489c04f8598495c17068fb
   - enabled: 1
-    path: Assets/Scenes/SKY/GodRegion/Hide/hide 3.unity
+    path: Assets/Scenes/sky/GodRegion/Hide/hide 3.unity
     guid: 40712e05b0ec0b249bd2c122a489a098
   - enabled: 1
-    path: Assets/Scenes/SKY/GodRegion/Hide/hide 4.unity
+    path: Assets/Scenes/sky/GodRegion/Hide/hide 4.unity
     guid: c4da0c76f993ecb42a38280c0c8ea600
   - enabled: 1
-    path: Assets/Scenes/SKY/GodRegion/Hide/hide.unity
+    path: Assets/Scenes/sky/GodRegion/Hide/hide.unity
     guid: 5fde87ad4e751604d82b9f723754ab18
   - enabled: 1
-    path: Assets/Scenes/SKY/GodRegion/Hide/MaxLow 1.unity
+    path: Assets/Scenes/sky/GodRegion/Hide/MaxLow 1.unity
     guid: 5897263c2b8755b40afea095d3e5d70b
   - enabled: 1
-    path: Assets/Scenes/SKY/GodRegion/Hide/MaxLow.unity
+    path: Assets/Scenes/sky/GodRegion/Hide/MaxLow.unity
     guid: 4fcf969490c47ff499273cc21601e2f8
   - enabled: 1
-    path: Assets/Scenes/SKY/GodRegion/Puzzal.unity
+    path: Assets/Scenes/sky/GodRegion/Puzzal.unity
     guid: 8b125397675ba5a4f8c6f9590acaacc3
   - enabled: 1
-    path: Assets/Scenes/SKY/GodRegion/Right.unity
+    path: Assets/Scenes/sky/GodRegion/Right.unity
     guid: 41b61bc60399a4a45889d3abe5ad593b
   - enabled: 1
-    path: Assets/Scenes/SKY/GodRegion/UpperEntrer.unity
+    path: Assets/Scenes/sky/GodRegion/UpperEntrer.unity
     guid: e79890e9250728745ac2ab4b2b7071a4
   - enabled: 1
-    path: Assets/Scenes/SKY/SkyMountain/SkyMountain.unity
+    path: Assets/Scenes/sky/SkyMountain/SkyMountain.unity
     guid: 23c35a0e6edee2e4eba52f5af4266faa
   - enabled: 1
-    path: Assets/Scenes/SKY/SkyRoad/SR1.unity
+    path: Assets/Scenes/sky/SkyRoad/SR1.unity
     guid: e59192b524760a749943d5eddfabb19c
   - enabled: 1
     path: Assets/Scenes/StartScene.unity
