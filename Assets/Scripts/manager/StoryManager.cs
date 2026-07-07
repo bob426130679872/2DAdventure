@@ -11,7 +11,6 @@ public class StoryManager : MonoBehaviour
     public int currentAct = 1;
 
     // 1. 持久化數據 (需要存檔)
-    private Dictionary<string, int> npcTalkCounts = new();
     private Dictionary<string, int> gameFlags = new();   // 存放 EVT_, NPC_, PLR_
     private Dictionary<string, int> questFlags = new();  // 存放 QST_
 
@@ -29,17 +28,10 @@ public class StoryManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(key)) return 0;
 
-        // 1. 優先處理：對話計數 (TalkCount)
-        // 判斷邏輯：如果 key 是 NPC_ID (這部分需要你的 NPC ID 命名規範，或者嘗試在字典找)
         if (key.StartsWith("ITM_"))
         {
             string pureID = key.Substring(4);
             return ItemManager.Instance.GetItemCount(pureID);
-        }
-        if (key.StartsWith("TK_"))
-        {
-            string pureID = key.Substring(3);
-            return GetTalkCount(pureID);
         }
 
         // 2. 根據前綴自動分流
@@ -62,12 +54,7 @@ public class StoryManager : MonoBehaviour
     public void SetAllValue(string key, int value)
     {
         if (string.IsNullOrEmpty(key)) return;
-        if (key.StartsWith("TK_"))
-        {
-            string pureID = key.Substring(3);
-            SetTalkCount(pureID, value);
-        }
-        else if (key.StartsWith("QST_"))
+        if (key.StartsWith("QST_"))
         {
             string pureID = key.Substring(4);
             SetQuestFlags(pureID, value);
@@ -86,11 +73,6 @@ public class StoryManager : MonoBehaviour
     #endregion
 
     #region get
-    public int GetTalkCount(string flagID)
-    {
-        return npcTalkCounts.ContainsKey(flagID) ? npcTalkCounts[flagID] : 0;
-    }
-
     public int GetQuestFlags(string flagID)
     {
         return questFlags.ContainsKey(flagID) ? questFlags[flagID] : 0;
@@ -124,16 +106,6 @@ public class StoryManager : MonoBehaviour
         // 使用 1 減去當前值： 1 - 1 = 0, 1 - 0 = 1
         noSaveFlags[flagID] = 1 - noSaveFlags[flagID];
     }
-    public void AddTalkCount(string npcID)
-    {
-        if (npcTalkCounts.ContainsKey(npcID)) npcTalkCounts[npcID]++;
-        else npcTalkCounts[npcID] = 1;
-    }
-    public void SetTalkCount(string npcID, int count)
-    {
-        if (npcTalkCounts.ContainsKey(npcID))
-            npcTalkCounts[npcID] = count;
-    }
     #endregion
 
     #region 存讀檔邏輯
@@ -145,7 +117,6 @@ public class StoryManager : MonoBehaviour
         // 1. 清空當前資料
         gameFlags.Clear();
         questFlags.Clear();
-        npcTalkCounts.Clear();
 
         // 2. 將 List 轉回 Dictionary
         foreach (var entry in data.gameFlags)
@@ -153,9 +124,6 @@ public class StoryManager : MonoBehaviour
 
         foreach (var entry in data.questFlags)
             questFlags[entry.key] = entry.value;
-
-        foreach (var entry in data.npcTalkCounts)
-            npcTalkCounts[entry.key] = entry.value;
     }
 
     public StorySaveData GetStorySaveData()
@@ -169,9 +137,6 @@ public class StoryManager : MonoBehaviour
 
         foreach (var kvp in questFlags)
             data.questFlags.Add(new StorySaveData.SaveEntry(kvp.Key, kvp.Value));
-
-        foreach (var kvp in npcTalkCounts)
-            data.npcTalkCounts.Add(new StorySaveData.SaveEntry(kvp.Key, kvp.Value));
 
         return data;
     }

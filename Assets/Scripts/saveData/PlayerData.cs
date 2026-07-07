@@ -74,7 +74,6 @@ public class StorySaveData
     public int act; // 當前幕數
     public List<SaveEntry> gameFlags = new();
     public List<SaveEntry> questFlags = new();
-    public List<SaveEntry> npcTalkCounts = new();
 
     [Serializable]
     public class SaveEntry
