@@ -14,12 +14,12 @@ public class DialogueEntry
     public string content;      // D 欄
     public int sequence;        // E 欄
     public int act;             // F 欄 (第幾幕)
-    public int talkCount;       // G 欄 (第幾次)
     public string condition;     // H 欄
     public string optionsRaw;   // I 欄
     public string triggerEvent;// 觸發事件
     public string endEvent;// 對話結束事件
     public string type;// 是否是隱藏對話
+    public string nextID;// 此句結束後自動接續的對話 ID (沒有選項時使用)
 }
 public class DialogueManager : MonoBehaviour
 {
@@ -120,12 +120,12 @@ public class DialogueManager : MonoBehaviour
                 content = cols[3].Trim(),
                 sequence = int.TryParse(cols[4], out int s) ? s : 1,
                 act = int.TryParse(cols[5], out int a) ? a : 0,
-                talkCount = int.TryParse(cols[6], out int t) ? t : 0,
                 condition = cols[7].Trim(),
                 optionsRaw = cols.Length > 8 ? cols[8].Trim() : "",
                 triggerEvent = cols.Length > 9 ? cols[9].Trim() : "",
                 endEvent = cols.Length > 10 ? cols[10].Trim() : "",
-                type = cols.Length > 11 ? cols[11].Trim() : ""
+                type = cols.Length > 11 ? cols[11].Trim() : "",
+                nextID = cols.Length > 12 ? cols[12].Trim() : ""
             };
 
             if (!dialogueDatabase.ContainsKey(entry.id))
@@ -281,34 +281,30 @@ public class DialogueManager : MonoBehaviour
     }
     private void EndDialogue()
     {
-        isTalking = false;
-        dialoguePanel.SetActive(false);
+        string nextID = currentLine != null ? currentLine.nextID : null;
+        bool willChain = !string.IsNullOrWhiteSpace(nextID) && dialogueDatabase.ContainsKey(nextID);
 
-        if (currentLine != null)
+        if (currentLine != null && !string.IsNullOrEmpty(currentLine.endEvent))
         {
-            bool skipCount = false;
-
-            // 1. 先解析 endEvent，看看裡面有沒有 "no_add_count"
-            if (!string.IsNullOrEmpty(currentLine.endEvent))
-            {
-                // 檢查字串中是否包含這個指令
-                if (currentLine.endEvent.Contains(StoryEventCommand.NO_ADD_COUNT))
-                {
-                    skipCount = true;
-                }
-
-                // 執行其他的 endEvent (如 add_item 等)
-                ExecuteEvent(currentLine.endEvent);
-            }
-
-            // 2. 根據結果決定是否要自動 +1
-            if (!skipCount && !string.IsNullOrEmpty(currentLine.npcID))
-            {
-                StoryManager.Instance.AddTalkCount(currentLine.npcID);
-            }
+            ExecuteEvent(currentLine.endEvent);
         }
 
         currentLine = null;
+
+        // 3. 若這句設定了自動接續的下一段對話 ID，直接接續播放，不關閉對話框
+        if (willChain)
+        {
+            Debug.Log($"[DialogueManager] 自動接續對話至: {nextID}");
+            StartDialogue(dialogueDatabase[nextID]);
+            return;
+        }
+        else if (!string.IsNullOrWhiteSpace(nextID))
+        {
+            Debug.LogError($"[DialogueManager] 找不到自動接續的對話 ID: {nextID}");
+        }
+
+        isTalking = false;
+        dialoguePanel.SetActive(false);
     }
     private IEnumerator TypeSentence(string sentence)
     {
@@ -330,11 +326,9 @@ public class DialogueManager : MonoBehaviour
     {
         // 1. 取得當前遊戲狀態數值
         int currentAct = StoryManager.Instance.currentAct;
-        int currentTalkCount = StoryManager.Instance.GetTalkCount(e.npcID);
 
         // 2. 進行條件判定
         bool resA = (e.act == 0) || (currentAct == e.act);
-        bool resB = (e.talkCount == 0) || (currentTalkCount == e.talkCount);
         bool resC = EvaluateSingle(e.condition);
 
         // --- 修改後的 Log 數值獲取邏輯 ---
@@ -345,13 +339,12 @@ public class DialogueManager : MonoBehaviour
         string resultsLog =
             $"<color=yellow>【條件對照表】(需求值 vs 目前值)</color>\n" +
             $"[A] 劇情幕數: {e.act} vs <b>{currentAct}</b> ⮕ {GetColor(resA)}\n" +
-            $"[B] 對話次數: {e.talkCount} vs <b>{currentTalkCount}</b> ⮕ {GetColor(resB)}\n" +
             $"[C] 標記 Flag: {e.condition}\n    ⮕ 目前狀態: <b>{currentFlagVal}</b> | 結果: {GetColor(resC)}\n";
 
         bool finalResult;
 
-        finalResult = resA && resB && resC;
-        Debug.Log($"{logHeader}{resultsLog}<b>公式:</b> <color=white>預設 (A&B&C&D&E)</color> ⮕ 最終結果: {GetColor(finalResult)}");
+        finalResult = resA && resC;
+        Debug.Log($"{logHeader}{resultsLog}<b>公式:</b> <color=white>預設 (A&C)</color> ⮕ 最終結果: {GetColor(finalResult)}");
         return finalResult;
     }
     // --- 新增的輔助工具：專門用來產生 Log 字串 ---
@@ -470,14 +463,10 @@ public class DialogueManager : MonoBehaviour
 
             string[] parts = eventStr.Split(':');
             string command = parts[0].Trim().ToLower();
-            if (command == StoryEventCommand.NO_ADD_COUNT) continue; // 這是標記用的，不需執行
             string key = parts[1].Trim();
 
             switch (command)
             {
-                case StoryEventCommand.SET_TALK_COUNT:
-                    if (int.TryParse(parts[2], out int tc)) StoryManager.Instance.SetTalkCount(key, tc);
-                    break;
                 case StoryEventCommand.SET_FLAG:
                     if (int.TryParse(parts[2], out int fv)) StoryManager.Instance.SetGameFlags(key, fv);
                     break;

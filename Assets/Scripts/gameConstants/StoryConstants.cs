@@ -38,8 +38,6 @@ public static class DialogueID
 }
 public static class StoryEventCommand
 {
-    public const string SET_TALK_COUNT = "set_talk_count";     
-    public const string NO_ADD_COUNT = "no_add_count"; // 不增加對話次數
     public const string SET_FLAG = "set_flag";       // 設定flag
     public const string SET_QUEST = "set_quest";     // 變更任務階段
     public const string ADD_ITEM = "add_item";       // 給予道具
