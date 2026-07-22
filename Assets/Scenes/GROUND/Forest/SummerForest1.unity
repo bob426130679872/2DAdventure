@@ -327,7 +327,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9096899745331185894, guid: 820b900de895aca448c206c86a1e1472, type: 3}
       propertyPath: targetSceneName
-      value: InitialForest
+      value: InitialVillage
       objectReference: {fileID: 0}
     - target: {fileID: 9096899745331185894, guid: 820b900de895aca448c206c86a1e1472, type: 3}
       propertyPath: targetSpawnName
