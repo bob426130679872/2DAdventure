@@ -14,6 +14,8 @@ public class StoryManager : MonoBehaviour
     private Dictionary<string, int> gameFlags = new();   // 存放 EVT_, NPC_, PLR_
     private Dictionary<string, int> questFlags = new();  // 存放 QST_
 
+    private HashSet<string> seenDialogues = new(); // 已出現過的對話 ID (SEEN_)
+
     // 2. 非持久化數據 (重開遊戲即消失)
     private Dictionary<string, int> noSaveFlags = new(); // 存放 SYS_
 
@@ -45,6 +47,12 @@ public class StoryManager : MonoBehaviour
         {
             string pureID = key.Substring(3);
             return GetNoSaveFlags(pureID);
+        }
+
+        else if (key.StartsWith("SEEN_"))
+        {
+            string pureID = key.Substring(5);
+            return IsDialogueSeen(pureID) ? 1 : 0;
         }
 
         // 4. 預設：從 gameFlags (EVT_, NPC_, PLR_) 找
@@ -85,6 +93,10 @@ public class StoryManager : MonoBehaviour
     {
         return gameFlags.ContainsKey(flagID) ? gameFlags[flagID] : 0;
     }
+    public bool IsDialogueSeen(string dialogueID)
+    {
+        return seenDialogues.Contains(dialogueID);
+    }
     #endregion
 
     #region set
@@ -106,6 +118,11 @@ public class StoryManager : MonoBehaviour
         // 使用 1 減去當前值： 1 - 1 = 0, 1 - 0 = 1
         noSaveFlags[flagID] = 1 - noSaveFlags[flagID];
     }
+    public void MarkDialogueSeen(string dialogueID)
+    {
+        if (string.IsNullOrEmpty(dialogueID)) return;
+        seenDialogues.Add(dialogueID);
+    }
     #endregion
 
     #region 存讀檔邏輯
@@ -117,6 +134,7 @@ public class StoryManager : MonoBehaviour
         // 1. 清空當前資料
         gameFlags.Clear();
         questFlags.Clear();
+        seenDialogues.Clear();
 
         // 2. 將 List 轉回 Dictionary
         foreach (var entry in data.gameFlags)
@@ -124,6 +142,9 @@ public class StoryManager : MonoBehaviour
 
         foreach (var entry in data.questFlags)
             questFlags[entry.key] = entry.value;
+
+        foreach (var id in data.seenDialogues)
+            seenDialogues.Add(id);
     }
 
     public StorySaveData GetStorySaveData()
@@ -137,6 +158,9 @@ public class StoryManager : MonoBehaviour
 
         foreach (var kvp in questFlags)
             data.questFlags.Add(new StorySaveData.SaveEntry(kvp.Key, kvp.Value));
+
+        foreach (var id in seenDialogues)
+            data.seenDialogues.Add(id);
 
         return data;
     }
