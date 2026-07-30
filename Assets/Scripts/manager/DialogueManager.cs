@@ -169,6 +169,13 @@ public class DialogueManager : MonoBehaviour
         isTalking = true; // 開始對話
         isWaitingForOption = false;
         dialoguePanel.SetActive(true);
+
+        // 記錄這組對話已經出現過，供其他對話的「條件」欄位用 SEEN_<id> 判斷
+        if (group.Count > 0)
+        {
+            StoryManager.Instance.MarkDialogueSeen(group[0].id);
+        }
+
         currentDialogueQueue.Clear();
         foreach (var line in group.OrderBy(g => g.sequence))
         {

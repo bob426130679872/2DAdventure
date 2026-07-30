@@ -74,6 +74,7 @@ public class StorySaveData
     public int act; // 當前幕數
     public List<SaveEntry> gameFlags = new();
     public List<SaveEntry> questFlags = new();
+    public List<string> seenDialogues = new(); // 已出現過的對話 ID
 
     [Serializable]
     public class SaveEntry
