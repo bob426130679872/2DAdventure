@@ -120,12 +120,12 @@ public class DialogueManager : MonoBehaviour
                 content = cols[3].Trim(),
                 sequence = int.TryParse(cols[4], out int s) ? s : 1,
                 act = int.TryParse(cols[5], out int a) ? a : 0,
-                condition = cols[7].Trim(),
-                optionsRaw = cols.Length > 8 ? cols[8].Trim() : "",
-                triggerEvent = cols.Length > 9 ? cols[9].Trim() : "",
-                endEvent = cols.Length > 10 ? cols[10].Trim() : "",
-                type = cols.Length > 11 ? cols[11].Trim() : "",
-                nextID = cols.Length > 12 ? cols[12].Trim() : ""
+                condition = cols.Length > 6 ? cols[6].Trim() : "",
+                optionsRaw = cols.Length > 7 ? cols[7].Trim() : "",
+                triggerEvent = cols.Length > 8 ? cols[8].Trim() : "",
+                endEvent = cols.Length > 9 ? cols[9].Trim() : "",
+                type = cols.Length > 10 ? cols[10].Trim() : "",
+                nextID = cols.Length > 11 ? cols[11].Trim() : ""
             };
 
             if (!dialogueDatabase.ContainsKey(entry.id))

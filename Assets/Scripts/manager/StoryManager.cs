@@ -14,7 +14,7 @@ public class StoryManager : MonoBehaviour
     private Dictionary<string, int> gameFlags = new();   // 存放 EVT_, NPC_, PLR_
     private Dictionary<string, int> questFlags = new();  // 存放 QST_
 
-    private HashSet<string> seenDialogues = new(); // 已出現過的對話 ID (SEEN_)
+    private Dictionary<string, int> seenDialogues = new(); // 已出現過的對話 ID 及次數 (SEEN_)
 
     // 2. 非持久化數據 (重開遊戲即消失)
     private Dictionary<string, int> noSaveFlags = new(); // 存放 SYS_
@@ -52,7 +52,7 @@ public class StoryManager : MonoBehaviour
         else if (key.StartsWith("SEEN_"))
         {
             string pureID = key.Substring(5);
-            return IsDialogueSeen(pureID) ? 1 : 0;
+            return GetDialogueSeenCount(pureID);
         }
 
         // 4. 預設：從 gameFlags (EVT_, NPC_, PLR_) 找
@@ -93,9 +93,9 @@ public class StoryManager : MonoBehaviour
     {
         return gameFlags.ContainsKey(flagID) ? gameFlags[flagID] : 0;
     }
-    public bool IsDialogueSeen(string dialogueID)
+    public int GetDialogueSeenCount(string dialogueID)
     {
-        return seenDialogues.Contains(dialogueID);
+        return seenDialogues.ContainsKey(dialogueID) ? seenDialogues[dialogueID] : 0;
     }
     #endregion
 
@@ -121,7 +121,8 @@ public class StoryManager : MonoBehaviour
     public void MarkDialogueSeen(string dialogueID)
     {
         if (string.IsNullOrEmpty(dialogueID)) return;
-        seenDialogues.Add(dialogueID);
+        seenDialogues.TryGetValue(dialogueID, out int count);
+        seenDialogues[dialogueID] = count + 1;
     }
     #endregion
 
@@ -143,8 +144,8 @@ public class StoryManager : MonoBehaviour
         foreach (var entry in data.questFlags)
             questFlags[entry.key] = entry.value;
 
-        foreach (var id in data.seenDialogues)
-            seenDialogues.Add(id);
+        foreach (var entry in data.seenDialogues)
+            seenDialogues[entry.key] = entry.value;
     }
 
     public StorySaveData GetStorySaveData()
@@ -159,8 +160,8 @@ public class StoryManager : MonoBehaviour
         foreach (var kvp in questFlags)
             data.questFlags.Add(new StorySaveData.SaveEntry(kvp.Key, kvp.Value));
 
-        foreach (var id in seenDialogues)
-            data.seenDialogues.Add(id);
+        foreach (var kvp in seenDialogues)
+            data.seenDialogues.Add(new StorySaveData.SaveEntry(kvp.Key, kvp.Value));
 
         return data;
     }
