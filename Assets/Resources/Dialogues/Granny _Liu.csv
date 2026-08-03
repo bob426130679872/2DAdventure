@@ -1,0 +1,13 @@
+﻿id,npc_id,name,content,sequence,第幾幕,條件,option,trigger_event,end_event,type,next_id
+Granny _Liu_1,Granny _Liu,柳婆婆,哎呀，這不是小燕雨嗎？,1,1,!SEEN_Granny _Liu_1:1,,,,,
+Granny _Liu_1,Granny _Liu,柳婆婆,看你這身打扮，眼神也變了...和你那倔強的父母真是一模一樣。,2,1,,,,,,
+Granny _Liu_1,Granny _Liu,柳婆婆,你爺爺還在生氣吧？別怪他，他只是不想再失去親人了。,3,1,,,,,,
+Granny _Liu_1,Granny _Liu,柳婆婆,外面的世界...已經不是我們記憶中的樣子了，穢氣讓一切都瘋了。,4,1,,,,,,
+Granny _Liu_2,Granny _Liu,柳婆婆,...我知道我攔不住你。就像當年我攔不住石衡，也攔不住你父母一樣。,1,1,SEEN_Granny _Liu_1:1&! ITM_key:1,,,,,
+Granny _Liu_2,Granny _Liu,柳婆婆,拿著這個吧。這是**【古代鑰匙】**。,2,1,,,,,,
+Granny _Liu_2,Granny _Liu,柳婆婆,在旅途中，你會看到一些破敗的紅色鳥居。用這把鑰匙喚醒它們，它們會成為你的庇護所。累了、傷了，就去鳥居下歇歇。,3,1,,,,,,
+Granny _Liu_2,Granny _Liu,柳婆婆,答應婆婆，一定要活著回來。,4,1,,,,add_item:ancient_key:1,,
+Granny _Liu_3,Granny _Liu,柳婆婆,哎喲！我的傻孩子！看看你，傷成什麼樣了！,1,1,! ITM_key:1&first_die,,,,,
+Granny _Liu_3,Granny _Liu,柳婆婆,都怪婆婆沒早點塞給你。來，拿著這個！沒有這把鑰匙啟動鳥居，你的靈魂會在穢氣中迷失的。,2,1,,,,,,
+Granny _Liu_3,Granny _Liu,柳婆婆,下次可別這麼莽撞了，命只有一條...雖然有了這個能讓你多幾次機會，但也不該隨便浪費啊。,3,1,,,,add_item:ancient_key:1,,
+Granny _Liu_4,Granny _Liu,柳婆婆,又是這樣的眼神...充滿了對未知的渴望。如果當年我也給了他們這把鑰匙，或許他們就能逃回來了...不，這次我必須守護好這孩子。,1,1,,,,,hide,
