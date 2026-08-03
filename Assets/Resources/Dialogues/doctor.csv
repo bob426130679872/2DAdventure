@@ -1,2 +1,0 @@
-﻿id,npc_id,name,content,sequence,第幾幕,條件,option,trigger_event,end_event,type,next_id
-doc_1,doctor,醫生,冒險者，你看起來受傷了。,1,,NS_is_hurt:1&ITM_coin:10,,,,,
