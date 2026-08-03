@@ -55,7 +55,7 @@ public class StoryManager : MonoBehaviour
             return GetDialogueSeenCount(pureID);
         }
 
-        // 4. 預設：從 gameFlags (EVT_, NPC_, PLR_) 找
+        // 4. 預設：從 gameFlags 找 (沒有特殊用途的旗標不加前綴)
         return GetGameFlags(key);
     }
 

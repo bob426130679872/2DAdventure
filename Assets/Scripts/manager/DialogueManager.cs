@@ -52,14 +52,18 @@ public class DialogueManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
-        TextAsset csvFile = Resources.Load<TextAsset>("dialogue");
-        if (csvFile != null)
+        dialogueDatabase.Clear();
+
+        TextAsset[] csvFiles = Resources.LoadAll<TextAsset>("Dialogues");
+        if (csvFiles == null || csvFiles.Length == 0)
+        {
+            Debug.LogError("找不到任何對話 CSV 檔案！請檢查 Resources/Dialogues 路徑下是否有檔案。");
+            return;
+        }
+
+        foreach (TextAsset csvFile in csvFiles)
         {
             LoadDatabase(csvFile);
-        }
-        else
-        {
-            Debug.LogError("找不到 CSV 檔案！請檢查路徑與檔名。");
         }
     }
     void Start()
@@ -101,10 +105,10 @@ public class DialogueManager : MonoBehaviour
             }
         }
     }
-    // 1. 載入 CSV (請將 Excel 存為 CSV UTF-8)
+    // 1. 載入 CSV (請將 Excel 存為 CSV UTF-8)。每個 NPC 一個檔案，全部放在 Resources/Dialogues/ 下，
+    //    Awake() 會逐一呼叫本方法把每個檔案的內容合併進同一個 dialogueDatabase。
     public void LoadDatabase(TextAsset csvFile)
     {
-        dialogueDatabase.Clear();
         string[] lines = csvFile.text.Split('\n');
 
         for (int i = 1; i < lines.Length; i++) // 跳過標題列
@@ -128,10 +132,20 @@ public class DialogueManager : MonoBehaviour
                 nextID = cols.Length > 11 ? cols[11].Trim() : ""
             };
 
-            if (!dialogueDatabase.ContainsKey(entry.id))
-                dialogueDatabase[entry.id] = new List<DialogueEntry>();
-
-            dialogueDatabase[entry.id].Add(entry);
+            if (dialogueDatabase.TryGetValue(entry.id, out List<DialogueEntry> existingGroup))
+            {
+                // id 必須全域唯一：同一個 id 若出現在不同 NPC 的檔案裡，代表命名衝突，跳過並警告，避免兩個 NPC 的對話被誤合併成一組
+                if (existingGroup.Count > 0 && existingGroup[0].npcID != entry.npcID)
+                {
+                    Debug.LogError($"[DialogueManager] 對話 id 重複衝突：\"{entry.id}\" 同時被 NPC \"{existingGroup[0].npcID}\" 與 \"{entry.npcID}\" 使用（來源檔案：{csvFile.name}）。id 必須全域唯一，請修改其中一個。");
+                    continue;
+                }
+                existingGroup.Add(entry);
+            }
+            else
+            {
+                dialogueDatabase[entry.id] = new List<DialogueEntry> { entry };
+            }
         }
     }
     #region 獲取npc對話串
@@ -475,7 +489,7 @@ public class DialogueManager : MonoBehaviour
             switch (command)
             {
                 case StoryEventCommand.SET_FLAG:
-                    if (int.TryParse(parts[2], out int fv)) StoryManager.Instance.SetGameFlags(key, fv);
+                    if (int.TryParse(parts[2], out int fv)) StoryManager.Instance.SetAllValue(key, fv);
                     break;
                 case StoryEventCommand.SET_QUEST:
                     if (int.TryParse(parts[2], out int qs)) StoryManager.Instance.SetQuestFlags(key, qs);
